@@ -1,4 +1,4 @@
-import 'package:cortado_app/ui/welcome/welcome_page.dart';
+import 'package:cortado_app/src/ui/welcome/welcome_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatelessWidget {

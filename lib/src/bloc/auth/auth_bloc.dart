@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:cortado_app/repositories/auth_repository.dart';
 import 'bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository = AuthRepository();
-
   // todo: check singleton for logic in project
   static final AuthBloc _authBlocSingleton = AuthBloc._internal();
   factory AuthBloc() {

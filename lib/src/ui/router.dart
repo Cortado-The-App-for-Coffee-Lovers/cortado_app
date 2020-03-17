@@ -1,6 +1,6 @@
-import 'package:cortado_app/ui/splash/splash_page.dart';
+import 'package:cortado_app/src/ui/splash/splash_page.dart';
 import 'package:fluro/fluro.dart';
-import 'package:cortado_app/ui/welcome/welcome_page.dart';
+import 'package:cortado_app/src/ui/welcome/welcome_page.dart';
 
 initRouter() {
   Router.appRouter

@@ -1,5 +1,5 @@
-import 'package:cortado_app/app.dart';
-import 'package:cortado_app/ui/router.dart';
+import 'package:cortado_app/src/app.dart';
+import 'package:cortado_app/src/ui/router.dart';
 
 import 'package:flutter/material.dart';
 

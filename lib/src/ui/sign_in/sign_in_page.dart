@@ -6,8 +6,8 @@
 *  Copyright © 2018 [Company]. All rights reserved.
     */
 
-import 'package:cortado_app/ui/sign_in/sign_in_animations.dart';
-import 'package:cortado_app/values/values.dart';
+import 'package:cortado_app/src/ui/sign_in/sign_in_animations.dart';
+import 'package:cortado_app/src/values/values.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 

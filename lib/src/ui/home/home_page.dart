@@ -1,4 +1,3 @@
-import 'package:cortado_app/values/values.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
