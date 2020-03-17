@@ -4,21 +4,41 @@ import 'package:cortado_app/src/data/coffee_shop.dart';
 class CoffeeShopFBProvider {
   final db = Firestore.instance.collection("coffee_shops");
 
-  Future<int> addCoffeeShop(Map<String, dynamic> jsonRest) async {
-    await db.document(jsonRest['id']).setData(jsonRest);
+  Future<void> addCoffeeShop(CoffeeShop coffeeShop) async {
+    Map<String, dynamic> jsonRest = coffeeShop.toJson();
+    return await db.document(jsonRest['id']).setData(jsonRest);
   }
 
-  Future<int> updateCoffeeShop(Map<String, dynamic> jsonRest) async {
-    await db.document(jsonRest['id']).setData(jsonRest, merge: true);
+  Future<void> updateCoffeeShop(CoffeeShop coffeeShop) async {
+    Map<String, dynamic> jsonRest = coffeeShop.toJson();
+    return await db.document(jsonRest['id']).setData(jsonRest, merge: true);
   }
 
-  Future<CoffeeShop> fetchCoffeeShop(String apiKey) async {
-    CoffeeShop restaurant;
-    await db.document(apiKey).get().then((snapshot) async {
+  Future<void> deleteCoffeeShop(CoffeeShop coffeeShop) async {
+    Map<String, dynamic> jsonRest = coffeeShop.toJson();
+    return await db.document(jsonRest['id']).delete();
+  }
+
+  Future<CoffeeShop> fetchCoffeeShop(String id) async {
+    CoffeeShop coffeeShop;
+    await db.document(id).get().then((snapshot) async {
       if (snapshot?.data?.isNotEmpty ?? false) {
-        restaurant = CoffeeShop.fromDb(snapshot.data);
+        coffeeShop = CoffeeShop.fromSnapshot(snapshot);
       }
     });
-    return restaurant;
+    return coffeeShop;
+  }
+
+  Future<List<CoffeeShop>> fetchAllCoffeeShops() async {
+    List<CoffeeShop> coffeeShops = [];
+
+    await db.getDocuments().then((querySnapshot) async {
+      querySnapshot.documents.forEach((snapshot) {
+        coffeeShops.add(CoffeeShop.fromSnapshot(snapshot));
+      });
+    });
+    return coffeeShops;
   }
 }
+
+final coffeeShopFBProvider = CoffeeShopFBProvider();

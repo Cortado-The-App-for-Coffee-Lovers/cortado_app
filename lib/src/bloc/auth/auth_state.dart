@@ -13,7 +13,6 @@ class SignedOutState extends AuthState {
   SignedOutState({this.error = ""});
 }
 
-// TODO
 // Implement SingedInState
 
 /* class SignedInState extends AuthState {

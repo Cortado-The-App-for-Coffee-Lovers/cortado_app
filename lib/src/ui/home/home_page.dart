@@ -1,4 +1,7 @@
+import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -12,10 +15,21 @@ class _HomePageState extends State<HomePage>
   int _selectedIndex = 0;
   String _title = "Coffee Shops";
   TabController _tabController;
+  CoffeeShopsBloc _coffeeShopsBloc;
+
+  final _homePageOptions = <Widget>[];
 
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    _coffeeShopsBloc = BlocProvider.of(context);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _coffeeShopsBloc.close();
   }
 
   @override
@@ -36,7 +50,8 @@ class _HomePageState extends State<HomePage>
                 )
               ]),
         ),
-        body: Center(),
+        body: Center(
+            child: (_selectedIndex == 0) ? _coffeeShopList() : _account()),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.brown,
           items: [
@@ -70,13 +85,17 @@ class _HomePageState extends State<HomePage>
     }
   }
 
-  List<Widget> _homePageOptions = <Widget>[_coffeeShopList(), _account()];
-}
+  _coffeeShopList() {
+    print(_coffeeShopsBloc.coffeeShops.length);
+    return Container(
+      child: ListView.builder(
+          itemCount: _coffeeShopsBloc.coffeeShops.length,
+          itemBuilder: (context, index) {
+            return CoffeeShopTile(
+                coffeeShop: _coffeeShopsBloc.coffeeShops[index]);
+          }),
+    );
+  }
 
-_coffeeShopList() {
-  return Container(
-    child: ListView.builder(itemBuilder: (context, index) {}),
-  );
+  _account() {}
 }
-
-_account() {}

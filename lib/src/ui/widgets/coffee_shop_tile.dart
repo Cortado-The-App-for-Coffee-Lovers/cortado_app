@@ -1,10 +1,15 @@
+import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:flutter/material.dart';
 
 class CoffeeShopTile extends StatelessWidget {
-  const CoffeeShopTile({Key key}) : super(key: key);
+  final CoffeeShop coffeeShop;
+
+  const CoffeeShopTile({Key key, this.coffeeShop}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile();
+    return ListTile(
+      title: Text(coffeeShop.name),
+    );
   }
 }

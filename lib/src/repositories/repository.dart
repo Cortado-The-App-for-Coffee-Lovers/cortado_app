@@ -1,8 +1,8 @@
 abstract class Repository<T, K> {
-  List<T> read();
+  Future<List<T>> read();
 
-  T readById(K id);
-  T create(T entity);
-  T update(T entity);
-  T delete(T entity);
+  Future<T> readById(K id);
+  create(T entity);
+  update(T entity);
+  delete(T entity);
 }
