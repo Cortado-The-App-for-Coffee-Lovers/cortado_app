@@ -2,6 +2,7 @@ import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage>
   String _title = "Coffee Shops";
   TabController _tabController;
   CoffeeShopsBloc _coffeeShopsBloc;
+  Position _currentUserLocation;
 
   final _homePageOptions = <Widget>[];
 
@@ -23,11 +25,11 @@ class _HomePageState extends State<HomePage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
     _coffeeShopsBloc = BlocProvider.of(context);
+    _getCurrentLocation();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _coffeeShopsBloc.close();
   }
@@ -86,15 +88,28 @@ class _HomePageState extends State<HomePage>
   }
 
   _coffeeShopList() {
-    print(_coffeeShopsBloc.coffeeShops.length);
     return Container(
       child: ListView.builder(
           itemCount: _coffeeShopsBloc.coffeeShops.length,
           itemBuilder: (context, index) {
             return CoffeeShopTile(
-                coffeeShop: _coffeeShopsBloc.coffeeShops[index]);
+              coffeeShop: _coffeeShopsBloc.coffeeShops[index],
+              currentUserLocation: _currentUserLocation,
+            );
           }),
     );
+  }
+
+  _getCurrentLocation() async {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    _currentUserLocation = await geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .catchError((e) {
+      print(e);
+    });
+    print(_currentUserLocation);
+    setState(() {});
   }
 
   _account() {}
