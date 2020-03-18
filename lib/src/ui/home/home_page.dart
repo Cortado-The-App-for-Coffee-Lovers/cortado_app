@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +21,7 @@ class _HomePageState extends State<HomePage>
   TabController _tabController;
   CoffeeShopsBloc _coffeeShopsBloc;
   Position _currentUserLocation;
+  Map<CoffeeShop, Future<Position>> _userDistanceMap;
 
   final _homePageOptions = <Widget>[];
 
@@ -26,6 +30,8 @@ class _HomePageState extends State<HomePage>
     _tabController = TabController(vsync: this, length: 2);
     _coffeeShopsBloc = BlocProvider.of(context);
     _getCurrentLocation();
+    _userDistanceMap = Map.fromIterable(_coffeeShopsBloc.coffeeShops,
+        key: (coffeeShop) => coffeeShop);
   }
 
   @override
@@ -108,8 +114,21 @@ class _HomePageState extends State<HomePage>
         .catchError((e) {
       print(e);
     });
-    print(_currentUserLocation);
     setState(() {});
+  }
+
+  _mapUserDistance(Position currentUserLocation) {
+    CoffeeShop coffeeShop;
+    Position position;
+
+    for (coffeeShop in _userDistanceMap.keys) {
+      _userDistanceMap.putIfAbsent(coffeeShop, () async {
+        final query = coffeeShop.address;
+        var addresses = await Geocoder.local.findAddressesFromQuery(query);
+        position = Position.fromMap(addresses.first.coordinates.toMap());
+        return position;
+      });
+    }
   }
 
   _account() {}
