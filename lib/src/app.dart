@@ -1,4 +1,5 @@
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/locator.dart';
 import 'package:cortado_app/src/repositories/coffee_shop_repository.dart';
 import 'package:cortado_app/src/ui/home/home_page.dart';
 import 'package:fluro/fluro.dart';
@@ -15,6 +16,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    registerLocatorItems();
     _coffeeShopRepository = CoffeeShopRepository();
   }
 

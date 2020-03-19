@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
-import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
+import 'package:cortado_app/src/ui/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,22 +14,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  int _selectedIndex = 0;
   String _title = "Coffee Shops";
   TabController _tabController;
+
   CoffeeShopsBloc _coffeeShopsBloc;
+
   Position _currentUserLocation;
-  Map<CoffeeShop, Future<Position>> _userDistanceMap;
+  Geolocator geolocator = Geolocator();
 
   final _homePageOptions = <Widget>[];
+  int _selectedIndex = 0;
 
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
     _coffeeShopsBloc = BlocProvider.of(context);
+    _coffeeShopsBloc.add(GetCoffeeShops());
     _getCurrentLocation();
-    _userDistanceMap = Map.fromIterable(_coffeeShopsBloc.coffeeShops,
-        key: (coffeeShop) => coffeeShop);
+    geolocator
+        .getPositionStream(LocationOptions(
+            accuracy: LocationAccuracy.best, timeInterval: 1000))
+        .listen((position) {
+      _currentUserLocation = position;
+    });
   }
 
   @override
@@ -58,8 +63,18 @@ class _HomePageState extends State<HomePage>
                 )
               ]),
         ),
-        body: Center(
-            child: (_selectedIndex == 0) ? _coffeeShopList() : _account()),
+        body: BlocBuilder(
+            bloc: _coffeeShopsBloc,
+            builder: (BuildContext context, state) {
+              if (state is CoffeeShopsLoading) {
+                showSnackbar(context, Text("Local coffee shops loading."));
+              }
+              return Center(
+                  // TODO
+                  // Make pages with bottom nav widgets
+                  child:
+                      (_selectedIndex == 0) ? _coffeeShopList() : _account());
+            }),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.brown,
           items: [
@@ -95,6 +110,7 @@ class _HomePageState extends State<HomePage>
 
   _coffeeShopList() {
     return Container(
+      color: Colors.grey[200],
       child: ListView.builder(
           itemCount: _coffeeShopsBloc.coffeeShops.length,
           itemBuilder: (context, index) {
@@ -107,27 +123,11 @@ class _HomePageState extends State<HomePage>
   }
 
   _getCurrentLocation() async {
-    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
-    _currentUserLocation = await geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .catchError((e) {
-      print(e);
-    });
-    setState(() {});
-  }
-
-  _mapUserDistance(Position currentUserLocation) {
-    CoffeeShop coffeeShop;
-    Position position;
-
-    for (coffeeShop in _userDistanceMap.keys) {
-      _userDistanceMap.putIfAbsent(coffeeShop, () async {
-        final query = coffeeShop.address;
-        var addresses = await Geocoder.local.findAddressesFromQuery(query);
-        position = Position.fromMap(addresses.first.coordinates.toMap());
-        return position;
-      });
+    try {
+      _currentUserLocation = await geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.best);
+    } catch (e) {
+      _currentUserLocation = null;
     }
   }
 

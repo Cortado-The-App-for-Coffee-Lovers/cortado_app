@@ -1,5 +1,7 @@
-import 'package:equatable/equatable.dart';
+import 'package:cortado_app/src/data/coffee_shop.dart';
 
-abstract class CoffeeShopEvent extends Equatable {
+abstract class CoffeeShopEvent {
   const CoffeeShopEvent();
 }
+
+class GetCoffeeShops extends CoffeeShopEvent {}

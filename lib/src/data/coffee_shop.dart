@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CoffeeShop {
   String id;
   String name;
-  String address;
+  Map<dynamic, dynamic> address;
   String blackDescription;
   String createdAt;
   String updatedAt;
   String description;
   String disabledReason;
-  String hours;
+  dynamic hours;
   String phone;
   String premiumDescription;
   DocumentReference reference;
@@ -30,7 +30,7 @@ class CoffeeShop {
   CoffeeShop.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromData(snapshot.data, reference: snapshot.reference);
 
-  CoffeeShop.fromData(Map<String, dynamic> data, {this.reference})
+  CoffeeShop.fromData(Map<dynamic, dynamic> data, {this.reference})
       : this.id = reference.documentID,
         this.name = data['name'],
         this.address = data['address'],
