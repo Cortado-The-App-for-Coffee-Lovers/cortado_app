@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
     
   http: ^0.12.0+2
-  flutter_bloc: ^3.2.0
+ 
   equatable: ^1.1.0
   path_provider: ^1.6.1
   url_launcher: ^5.4.2
@@ -34,22 +34,24 @@ dependencies:
   geolocator: ^5.1.3
   geocoder: ^0.2.1
   location: ^1.4.1
+
+
+  #BLOC and PROVIDER
+  flutter_bloc: ^3.2.0
+  provider: ^4.0.4
   
  
   # FIREBASE
   firebase_core: 0.4.0+9
   firebase_auth: 0.14.0+5
-  firebase_storage: 3.0.6
-  firebase_messaging: 5.1.6
   firebase_dynamic_links: 0.5.0+1
   cloud_firestore: 0.12.9+4
+
   
   # IMAGES
   flutter_launcher_icons: ^0.7.4
   
 
-  # ROUTING
-  fluro: ^1.5.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,7 +61,7 @@ dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/cortado-logo-4.png"
+  image_path: "assets/images/Cortado-CoffeeStain.png"
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +84,7 @@ flutter:
     - assets/images/welcome-screen-3.png
     - assets/images/cortado-splash.png
     - assets/images/cortado-splash-dark.png
+    - assets/images/Cortado-CoffeeStain.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,4 +1,5 @@
-import 'package:cortado_app/src/ui/welcome/welcome_page.dart';
+
+import 'package:cortado_app/src/ui/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashPage extends StatelessWidget {
@@ -7,7 +8,7 @@ class SplashPage extends StatelessWidget {
     Future.delayed(
         Duration(seconds: 2),
         () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => WelcomePage())));
+            .push(MaterialPageRoute(builder: (_) => HomePage())));
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),

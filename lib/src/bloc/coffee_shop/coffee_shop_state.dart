@@ -6,7 +6,7 @@ abstract class CoffeeShopState {
 
 class CoffeeShopInitial extends CoffeeShopState {}
 
-class CoffeeShopsLoading extends CoffeeShopState {}
+class CoffeeShopsLoadingState extends CoffeeShopState {}
 
 class CoffeeShopsLoaded extends CoffeeShopState {
   final List<CoffeeShop> coffeeShops;

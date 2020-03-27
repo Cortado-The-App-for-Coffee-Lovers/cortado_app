@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage>
         body: BlocBuilder(
             bloc: _coffeeShopsBloc,
             builder: (BuildContext context, state) {
-              if (state is CoffeeShopsLoading) {
+              if (state is CoffeeShopsLoadingState) {
                 showSnackbar(context, Text("Local coffee shops loading."));
               }
               return Center(

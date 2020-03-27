@@ -22,7 +22,7 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     List<CoffeeShop> coffeeShops;
 
     if (event is GetCoffeeShops) {
-      yield CoffeeShopsLoading();
+      yield CoffeeShopsLoadingState();
       try {
         coffeeShops = await coffeeShopRepository.read();
         this.setCoffeeShops(coffeeShops);

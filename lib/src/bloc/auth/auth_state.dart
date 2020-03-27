@@ -1,3 +1,5 @@
+import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
+import 'package:cortado_app/src/data/user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -15,17 +17,17 @@ class SignedOutState extends AuthState {
 
 // Implement SingedInState
 
-/* class SignedInState extends AuthState {
+class SignedInState extends AuthState {
   final User user;
 
   SignedInState(this.user);
-} */
+}
 
-/* class IncompleteSignUp extends AuthState {
+class IncompleteSignUp extends AuthState {
   final SignUpState signUpState;
 
   IncompleteSignUp(this.signUpState);
-} */
+}
 
 class DeepLinkState extends AuthState {
   final Uri deepLink;
