@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
     AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
     SizeConfig().init(context);
     return Scaffold(
+      backgroundColor: AppColors.light,
       body: BlocBuilder(
           bloc: bloc,
           builder: (context, state) {
@@ -46,10 +47,10 @@ class _HomePageState extends State<HomePage> {
                         children: <Widget>[
                           Positioned(
                             left: 0,
-                            top: 145,
+                            top: SizeConfig.safeBlockVertical * .18,
                             child: Container(
-                              height: 150,
-                              width: 85,
+                              height: SizeConfig.blockSizeVertical * .2,
+                              width: SizeConfig.safeBlockHorizontal * .21,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
@@ -58,34 +59,58 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Positioned(
                             right: 0,
-                            top: 85,
+                            top: SizeConfig.safeBlockVertical * .07,
                             child: Container(
-                              height: 200,
-                              width: 170,
+                              height: SizeConfig.safeBlockVertical * .2,
+                              width: SizeConfig.safeBlockHorizontal * .32,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
-                                          'assets/images/corner_plants_right.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            left: 0,
-                            bottom: 0,
-                            child: Container(
-                              height: 150,
-                              width: 85,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/corner_plants_left.png'))),
+                                          'assets/images/latte_right.png'))),
                             ),
                           ),
                           Positioned(
                             right: 0,
-                            bottom: 0,
+                            bottom: SizeConfig.safeBlockVertical * .05,
                             child: Container(
-                              height: 190,
-                              width: 100,
+                              height: SizeConfig.safeBlockVertical * .6,
+                              width: SizeConfig.safeBlockHorizontal * .35,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/blob_right.png'))),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            child: Container(
+                              height: SizeConfig.safeBlockVertical * .6,
+                              width: SizeConfig.safeBlockHorizontal * .9,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                          'assets/images/blob_left.png'))),
+                            ),
+                          ),
+                          Positioned(
+                            left: 0,
+                            bottom: SizeConfig.safeBlockVertical * .3,
+                            child: Container(
+                              height: SizeConfig.safeBlockVertical * .2,
+                              width: SizeConfig.safeBlockHorizontal * .32,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/latte.png'))),
+                            ),
+                          ),
+                          Positioned(
+                            right: 0,
+                            bottom: SizeConfig.blockSizeVertical * .225,
+                            child: Container(
+                              height: SizeConfig.blockSizeVertical * .2,
+                              width: SizeConfig.safeBlockHorizontal * .23,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
@@ -105,37 +130,49 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyles.kSubtitleTextStyle,
                               ),
                             ]),
-                          )
+                          ),
+                          Positioned(
+                            bottom: SizeConfig.blockSizeVertical * .2,
+                            left: SizeConfig.blockSizeHorizontal * .37,
+                            child: GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(kSignUpInitialRoute),
+                              child: Text(
+                                "Sign Up",
+                                style: TextStyles.kSubtitleTextStyle,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: SizeConfig.blockSizeVertical * .18,
+                            left: SizeConfig.blockSizeHorizontal * .245,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 8.0),
+                              color: AppColors.caramel,
+                              height: 1.0,
+                              width: SizeConfig.safeBlockHorizontal * .5,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: SizeConfig.blockSizeVertical * .04,
+                            left: SizeConfig.blockSizeHorizontal * .245,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 80),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text("Have an account?",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: kFontFamilyNormal,
+                                          color: AppColors.dark)),
+                                  _loginButton(context)
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(kSignUpInitialRoute),
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyles.kSubtitleTextStyle,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    color: AppColors.caramel,
-                    height: 1.0,
-                    width: SizeConfig.safeBlockHorizontal * .5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 80),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Have an account?",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: kFontFamilyNormal,
-                                color: AppColors.caramel)),
-                        _loginButton(context)
-                      ],
                     ),
                   ),
                 ],
@@ -156,7 +193,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () => Navigator.of(context).pushNamed(kSignInRoute),
           child: Text("Log in",
               style: TextStyle(
-                  color: AppColors.dark,
+                  color: AppColors.caramel,
                   fontSize: 20,
                   fontFamily: kFontFamilyNormal,
                   decoration: TextDecoration.underline))),

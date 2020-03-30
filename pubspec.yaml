@@ -94,6 +94,10 @@ flutter:
     - assets/images/credit_card.png
     - assets/images/cup_of_joe.png
     - assets/images/map.png
+    - assets/images/latte.png
+    - assets/images/latte_right.png
+    - assets/images/blob_right.png
+    - assets/images/blob_left.png
 
    
 
