@@ -13,7 +13,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
   ) async* {
     if (event is SignInPressed) {
       yield SignInLoadingState();
-      print('validate email and password');
     }
   }
 }

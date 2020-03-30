@@ -1,9 +1,10 @@
-import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+/* import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
 import 'package:cortado_app/src/ui/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../repositories/coffee_shop_repository.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,19 +17,19 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   String _title = "Coffee Shops";
   TabController _tabController;
-
+  CoffeeShopRepository _coffeeShopRepository;
   CoffeeShopsBloc _coffeeShopsBloc;
 
   Position _currentUserLocation;
   Geolocator geolocator = Geolocator();
 
-  final _homePageOptions = <Widget>[];
   int _selectedIndex = 0;
 
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
-    _coffeeShopsBloc = BlocProvider.of(context);
+    _coffeeShopRepository = CoffeeShopRepository();
+    _coffeeShopsBloc = CoffeeShopsBloc(_coffeeShopRepository);
     _coffeeShopsBloc.add(GetCoffeeShops());
     _getCurrentLocation();
     geolocator
@@ -37,12 +38,6 @@ class _HomePageState extends State<HomePage>
         .listen((position) {
       _currentUserLocation = position;
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _coffeeShopsBloc.close();
   }
 
   @override
@@ -133,3 +128,4 @@ class _HomePageState extends State<HomePage>
 
   _account() {}
 }
+ */

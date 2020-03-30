@@ -1,9 +1,7 @@
-
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/locator.dart';
 import 'package:cortado_app/src/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 
 class AuthService {
   UserService get _userService => locator.get();
@@ -23,7 +21,13 @@ class AuthService {
   }
 
   Future<bool> isEmailInUse(String email) async {
-    var list = await _firebaseAuth.fetchSignInMethodsForEmail(email: email);
+    var list;
+    try {
+      print("checking email");
+      list = await _firebaseAuth.fetchSignInMethodsForEmail(email: email);
+    } catch (e) {
+      print(e);
+    }
     return list.isNotEmpty;
   }
 

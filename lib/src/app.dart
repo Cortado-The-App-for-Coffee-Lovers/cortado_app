@@ -1,12 +1,11 @@
 import 'package:cortado_app/src/bloc/auth/auth_bloc.dart';
 import 'package:cortado_app/src/bloc/auth/bloc.dart';
-import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/locator.dart';
-import 'package:cortado_app/src/repositories/coffee_shop_repository.dart';
 import 'package:cortado_app/src/services/navigation_service.dart';
+import 'package:cortado_app/src/ui/home/home.dart';
 import 'package:cortado_app/src/ui/router.dart';
-import 'package:cortado_app/src/ui/welcome.dart/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -17,24 +16,26 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  CoffeeShopRepository _coffeeShopRepository;
   @override
   void initState() {
     super.initState();
     registerLocatorItems();
-    _coffeeShopRepository = CoffeeShopRepository();
   }
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<AuthBloc>(context).add(AppStarted());
     return MaterialApp(
       title: 'Cortado',
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: BlocProvider<CoffeeShopsBloc>(
-          create: (context) => CoffeeShopsBloc(_coffeeShopRepository),
-          child: home(context)),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<SignUpBloc>(create: (context) => SignUpBloc())
+        ],
+        child: home(context),
+      ),
       onGenerateRoute: Router.onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
     );
@@ -53,7 +54,7 @@ class _AppState extends State<App> {
           Navigator.of(context).pushReplacementNamed(kHomeRoute);
         }
       },
-      child: WelcomePage(),
+      child: HomePage(),
     );
   }
 }

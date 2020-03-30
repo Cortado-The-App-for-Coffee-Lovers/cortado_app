@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cortado_app/src/services/auth_service.dart';
-import 'package:cortado_app/src/services/firebase_storage_service.dart';
 import 'package:cortado_app/src/services/navigation_service.dart';
 import 'package:cortado_app/src/services/user_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';

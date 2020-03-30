@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../style.dart';
+
 class CortadoInputField extends StatefulWidget {
   final String hint;
   final ValueChanged<String> onChanged;
@@ -19,7 +21,9 @@ class CortadoInputField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final bool enabled;
   final TextCapitalization textCapitalization;
-
+  final Color color;
+  final TextStyle style;
+  final TextStyle hintStyle;
   CortadoInputField(
       {Key key,
       this.hint,
@@ -38,7 +42,9 @@ class CortadoInputField extends StatefulWidget {
       @required this.textAlign,
       this.inputFormatters,
       @required this.enabled,
-      @required this.textCapitalization})
+      @required this.textCapitalization,
+      this.color,
+      this.hintStyle, this.style})
       : super(key: key);
 
   @override
@@ -50,11 +56,11 @@ class _CortadoInputFieldState extends State<CortadoInputField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 32,
-        vertical: 18,
+        horizontal: 40,
+        vertical: 10,
       ),
       child: TextFormField(
-        cursorColor: Colors.brown,
+        cursorColor: widget.color ?? Colors.brown,
         enabled: widget.enabled,
         validator: widget.validator,
         onSaved: widget.onSaved,
@@ -67,39 +73,34 @@ class _CortadoInputFieldState extends State<CortadoInputField> {
         textCapitalization: widget.textCapitalization,
         keyboardType: widget.textInputType,
         textInputAction: widget.textInputAction,
-        style: TextStyle(
-            fontFamily: 'GibsonSemi', letterSpacing: 1.2, color: Colors.brown),
+        style: widget.style ?? TextStyles.kDefaultTextStyle,
         obscureText: widget.isPassword,
         onChanged: widget.onChanged,
         enableInteractiveSelection: true,
         readOnly: false,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 8.0),
           suffix: widget.suffix,
           prefixIcon: widget.prefix,
           hintText: widget.hint,
-          hintStyle: TextStyle(
-            color: Colors.brown,
-            fontFamily: 'GibsonSemi',
-          ),
+          hintStyle: widget.hintStyle ?? TextStyles.kHintTextStyle,
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.brown,
+              color: widget.color ?? AppColors.dark,
             ),
           ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.brown,
+              color: widget.color ?? AppColors.dark,
             ),
           ),
           disabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.brown,
+              color: widget.color ?? AppColors.dark,
             ),
           ),
         ),
       ),
     );
   }
-
-
 }

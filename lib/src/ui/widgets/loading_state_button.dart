@@ -13,7 +13,6 @@ class LoadingStateButton<LoadingState> extends StatelessWidget {
       bloc: bloc,
       builder: (context, state) {
         if (state is LoadingState) {
-          print(state);
           return Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(16.0),

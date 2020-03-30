@@ -6,9 +6,9 @@ showSnackbar(BuildContext context, Widget content) {
   });
 }
 
-showSnackBarWithKey(GlobalKey<ScaffoldState> _scaffoldKey, Widget content,
+showSnackBarWithKey(GlobalKey<ScaffoldState> scaffoldKey, Widget content,
     {SnackBarAction action}) {
-  _scaffoldKey.currentState.showSnackBar(new SnackBar(
+  scaffoldKey.currentState.showSnackBar(new SnackBar(
     content: content,
     action: action,
   ));
