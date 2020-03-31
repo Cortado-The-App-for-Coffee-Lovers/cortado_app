@@ -70,7 +70,7 @@ class _CoffeeShopsPageState extends State<CoffeeShopsPage> {
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  top: SizeConfig.safeBlockHorizontal * .23,
+                  top: SizeConfig.safeBlockVertical * .13,
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16.0),
                     color: AppColors.dark,

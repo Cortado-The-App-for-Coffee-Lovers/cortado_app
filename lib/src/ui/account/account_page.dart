@@ -48,20 +48,24 @@ class _AccountPageState extends State<AccountPage> {
         children: <Widget>[
           Container(
             height: SizeConfig.blockSizeVertical * .175,
+            width: SizeConfig.blockSizeVertical * 1,
             child: Stack(
               children: <Widget>[
+                Container(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
                 Positioned(
-                  top: SizeConfig.safeBlockHorizontal * .3,
+                  top: SizeConfig.safeBlockVertical * .12,
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16.0),
                     color: AppColors.dark,
                     height: 2.0,
-                    width: SizeConfig.safeBlockHorizontal * .9,
+                    width: SizeConfig.safeBlockVertical * .46,
                   ),
                 ),
-                Positioned(
+                Center(
                   child: Container(
-                      height: SizeConfig.blockSizeVertical * .3,
+                      width: SizeConfig.blockSizeVertical * .17,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('assets/images/account.png')))),
