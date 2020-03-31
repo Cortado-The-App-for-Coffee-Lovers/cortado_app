@@ -18,18 +18,13 @@ class CoffeeShopsPage extends DrawerPage {
 }
 
 class _CoffeeShopsPageState extends State<CoffeeShopsPage> {
-  CoffeeShopRepository _coffeeShopRepository;
   CoffeeShopsBloc _coffeeShopsBloc;
-  Future<List<CoffeeShop>> _coffeeShops;
   User user;
 
   @override
   void initState() {
     super.initState();
-    _coffeeShopRepository = CoffeeShopRepository();
-    _coffeeShopsBloc = CoffeeShopsBloc(_coffeeShopRepository);
-
-    _coffeeShopsBloc.add(GetCoffeeShops());
+    _coffeeShopsBloc = BlocProvider.of<CoffeeShopsBloc>(context);
   }
 
   @override

@@ -1,6 +1,9 @@
+import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/repositories/coffee_shop_repository.dart';
 import 'package:cortado_app/src/ui/account/account_page.dart';
 import 'package:cortado_app/src/ui/map/coffee_map_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../coffee_shop/coffee_shop_page.dart';
 
 import '../style.dart';
@@ -21,7 +24,16 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
   DrawerRoute _currentRoute;
   DrawerPage _currentPage;
 
+  CoffeeShopsBloc _coffeeShopsBloc;
   _DrawerHomePageState(this._currentRoute);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _coffeeShopsBloc = BlocProvider.of<CoffeeShopsBloc>(context);
+    _coffeeShopsBloc.add(GetCoffeeShops());
+  }
 
   @override
   Widget build(BuildContext context) {
