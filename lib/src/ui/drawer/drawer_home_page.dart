@@ -72,10 +72,10 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     alignment: Alignment.center,
                   ),
                   Positioned(
-                    top: 90,
+                    top: SizeConfig.safeBlockVertical * .17,
                     left: 0,
                     child: Container(
-                      width: SizeConfig.safeBlockHorizontal * .5,
+                      width: SizeConfig.safeBlockHorizontal * .36,
                       height: SizeConfig.safeBlockVertical * .07,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -84,7 +84,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     ),
                   ),
                   Positioned(
-                    bottom: 20,
+                    bottom: SizeConfig.safeBlockVertical * .02,
                     left: 0,
                     child: Container(
                       width: SizeConfig.safeBlockHorizontal * .5,
@@ -105,7 +105,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                         bottomRight: Radius.circular(25.0),
                       ),
                       child: Container(
-                        width: SizeConfig.safeBlockHorizontal * .6,
+                        width: SizeConfig.safeBlockHorizontal * .5,
                         height: SizeConfig.safeBlockVertical * .08,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -122,7 +122,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     child: Stack(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 163, right: 40),
+                      padding: EdgeInsets.only(
+                          bottom: SizeConfig.safeBlockVertical * .11,
+                          right: SizeConfig.safeBlockVertical * .12),
                       child: Container(
                           width: SizeConfig.blockSizeHorizontal * .8,
                           decoration: BoxDecoration(
@@ -133,13 +135,14 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     Positioned(
                       child: Container(
                         color: Color(0xFF703D19),
-                        width: SizeConfig.safeBlockHorizontal * .51,
-                        height: SizeConfig.safeBlockVertical * .025,
+                        width: SizeConfig.safeBlockHorizontal * .4,
+                        height: SizeConfig.safeBlockVertical * .02,
                       ),
                     ),
                     ListView(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * .03,
+                          vertical: 30),
                       shrinkWrap: true,
                       children: <Widget>[
                         Container(

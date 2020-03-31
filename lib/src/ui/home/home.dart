@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
     SizeConfig().init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.light,
       body: BlocListener(
         bloc: bloc,
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                               top: SizeConfig.safeBlockVertical * .07,
                               child: Container(
                                 height: SizeConfig.safeBlockVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .32,
+                                width: SizeConfig.safeBlockHorizontal * .29,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
@@ -109,11 +110,11 @@ class _HomePageState extends State<HomePage> {
                               bottom: SizeConfig.safeBlockVertical * .3,
                               child: Container(
                                 height: SizeConfig.safeBlockVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .32,
+                                width: SizeConfig.safeBlockHorizontal * .3,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/latte.png'))),
+                                            'assets/images/latte_left.png'))),
                               ),
                             ),
                             Positioned(
@@ -129,8 +130,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Positioned(
-                              top: SizeConfig.safeBlockVertical * .45,
-                              left: SizeConfig.safeBlockHorizontal * .14,
+                              top: SizeConfig.safeBlockVertical * .4,
+                              left: SizeConfig.safeBlockHorizontal * .12,
                               child: Column(children: [
                                 Text(
                                   "Cortado",
@@ -166,9 +167,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Positioned(
                               bottom: SizeConfig.blockSizeVertical * .04,
-                              left: SizeConfig.blockSizeHorizontal * .245,
+                              left: SizeConfig.blockSizeHorizontal * .2,
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 80),
+                                padding: EdgeInsets.only(
+                                    bottom: SizeConfig.blockSizeVertical * .07),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[

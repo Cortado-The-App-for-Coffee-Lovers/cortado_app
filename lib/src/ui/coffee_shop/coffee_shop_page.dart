@@ -75,7 +75,7 @@ class _CoffeeShopsPageState extends State<CoffeeShopsPage> {
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  top: SizeConfig.safeBlockHorizontal * .3,
+                  top: SizeConfig.safeBlockHorizontal * .23,
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 16.0),
                     color: AppColors.dark,
@@ -98,14 +98,15 @@ class _CoffeeShopsPageState extends State<CoffeeShopsPage> {
               bloc: _coffeeShopsBloc,
               builder: (BuildContext context, state) {
                 if (state is CoffeeShopsLoaded) {
+                  List<CoffeeShop> updatedCoffeeShopList;
+                  updatedCoffeeShopList =
+                      _sortAndFilterCoffeeList(state.coffeeShops);
                   return Container(
                     height: SizeConfig.blockSizeVertical * .7,
                     child: ListView.separated(
-                      itemCount: state.coffeeShops.length,
+                      itemCount: updatedCoffeeShopList.length,
                       itemBuilder: (context, index) {
-                        state.coffeeShops.sort((a, b) =>
-                            a.currentDistance.compareTo(b.currentDistance));
-                        CoffeeShop coffeeShop = state.coffeeShops[index];
+                        CoffeeShop coffeeShop = updatedCoffeeShopList[index];
 
                         return CoffeeShopTile(coffeeShop: coffeeShop);
                       },
@@ -128,5 +129,17 @@ class _CoffeeShopsPageState extends State<CoffeeShopsPage> {
         ],
       ),
     );
+  }
+
+  List<CoffeeShop> _sortAndFilterCoffeeList(List<CoffeeShop> coffeeShops) {
+    List<CoffeeShop> sortedAndFilterList;
+    coffeeShops.sort((a, b) => a.currentDistance.compareTo(b.currentDistance));
+    sortedAndFilterList = coffeeShops.where((coffeeShop) {
+      if (coffeeShop.currentDistance > 20.0)
+        return false;
+      else
+        return true;
+    }).toList();
+    return sortedAndFilterList;
   }
 }

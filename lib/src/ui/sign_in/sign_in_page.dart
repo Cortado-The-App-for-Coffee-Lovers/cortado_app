@@ -33,108 +33,113 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.light,
-      body: Builder(builder: (BuildContext context) {
-        return Scaffold(
-          backgroundColor: AppColors.light,
-          body: BlocListener(
-            bloc: _signInBloc,
-            listener: (BuildContext context, state) {
-              if (state is SignInErrorState) {
-                showSnackbar(context, Text(state.error));
-              }
-            },
-            child: Form(
-              key: _formKey,
-              child: Container(
-                padding: EdgeInsets.only(bottom: 215),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(children: [
-                        Text(
-                          "Cortado",
-                          style: TextStyles.kWelcomeTitleTextStyle,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: AppColors.light,
+        body: Builder(builder: (BuildContext context) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: AppColors.light,
+            body: BlocListener(
+              bloc: _signInBloc,
+              listener: (BuildContext context, state) {
+                if (state is SignInErrorState) {
+                  showSnackbar(context, Text(state.error));
+                }
+              },
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 215),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(children: [
+                          Text(
+                            "Cortado",
+                            style: TextStyles.kWelcomeTitleTextStyle,
+                          ),
+                          Text(
+                            "The app for coffee lovers.",
+                            style: TextStyles.kSubtitleTextStyle,
+                          ),
+                        ]),
+                        Container(
+                          padding: EdgeInsets.only(top: 30),
+                          child: Column(
+                            children: <Widget>[
+                              CortadoInputField(
+                                hint: "Email",
+                                onChanged: (value) => setState(() {
+                                  _email = value;
+                                }),
+                                textAlign: TextAlign.start,
+                                autofocus: true,
+                                isPassword: false,
+                                enabled: true,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          "The app for coffee lovers.",
-                          style: TextStyles.kSubtitleTextStyle,
+                        CortadoInputField(
+                          hint: "Password",
+                          onChanged: (value) => setState(() {
+                            _password = value;
+                          }),
+                          textAlign: TextAlign.start,
+                          autofocus: true,
+                          isPassword: true,
+                          enabled: true,
+                          textCapitalization: TextCapitalization.sentences,
                         ),
                       ]),
-                      Container(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Column(
-                          children: <Widget>[
-                            CortadoInputField(
-                              hint: "Email",
-                              onChanged: (value) => setState(() {
-                                _email = value;
-                              }),
-                              textAlign: TextAlign.start,
-                              autofocus: true,
-                              isPassword: false,
-                              enabled: true,
-                              textCapitalization: TextCapitalization.sentences,
-                            ),
-                          ],
-                        ),
-                      ),
-                      CortadoInputField(
-                        hint: "Password",
-                        onChanged: (value) => setState(() {
-                          _password = value;
-                        }),
-                        textAlign: TextAlign.start,
-                        autofocus: true,
-                        isPassword: true,
-                        enabled: true,
-                        textCapitalization: TextCapitalization.sentences,
-                      ),
-                    ]),
+                ),
               ),
             ),
+          );
+        }),
+        floatingActionButton: Container(
+          height: 150,
+          child: Column(
+            children: <Widget>[
+              LoadingStateButton<SignInLoadingState>(
+                bloc: _signInBloc,
+                button: Container(
+                  child: GestureDetector(
+                      child: Text(
+                        "Continue",
+                        style: TextStyles.kContinueTextStyle,
+                      ),
+                      onTap: () =>
+                          _signInBloc.add(SignInPressed(_email, _password))),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 8.0),
+                color: AppColors.caramel,
+                height: 1.0,
+                width: SizeConfig.safeBlockHorizontal * .5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Have an account?",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: kFontFamilyNormal,
+                          color: AppColors.dark)),
+                  _signUpButton(context)
+                ],
+              ),
+            ],
           ),
-        );
-      }),
-      floatingActionButton: Container(
-        height: 150,
-        child: Column(
-          children: <Widget>[
-            LoadingStateButton<SignInLoadingState>(
-              bloc: _signInBloc,
-              button: Container(
-                child: GestureDetector(
-                    child: Text(
-                      "Continue",
-                      style: TextStyles.kContinueTextStyle,
-                    ),
-                    onTap: () =>
-                        _signInBloc.add(SignInPressed(_email, _password))),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 8.0),
-              color: AppColors.caramel,
-              height: 1.0,
-              width: SizeConfig.safeBlockHorizontal * .5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Have an account?",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: kFontFamilyNormal,
-                        color: AppColors.dark)),
-                _signUpButton(context)
-              ],
-            ),
-          ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
