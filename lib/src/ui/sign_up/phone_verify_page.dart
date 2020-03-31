@@ -1,6 +1,4 @@
-import 'package:cortado_app/src/ui/router.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import './sign_up_page.dart';
 import 'package:flutter/material.dart';
 import '../widgets/loading_state_button.dart';
@@ -21,8 +19,6 @@ class PhoneVerifyPage extends StatefulWidget {
 }
 
 class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
-  String _verificationCode;
-
   TextEditingController _pinController = TextEditingController();
 
   @override
@@ -76,11 +72,7 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                         animationDuration: Duration(milliseconds: 300),
                         fieldHeight: 50,
                         fieldWidth: 40,
-                        onChanged: (value) {
-                          setState(() {
-                            _verificationCode = value;
-                          });
-                        },
+                        onChanged: (value) {},
                       ),
                     ),
                     Padding(
@@ -112,18 +104,12 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                                         fontSize: 28,
                                       ),
                                     ),
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed(kOnBoardingRoute,
-                                            arguments: widget.user)
-
-                                    /* signUpBloc.add(
+                                    onTap: () => signUpBloc.add(
                                         SignUpVerifyPressed(
                                             user: widget.user,
                                             verificationId:
                                                 widget.verificationId,
-                                            code: _pinController.text)) */
-
-                                    ),
+                                            code: _pinController.text))),
                               ),
                             ),
                             Container(

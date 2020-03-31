@@ -15,6 +15,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpState get initialState => SignUpInitial();
 
   @override
+  void onTransition(Transition<SignUpEvent, SignUpState> transition) {
+    super.onTransition(transition);
+    print(transition);
+  }
+
+  @override
   Stream<SignUpState> mapEventToState(
     SignUpEvent event,
   ) async* {
@@ -31,7 +37,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             ..email = event.email
             ..password = event.password;
           bool emailInUse = await _authService.isEmailInUse(event.email);
-          print(emailInUse);
           if (!emailInUse) {
             yield SignUpInitialComplete(user);
           } else {
@@ -66,8 +71,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             return;
           },
           codeSent: (verificationId, [int forceResendingToken]) {
-            verifyCompleter
-                .complete(SignUpPhoneVerificationSent(user, verificationId));
+            verifyCompleter.complete(
+                SignUpPhoneVerificationSent(user, verificationId, user.phone));
             return;
           },
           codeAutoRetrievalTimeout: (verificationId) {
@@ -90,6 +95,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         var user = await _authService.checkVerificationCode(
             event.user, event.verificationId, event.code);
         User updatedUser = await _phoneVerified(user);
+        updatedUser = await _userService.saveUser(updatedUser);
         yield SignUpPhoneVerificationComplete(updatedUser);
       } catch (e) {
         print('Verification error: $e');

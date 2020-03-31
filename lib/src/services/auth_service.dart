@@ -7,6 +7,7 @@ class AuthService {
   UserService get _userService => locator.get();
 
   final FirebaseAuth _firebaseAuth;
+  String verificationId;
 
   AuthService(FirebaseAuth firebaseAuth) : _firebaseAuth = firebaseAuth;
 
@@ -76,6 +77,44 @@ class AuthService {
       codeSent: codeSent,
       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
+  }
+
+  Future<void> sendCodeToPhoneNumber(String phone, User user) async {
+    try {
+      final PhoneVerificationCompleted verificationCompleted =
+          (AuthCredential phoneAuthCredential) {
+        print(
+            'Inside _sendCodeToPhoneNumber: signInWithPhoneNumber auto succeeded: $phoneAuthCredential');
+      };
+
+      final PhoneVerificationFailed verificationFailed =
+          (AuthException authException) {
+        print(
+            'Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}');
+      };
+
+      final PhoneCodeSent codeSent =
+          (String verificationId, [int forceResendingToken]) async {
+        this.verificationId = verificationId;
+        print("code sent to " + phone);
+      };
+
+      final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
+          (String verificationId) {
+        this.verificationId = verificationId;
+        print("time out");
+      };
+
+      await _firebaseAuth.verifyPhoneNumber(
+          phoneNumber: phone,
+          timeout: const Duration(seconds: 5),
+          verificationCompleted: verificationCompleted,
+          verificationFailed: verificationFailed,
+          codeSent: codeSent,
+          codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<User> checkVerificationCode(User user, String id, String code) async {

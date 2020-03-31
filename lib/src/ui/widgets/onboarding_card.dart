@@ -8,7 +8,7 @@ class OnBoardingCard extends StatelessWidget {
   final String title;
 
   OnBoardingCard({
-    @required this.backgroundColor,
+    this.backgroundColor,
     @required this.image,
     @required this.title,
   });
@@ -16,7 +16,7 @@ class OnBoardingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor,
+      color: Colors.transparent,
       padding: EdgeInsets.all(8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

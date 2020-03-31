@@ -29,7 +29,8 @@ class SignUpInitialComplete extends SignUpState {
 class SignUpPhoneVerificationSent extends SignUpState {
   final User user;
   final String verificationId;
-  SignUpPhoneVerificationSent(this.user, this.verificationId);
+  final String phone;
+  SignUpPhoneVerificationSent(this.user, this.verificationId, this.phone);
 }
 
 class SignUpPhoneVerificationComplete extends SignUpState {
@@ -37,5 +38,3 @@ class SignUpPhoneVerificationComplete extends SignUpState {
 
   SignUpPhoneVerificationComplete(this.user);
 }
-
-

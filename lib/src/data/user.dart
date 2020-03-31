@@ -17,7 +17,7 @@ class User {
   String cbPlanId;
   DateTime createdAt;
   DateTime updatedAt;
-  bool isAdmin;
+  bool isAdmin = false;
   String firstName;
   String lastName;
   String phone;
@@ -29,23 +29,17 @@ class User {
   String password;
   AuthCredential phoneAuthCredentials;
   String grade;
-  DateTime dob;
   String picture;
-  bool termsAgreed = false;
+  bool termsAgreed = true;
   DocumentReference reference;
 
   User({
     this.firebaseUser,
-    this.firstName,
-    this.lastName,
-    this.dob,
     this.grade,
   })  : this.email = firebaseUser?.email,
         this.phone = firebaseUser?.phoneNumber;
 
   String get id => firebaseUser?.uid;
-
-  String get displayName => '$firstName $lastName';
 
   User.fromSnapshot(DocumentSnapshot snapshot, {FirebaseUser firebaseUser})
       : this.fromData(
@@ -56,8 +50,6 @@ class User {
 
   User.fromData(Map<String, dynamic> data,
       {this.reference, this.firebaseUser}) {
-    firstName = data['firstName'];
-    lastName = data['lastName'];
     termsAgreed = data['termsAgreed'] ?? true;
     phone = data['phone'];
     email = data['email'];
@@ -66,14 +58,14 @@ class User {
     createdAt = data['createdAt'];
     updatedAt = data['updatedAt'];
     isAdmin = data['isAdmin'];
-    redemptionsLeft = int.parse(data['redemptionsLeft']);
+    redemptionsLeft = data['redemptionsLeft'] != null
+        ? int.parse(data['redemptionsLeft'])
+        : null;
     reloadDate = data['reloadDate'];
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "firstName": this.firstName,
-      "lastName": this.lastName,
       "termsAgreed": this.termsAgreed,
       "email": this.email,
       "phone": this.phone,

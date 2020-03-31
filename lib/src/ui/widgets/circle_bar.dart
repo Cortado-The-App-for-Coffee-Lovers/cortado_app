@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../style.dart';
 
 class CircleBar extends StatefulWidget {
   final bool isActive;
@@ -15,17 +14,22 @@ class CircleBar extends StatefulWidget {
 class _CircleBarState extends State<CircleBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 6),
-      height:
-          widget.isActive ? widget.activeSize ?? 12 : widget.inactiveSize ?? 8,
-      width:
-          widget.isActive ? widget.activeSize ?? 12 : widget.inactiveSize ?? 8,
-      decoration: BoxDecoration(
-          color: widget.isActive ? AppColors.light : AppColors.caramel,
-          borderRadius: BorderRadius.all(Radius.circular(8))),
-    ));
+    return Transform.rotate(
+        angle: -10,
+        child: Container(
+            child: AnimatedContainer(
+          duration: Duration(milliseconds: 150),
+          margin: EdgeInsets.symmetric(horizontal: 6),
+          height: widget.isActive
+              ? widget.activeSize ?? 12
+              : widget.inactiveSize ?? 8,
+          width: widget.isActive
+              ? widget.activeSize ?? 12
+              : widget.inactiveSize ?? 8,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image:
+                      AssetImage("assets/images/icons/white_coffee_bean.png"))),
+        )));
   }
 }

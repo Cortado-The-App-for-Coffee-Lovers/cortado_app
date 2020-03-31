@@ -17,7 +17,9 @@ const String kFontFamilyNormal = 'Mermaid';
 class AppColors {
   AppColors._();
   static const Color light = Color(0xFFFFF6EE);
+  static const Color cream = Color(0xFFEDCAA6);
   static const Color dark = Color(0xFF421F00);
+  static const Color light_caramel = Color(0xFF7C431C);
   static const Color caramel = Color(0xFF7C3F00);
   static const Color blue = Color(0xFF89C5CC);
   static const Color dark_blue = Color(0xFF69A1AC);
@@ -40,6 +42,30 @@ class TextStyles {
   static final TextStyle kDefaultTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
     fontSize: 20,
+    color: AppColors.caramel,
+  );
+
+  static final TextStyle kDefaultSmallTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 16,
+    color: AppColors.caramel,
+  );
+
+  static final TextStyle kDefaultDarkTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 20,
+    color: AppColors.dark,
+  );
+
+  static final TextStyle kDefaultLightTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 20,
+    color: AppColors.light,
+  );
+
+  static final TextStyle kAccountTitleTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 40,
     color: AppColors.caramel,
   );
 

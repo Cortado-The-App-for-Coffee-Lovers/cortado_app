@@ -1,9 +1,12 @@
+import 'package:cortado_app/src/bloc/auth/bloc.dart';
 import 'package:cortado_app/src/bloc/sign_in/bloc.dart';
 import 'package:cortado_app/src/bloc/sign_in/sign_in_bloc.dart';
 import 'package:cortado_app/src/ui/style.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_input_field.dart';
 import 'package:cortado_app/src/ui/widgets/loading_state_button.dart';
+import 'package:cortado_app/src/ui/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../router.dart';
 
@@ -24,7 +27,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void initState() {
     super.initState();
-    _signInBloc = SignInBloc();
+    _signInBloc = SignInBloc(BlocProvider.of<AuthBloc>(context));
   }
 
   @override
@@ -33,53 +36,68 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.light,
-      body: Form(
-        key: _formKey,
-        child: Container(
-          padding: EdgeInsets.only(bottom: 215),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Column(children: [
-              Text(
-                "Cortado",
-                style: TextStyles.kWelcomeTitleTextStyle,
-              ),
-              Text(
-                "The app for coffee lovers.",
-                style: TextStyles.kSubtitleTextStyle,
-              ),
-            ]),
-            Container(
-              padding: EdgeInsets.only(top: 30),
-              child: Column(
-                children: <Widget>[
-                  CortadoInputField(
-                    hint: "Email",
-                    onChanged: (value) => setState(() {
-                      _email = value;
-                    }),
-                    textAlign: TextAlign.start,
-                    autofocus: true,
-                    isPassword: false,
-                    enabled: true,
-                    textCapitalization: TextCapitalization.sentences,
-                  ),
-                ],
+      body: Builder(builder: (BuildContext context) {
+        return Scaffold(
+          backgroundColor: AppColors.light,
+          body: BlocListener(
+            bloc: _signInBloc,
+            listener: (BuildContext context, state) {
+              if (state is SignInErrorState) {
+                showSnackbar(context, Text(state.error));
+              }
+            },
+            child: Form(
+              key: _formKey,
+              child: Container(
+                padding: EdgeInsets.only(bottom: 215),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(children: [
+                        Text(
+                          "Cortado",
+                          style: TextStyles.kWelcomeTitleTextStyle,
+                        ),
+                        Text(
+                          "The app for coffee lovers.",
+                          style: TextStyles.kSubtitleTextStyle,
+                        ),
+                      ]),
+                      Container(
+                        padding: EdgeInsets.only(top: 30),
+                        child: Column(
+                          children: <Widget>[
+                            CortadoInputField(
+                              hint: "Email",
+                              onChanged: (value) => setState(() {
+                                _email = value;
+                              }),
+                              textAlign: TextAlign.start,
+                              autofocus: true,
+                              isPassword: false,
+                              enabled: true,
+                              textCapitalization: TextCapitalization.sentences,
+                            ),
+                          ],
+                        ),
+                      ),
+                      CortadoInputField(
+                        hint: "Password",
+                        onChanged: (value) => setState(() {
+                          _password = value;
+                        }),
+                        textAlign: TextAlign.start,
+                        autofocus: true,
+                        isPassword: true,
+                        enabled: true,
+                        textCapitalization: TextCapitalization.sentences,
+                      ),
+                    ]),
               ),
             ),
-            CortadoInputField(
-              hint: "Password",
-              onChanged: (value) => setState(() {
-                _password = value;
-              }),
-              textAlign: TextAlign.start,
-              autofocus: true,
-              isPassword: true,
-              enabled: true,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-          ]),
-        ),
-      ),
+          ),
+        );
+      }),
       floatingActionButton: Container(
         height: 150,
         child: Column(
@@ -133,6 +151,4 @@ class _SignInPageState extends State<SignInPage> {
                   decoration: TextDecoration.underline))),
     );
   }
-
-
 }

@@ -23,17 +23,17 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage>
   PageController _pageController;
   List<Widget> _onboardingCards = <Widget>[
     OnBoardingCard(
-      backgroundColor: AppColors.dark,
+      backgroundColor: Colors.transparent,
       image: Image.asset('assets/images/credit_card.png', height: 200),
       title: 'Save money with every purchase.',
     ),
     OnBoardingCard(
-      backgroundColor: AppColors.dark,
+      backgroundColor: Colors.transparent,
       image: Image.asset('assets/images/map.png', height: 200),
       title: 'Support local cafés.',
     ),
     OnBoardingCard(
-      backgroundColor: AppColors.dark,
+      backgroundColor: Colors.transparent,
       image: Image.asset('assets/images/cup_of_joe.png', height: 200),
       title: 'Get your daily cup of joe.',
     ),
@@ -54,27 +54,35 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage>
   @override
   Widget get child => Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.dark,
-        body: SafeArea(
-            child: Container(
-          color: Colors.transparent,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.dark, AppColors.caramel, AppColors.cream],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topRight,
+                stops: [.6, .8, .9]),
+          ),
           child: Column(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(
-                    top: SizeConfig.safeBlockVertical * .1,
-                    bottom: SizeConfig.safeBlockVertical * .1),
-                child: Column(children: [
-                  Text(
-                    "Cortado",
-                    style: TextStyles.kWelcomeTitleLightTextStyle,
-                  ),
-                  Text(
-                    "The app for coffee lovers.",
-                    style: TextStyles.kSubtitleTextStyle,
-                  ),
-                ]),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * .2,
               ),
+              /*  Container(
+        padding: EdgeInsets.only(
+            top: SizeConfig.safeBlockVertical * .1,
+            bottom: SizeConfig.safeBlockVertical * .05),
+        child: Column(children: [
+          Text(
+            "Cortado",
+            style: TextStyles.kWelcomeTitleLightTextStyle,
+          ),
+          Text(
+            "The app for coffee lovers.",
+            style: TextStyles.kSubtitleTextStyle,
+          ),
+        ]),
+      ), */
+
               Expanded(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
@@ -90,41 +98,40 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage>
                         return _onboardingCards[index];
                       },
                     ),
-                    Stack(
-                      alignment: AlignmentDirectional.topStart,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * .2),
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              for (int i = 0; i < _onboardingCards.length; i++)
-                                if (i == _currentPageValue) ...[
-                                  CircleBar(
-                                    isActive: true,
-                                    activeSize: 18.0,
-                                    inactiveSize: 13.0,
-                                  )
-                                ] else
-                                  CircleBar(
-                                    isActive: false,
-                                    activeSize: 18.0,
-                                    inactiveSize: 13.0,
-                                  ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
+              Stack(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(
+                        bottom: SizeConfig.blockSizeVertical * .35),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        for (int i = 0; i < _onboardingCards.length; i++)
+                          if (i == _currentPageValue) ...[
+                            CircleBar(
+                              isActive: true,
+                              activeSize: 22.0,
+                              inactiveSize: 13.0,
+                            )
+                          ] else
+                            CircleBar(
+                              isActive: false,
+                              activeSize: 22.0,
+                              inactiveSize: 13.0,
+                            ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-        )),
+        ),
         floatingActionButton: Visibility(
           visible: _currentPageValue == _onboardingCards.length - 1,
           child: Container(
@@ -170,7 +177,9 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage>
     return ButtonTheme(
       minWidth: 30,
       child: FlatButton(
-          onPressed: () => Navigator.of(context).pushNamed(kHomeRoute),
+          onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+              kCoffeeShopsRoute, (Route<dynamic> route) => false,
+              arguments: widget.user),
           child: Text("Browse the app",
               style: TextStyle(
                   color: AppColors.light,

@@ -9,6 +9,8 @@ class InitialAuthState extends AuthState {}
 
 class RequiresAuthState extends AuthState {}
 
+class AuthLoadingState extends AuthState {}
+
 class SignedOutState extends AuthState {
   final String error;
 

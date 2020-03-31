@@ -9,10 +9,12 @@ class CoffeeShop {
   String updatedAt;
   String description;
   String disabledReason;
+  String picture;
   dynamic hours;
   String phone;
   String premiumDescription;
   DocumentReference reference;
+  double currentDistance;
 
   CoffeeShop(
       this.reference,
@@ -25,7 +27,9 @@ class CoffeeShop {
       this.description,
       this.disabledReason,
       this.premiumDescription,
-      this.updatedAt);
+      this.updatedAt,
+      this.currentDistance,
+      this.picture);
 
   CoffeeShop.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromData(snapshot.data, reference: snapshot.reference);
@@ -41,6 +45,7 @@ class CoffeeShop {
         this.disabledReason = data['disabledReason'],
         this.hours = data['hours'],
         this.phone = data['phone'],
+        this.picture = data['picture'],
         this.premiumDescription = data['premiumDescription'];
 
   Map<String, dynamic> toJson() {
@@ -55,7 +60,8 @@ class CoffeeShop {
       'description': description,
       'disabledReason': disabledReason,
       'premiumDescription': premiumDescription,
-      'updatedAt': updatedAt
+      'updatedAt': updatedAt,
+      'picture': picture
     };
   }
 }

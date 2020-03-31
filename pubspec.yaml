@@ -40,6 +40,7 @@ dependencies:
   linkify: ^2.0.3
   flutter_linkify: ^3.1.0
   get_it: ^3.1.0
+  async: ^2.4.0
 
   #BLOC and PROVIDER
   flutter_bloc: ^3.2.0
@@ -94,10 +95,22 @@ flutter:
     - assets/images/credit_card.png
     - assets/images/cup_of_joe.png
     - assets/images/map.png
+    - assets/images/coffee_shop.png
     - assets/images/latte.png
     - assets/images/latte_right.png
     - assets/images/blob_right.png
     - assets/images/blob_left.png
+    - assets/images/lid_bottom.png
+    - assets/images/lid_top.png
+    - assets/images/account.png
+    - assets/images/icons/white_coffee_bean.png
+    - assets/images/icons/coffee.png
+    - assets/images/icons/crossoint.png
+    - assets/images/icons/latte.png
+    - assets/images/lid_shadow.png
+    - assets/images/body_shadow.png
+    - assets/images/infinity.png
+    - assets/images/cup_body.png
 
    
 

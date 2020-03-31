@@ -1,5 +1,6 @@
 import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../router.dart';
 import '../widgets/cortado_input_field.dart';
 import '../widgets/loading_state_button.dart';
@@ -21,127 +22,130 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget get child => Scaffold(
-        extendBody: true,
-        appBar: AppBar(
+  Widget get child => BlocListener(
+        bloc: signUpBloc,
+        listener: (context, state) {
+          if (state is SignUpPhoneVerificationSent) {
+            Navigator.of(context).pushNamed(kPhoneVerifyRoute,
+                arguments: [state.verificationId, state.user, state.phone]);
+          }
+        },
+        child: Scaffold(
+          extendBody: true,
+          appBar: AppBar(
+            backgroundColor: AppColors.light,
+            elevation: 0,
+            leading: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Tab(
+                    icon: Image.asset("assets/images/icons/back_arrow.png"))),
+          ),
+          resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.light,
-          elevation: 0,
-          leading: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child:
-                  Tab(icon: Image.asset("assets/images/icons/back_arrow.png"))),
-        ),
-        resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.light,
-        body: Container(
-          decoration: BoxDecoration(
-              color: AppColors.light,
-              border: Border.all(width: 0.0, color: Colors.transparent)),
-          margin: EdgeInsets.only(top: SizeConfig.safeBlockVertical * .025),
-          child: Column(children: [
-            Column(children: [
-              Text(
-                "Cortado",
-                style: TextStyles.kWelcomeTitleTextStyle,
-              ),
-              Text(
-                "The app for coffee lovers.",
-                style: TextStyles.kSubtitleTextStyle,
-              ),
-              Form(
-                key: _formKey,
+          body: Container(
+            decoration: BoxDecoration(
+                color: AppColors.light,
+                border: Border.all(width: 0.0, color: Colors.transparent)),
+            margin: EdgeInsets.only(top: SizeConfig.safeBlockVertical * .025),
+            child: Column(children: [
+              Column(children: [
+                Text(
+                  "Cortado",
+                  style: TextStyles.kWelcomeTitleTextStyle,
+                ),
+                Text(
+                  "The app for coffee lovers.",
+                  style: TextStyles.kSubtitleTextStyle,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.light,
+                        border: Border.all(width: 0.0, color: AppColors.light)),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.safeBlockVertical * .075),
+                    child: CortadoInputField(
+                      textInputType: TextInputType.phone,
+                      inputFormatters: [UsNumberTextInputFormatter()],
+                      hint: "Phone Number",
+                      onChanged: (value) => setState(() {
+                        _phone = value;
+                      }),
+                      validator: _phoneValidator,
+                      textAlign: TextAlign.start,
+                      autofocus: true,
+                      isPassword: false,
+                      enabled: true,
+                      textCapitalization: TextCapitalization.sentences,
+                    ),
+                  ),
+                ),
+              ]),
+              Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.light,
-                      border: Border.all(width: 0.0, color: AppColors.light)),
-                  padding:
-                      EdgeInsets.only(top: SizeConfig.safeBlockVertical * .075),
-                  child: CortadoInputField(
-                    textInputType: TextInputType.phone,
-                    inputFormatters: [UsNumberTextInputFormatter()],
-                    hint: "Phone Number",
-                    onChanged: (value) => setState(() {
-                      _phone = value;
-                    }),
-                    validator: _phoneValidator,
-                    textAlign: TextAlign.start,
-                    autofocus: true,
-                    isPassword: false,
-                    enabled: true,
-                    textCapitalization: TextCapitalization.sentences,
+                  color: AppColors.dark,
+                  margin:
+                      EdgeInsets.only(top: SizeConfig.safeBlockVertical * .25),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        bottom: 70,
+                        left: 100,
+                        child: Container(
+                          color: AppColors.dark,
+                          child: Column(
+                            children: <Widget>[
+                              LoadingStateButton<SignUpLoadingState>(
+                                bloc: signUpBloc,
+                                button: Container(
+                                  child: GestureDetector(
+                                      child: Text(
+                                        "Continue",
+                                        style: TextStyle(
+                                          fontFamily: kFontFamilyNormal,
+                                          color: AppColors.light,
+                                          fontSize: 28,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        if (_formKey.currentState.validate()) {
+                                          signUpBloc.add(SignUpPhonePressed(
+                                              user: widget.user,
+                                              phone:
+                                                  Format.phoneToE164(_phone)));
+                                        }
+                                      }),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 8.0),
+                                decoration: BoxDecoration(
+                                    color: AppColors.light,
+                                    border: Border.all(
+                                        width: 0.0, color: AppColors.light)),
+                                height: 1.0,
+                                width: SizeConfig.safeBlockHorizontal * .5,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ClipPath(
+                        clipper: PhoneInputClippingClass(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.light,
+                              border: Border.all(
+                                  width: 0.0, color: Colors.transparent)),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
             ]),
-            Expanded(
-              child: Container(
-                color: AppColors.dark,
-                margin:
-                    EdgeInsets.only(top: SizeConfig.safeBlockVertical * .25),
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      bottom: 70,
-                      left: 100,
-                      child: Container(
-                        color: AppColors.dark,
-                        child: Column(
-                          children: <Widget>[
-                            LoadingStateButton<SignUpLoadingState>(
-                              bloc: signUpBloc,
-                              button: Container(
-                                child: GestureDetector(
-                                    child: Text(
-                                      "Continue",
-                                      style: TextStyle(
-                                        fontFamily: kFontFamilyNormal,
-                                        color: AppColors.light,
-                                        fontSize: 28,
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      if (_formKey.currentState.validate()) {
-                                        Navigator.of(context).pushNamed(
-                                            kPhoneVerifyRoute,
-                                            arguments: [
-                                              Format.phoneToE164(_phone),
-                                              widget.user,
-                                              _phone
-                                            ]);
-                                        /*  signUpBloc.add(SignUpPhonePressed(
-                                            widget.user,
-                                            Format.phoneToE164(_phone))); */
-                                      }
-                                    }),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 8.0),
-                              decoration: BoxDecoration(
-                                  color: AppColors.light,
-                                  border: Border.all(
-                                      width: 0.0, color: AppColors.light)),
-                              height: 1.0,
-                              width: SizeConfig.safeBlockHorizontal * .5,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    ClipPath(
-                      clipper: PhoneInputClippingClass(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.light,
-                            border: Border.all(
-                                width: 0.0, color: Colors.transparent)),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ]),
+          ),
         ),
       );
 

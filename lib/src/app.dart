@@ -1,14 +1,17 @@
 import 'package:cortado_app/src/bloc/auth/auth_bloc.dart';
 import 'package:cortado_app/src/bloc/auth/bloc.dart';
-import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/locator.dart';
 import 'package:cortado_app/src/services/navigation_service.dart';
+import 'package:cortado_app/src/ui/auth/user_observer.dart';
 import 'package:cortado_app/src/ui/home/home.dart';
 import 'package:cortado_app/src/ui/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'ui/style.dart';
 
 class App extends StatefulWidget {
   @override
@@ -24,20 +27,34 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.black, //top bar color
+      statusBarIconBrightness: Brightness.dark, //top bar icons
+      //bottom bar color
+      systemNavigationBarIconBrightness: Brightness.dark, //bottom bar icons
+    ));
     BlocProvider.of<AuthBloc>(context).add(AppStarted());
-    return MaterialApp(
-      title: 'Cortado',
-      theme: ThemeData(
-        primarySwatch: Colors.brown,
+
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: UserObserver(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Cortado',
+          theme: ThemeData(
+            primarySwatch: Colors.brown,
+          ),
+          home: home(context),
+          onGenerateRoute: Router.onGenerateRoute,
+          navigatorKey: locator<NavigationService>().navigatorKey,
+        ),
       ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<SignUpBloc>(create: (context) => SignUpBloc())
-        ],
-        child: home(context),
-      ),
-      onGenerateRoute: Router.onGenerateRoute,
-      navigatorKey: locator<NavigationService>().navigatorKey,
     );
   }
 
@@ -48,9 +65,9 @@ class _AppState extends State<App> {
       bloc: authBloc,
       listener: (context, state) {
         UserModel userModel = Provider.of<UserModel>(context, listen: false);
-
         if (state is SignedInState) {
           userModel.updateUser(state.user);
+
           Navigator.of(context).pushReplacementNamed(kHomeRoute);
         }
       },

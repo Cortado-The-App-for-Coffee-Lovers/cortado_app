@@ -39,6 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
           if (user != null) {
             //await _notificationService.start();
+            print(user.email);
             yield SignedInState(user);
           } else {
             yield SignedOutState();
@@ -50,6 +51,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _authService.signOut();
         yield SignedOutState();
       }
+    }
+    if (event is SignOut) {
+      await _authService.signOut();
+      yield SignedOutState();
     }
   }
 }

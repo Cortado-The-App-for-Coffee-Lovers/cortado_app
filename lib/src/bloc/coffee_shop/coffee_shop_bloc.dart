@@ -1,16 +1,32 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
 import 'package:cortado_app/src/constants.dart';
 import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/repositories/coffee_shop_repository.dart';
+import 'package:geolocator/geolocator.dart';
 
 class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   CoffeeShopRepository coffeeShopRepository;
   List<CoffeeShop> _coffeeShops = [];
+  Stream<CoffeeShop> coffeeShopStream;
+  List<CoffeeShop> updatedCoffeeShops = [];
 
-  CoffeeShopsBloc(this.coffeeShopRepository);
+  Position _currentUserLocation;
+  Geolocator geolocator = Geolocator();
+
+  CoffeeShopsBloc(this.coffeeShopRepository) {
+    _getCurrentLocation();
+
+    geolocator
+        .getPositionStream(LocationOptions(
+            accuracy: LocationAccuracy.best, timeInterval: 1000))
+        .listen((position) {
+      _currentUserLocation = position;
+    });
+  }
 
   @override
   CoffeeShopState get initialState => CoffeeShopInitial();
@@ -24,9 +40,15 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     if (event is GetCoffeeShops) {
       yield CoffeeShopsLoadingState();
       try {
+        await _getCurrentLocation();
         coffeeShops = await coffeeShopRepository.read();
-        this.setCoffeeShops(coffeeShops);
-        yield CoffeeShopsLoaded(coffeeShops);
+        Stream<CoffeeShop> coffeeShopStream = Stream.fromIterable(coffeeShops);
+
+        coffeeShopStream = addDistancesToShops(coffeeShopStream);
+
+        updatedCoffeeShops = await coffeeListFromStream(coffeeShopStream);
+
+        yield CoffeeShopsLoaded(updatedCoffeeShops);
       } catch (e) {
         yield CoffeeShopsError(kCoffeeShopsLoadingError);
       }
@@ -35,7 +57,45 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
 
   List<CoffeeShop> get coffeeShops => _coffeeShops;
 
-  setCoffeeShops(List<CoffeeShop> coffeeShops) {
-    this._coffeeShops = coffeeShops;
+  Future<CoffeeShop> _getUserDistance(CoffeeShop coffeeShop) async {
+    GeoPoint coffeeShopCoords = coffeeShop.address['coordinates'];
+
+    double distance = await geolocator.distanceBetween(
+        _currentUserLocation.latitude,
+        _currentUserLocation.longitude,
+        coffeeShopCoords.latitude,
+        coffeeShopCoords.longitude);
+
+    distance = distance / 1609;
+    coffeeShop.currentDistance = distance;
+
+    return coffeeShop;
+  }
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      _currentUserLocation = await geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.best);
+    } catch (e) {
+      _currentUserLocation = null;
+    }
+  }
+
+  Stream<CoffeeShop> addDistancesToShops(
+      Stream<CoffeeShop> coffeeShops) async* {
+    CoffeeShop updatedCoffeeShop;
+    await for (CoffeeShop coffeeShop in coffeeShops) {
+      updatedCoffeeShop = await _getUserDistance(coffeeShop);
+      yield updatedCoffeeShop;
+    }
+  }
+
+  Future<List<CoffeeShop>> coffeeListFromStream(
+      Stream<CoffeeShop> stream) async {
+    List<CoffeeShop> updatedCoffeeShops = [];
+    await for (CoffeeShop coffeeShop in stream) {
+      updatedCoffeeShops.add(coffeeShop);
+    }
+    return updatedCoffeeShops;
   }
 }
