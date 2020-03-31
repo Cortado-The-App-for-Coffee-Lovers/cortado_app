@@ -84,11 +84,11 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     alignment: Alignment.center,
                   ),
                   Positioned(
-                    top: SizeConfig.safeBlockVertical * .17,
+                    top: SizeConfig.blockSizeVertical * .13,
                     left: 0,
                     child: Container(
-                      width: SizeConfig.safeBlockHorizontal * .36,
-                      height: SizeConfig.safeBlockVertical * .07,
+                      width: SizeConfig.blockSizeVertical * .2,
+                      height: SizeConfig.blockSizeVertical * .06,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.cover,
@@ -99,8 +99,8 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     bottom: SizeConfig.safeBlockVertical * .02,
                     left: 0,
                     child: Container(
-                      width: SizeConfig.safeBlockHorizontal * .5,
-                      height: SizeConfig.safeBlockVertical * .085,
+                      width: SizeConfig.safeBlockVertical * .22,
+                      height: SizeConfig.safeBlockVertical * .07,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.cover,
@@ -117,8 +117,8 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                         bottomRight: Radius.circular(25.0),
                       ),
                       child: Container(
-                        width: SizeConfig.safeBlockHorizontal * .5,
-                        height: SizeConfig.safeBlockVertical * .08,
+                        width: SizeConfig.blockSizeVertical * .25,
+                        height: SizeConfig.blockSizeVertical * .06,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
@@ -135,25 +135,25 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: SizeConfig.safeBlockVertical * .11,
-                          right: SizeConfig.safeBlockVertical * .12),
+                          bottom: SizeConfig.blockSizeVertical * .2,
+                          right: SizeConfig.blockSizeVertical * .07),
                       child: Container(
-                          width: SizeConfig.blockSizeHorizontal * .8,
                           decoration: BoxDecoration(
                               image: DecorationImage(
+                                  fit: BoxFit.fill,
                                   image: AssetImage(
                                       "assets/images/cup_body.png")))),
                     ),
                     Positioned(
                       child: Container(
                         color: Color(0xFF703D19),
-                        width: SizeConfig.safeBlockHorizontal * .4,
+                        width: SizeConfig.blockSizeVertical * .2,
                         height: SizeConfig.safeBlockVertical * .02,
                       ),
                     ),
                     ListView(
                       padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.blockSizeHorizontal * .03,
+                          horizontal: SizeConfig.blockSizeVertical * .03,
                           vertical: 30),
                       shrinkWrap: true,
                       children: <Widget>[
