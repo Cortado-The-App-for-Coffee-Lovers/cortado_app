@@ -72,7 +72,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     alignment: Alignment.center,
                   ),
                   Positioned(
-                    top: 80,
+                    top: 90,
                     left: 0,
                     child: Container(
                       width: SizeConfig.safeBlockHorizontal * .5,
@@ -84,7 +84,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     ),
                   ),
                   Positioned(
-                    bottom: 25,
+                    bottom: 20,
                     left: 0,
                     child: Container(
                       width: SizeConfig.safeBlockHorizontal * .5,
@@ -105,8 +105,8 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                         bottomRight: Radius.circular(25.0),
                       ),
                       child: Container(
-                        width: SizeConfig.safeBlockHorizontal * .7,
-                        height: SizeConfig.safeBlockVertical * .05,
+                        width: SizeConfig.safeBlockHorizontal * .6,
+                        height: SizeConfig.safeBlockVertical * .08,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
