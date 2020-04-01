@@ -70,6 +70,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
       color: Colors.transparent,
       width: SizeConfig.safeBlockHorizontal * .6,
       child: Drawer(
+        elevation: 0,
         child: Container(
           color: Colors.transparent,
           child: Column(
@@ -79,12 +80,12 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: 200,
+                    height: SizeConfig.screenHeight * .4,
                     color: Colors.transparent,
                     alignment: Alignment.center,
                   ),
                   Positioned(
-                    top: SizeConfig.blockSizeVertical * .13,
+                    bottom: SizeConfig.blockSizeVertical * .05,
                     left: 0,
                     child: Container(
                       width: SizeConfig.blockSizeVertical * .2,
@@ -135,7 +136,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: SizeConfig.blockSizeVertical * .2,
+                          bottom: SizeConfig.blockSizeVertical * .06,
                           right: SizeConfig.blockSizeVertical * .07),
                       child: Container(
                           decoration: BoxDecoration(

@@ -111,6 +111,8 @@ flutter:
     - assets/images/body_shadow.png
     - assets/images/infinity.png
     - assets/images/cup_body.png
+    - assets/images/open_sign.png
+    - assets/images/closed_sign.png
 
    
 

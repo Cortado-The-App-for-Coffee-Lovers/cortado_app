@@ -42,25 +42,12 @@ class _CoffeeShopTileState extends State<CoffeeShopTile> {
                           color: AppColors.dark),
                     ),
                   ),
-                  /*  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Tab(
-                          icon: Image.asset("assets/images/icons/coffee.png"),
-                        ),
-                        Tab(
-                          icon: Image.asset("assets/images/icons/latte.png"),
-                        ),
-                           Container(
-                          width: 43,
-                          child: Tab(
-                            icon: Image.asset(
-                                "assets/images/icons/crossoint.png"),
-                          ),
-                        ), 
-                      ],
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Tab(
+                      icon: Image.asset("assets/images/closed_sign.png"),
                     ),
-                  ) */
+                  )
                 ],
               ),
               Row(
