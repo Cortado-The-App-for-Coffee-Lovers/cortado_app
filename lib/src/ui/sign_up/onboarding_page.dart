@@ -178,7 +178,7 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage>
       minWidth: 30,
       child: FlatButton(
           onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-              kCoffeeShopsRoute, (Route<dynamic> route) => false,
+              kCoffeeShopsListRoute, (Route<dynamic> route) => false,
               arguments: widget.user),
           child: Text("Browse the app",
               style: TextStyle(

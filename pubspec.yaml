@@ -41,6 +41,7 @@ dependencies:
   flutter_linkify: ^3.1.0
   get_it: ^3.1.0
   async: ^2.4.0
+  flutter_spinkit: ^4.1.2+1
 
   #BLOC and PROVIDER
   flutter_bloc: ^3.2.0
@@ -59,6 +60,7 @@ dependencies:
   
   # Widgets
   pin_code_fields: ^2.4.0
+  gradient_app_bar: ^0.1.3
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -113,6 +115,7 @@ flutter:
     - assets/images/cup_body.png
     - assets/images/open_sign.png
     - assets/images/closed_sign.png
+    - assets/images/latte_spin.png
 
    
 

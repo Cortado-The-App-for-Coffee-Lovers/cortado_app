@@ -63,6 +63,12 @@ class TextStyles {
     color: AppColors.light,
   );
 
+  static final TextStyle kCoffeeShopTitleTextStyle = TextStyle(
+      fontFamily: kFontFamilyNormal,
+      fontSize: 28,
+      color: AppColors.light,
+      fontWeight: FontWeight.bold);
+
   static final TextStyle kAccountTitleTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
     fontSize: 40,

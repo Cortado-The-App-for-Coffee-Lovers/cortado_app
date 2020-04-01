@@ -1,5 +1,6 @@
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 
+import 'coffee_shop/coffee_shop_page.dart';
 import 'home/home.dart';
 import 'sign_in/sign_in_page.dart';
 import 'sign_up/onboarding_page.dart';
@@ -14,7 +15,8 @@ const String kSignUpInitialRoute = '/signup/initial';
 const String kPhoneInputRoute = '/signup/phone-input';
 const String kPhoneVerifyRoute = '/signup/phone-verify';
 const String kOnBoardingRoute = '/signup/onboarding';
-const String kCoffeeShopsRoute = '/coffee_shops';
+const String kCoffeeShopsListRoute = '/coffee_shops';
+const String kCoffeeShopRoute = '/coffee_shops/coffee_shop_page';
 
 class Router {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -43,10 +45,16 @@ class Router {
             builder: (_) => OnboardingPage(
                   user: settings.arguments,
                 ));
-      case kCoffeeShopsRoute:
+      case kCoffeeShopsListRoute:
         return MaterialPageRoute(
             builder: (_) =>
                 DrawerHomePage(initialRoute: DrawerRoute.coffeeShops));
+
+      case kCoffeeShopRoute:
+        return MaterialPageRoute(
+            builder: (_) => CoffeeShopPage(
+                  coffeeShop: settings.arguments,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => HomePage());

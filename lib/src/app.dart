@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import 'ui/style.dart';
 
 class App extends StatefulWidget {
   @override
