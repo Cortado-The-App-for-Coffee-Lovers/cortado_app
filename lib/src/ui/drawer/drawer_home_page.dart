@@ -78,28 +78,33 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: SizeConfig.screenHeight * .4,
+                    height: SizeConfig.screenHeight * .34,
                     color: Colors.transparent,
                     alignment: Alignment.center,
                   ),
                   Positioned(
-                    bottom: SizeConfig.blockSizeVertical * .05,
+                    bottom: SizeConfig.screenHeight * .07,
                     left: 0,
-                    child: Container(
-                      width: SizeConfig.blockSizeVertical * .2,
-                      height: SizeConfig.blockSizeVertical * .06,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/lid_top.png'))),
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.only(topRight: Radius.circular(12.0)),
+                      child: Container(
+                        width: SizeConfig.blockSizeVertical * .2,
+                        height: SizeConfig.blockSizeVertical * .07,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image:
+                                    AssetImage('assets/images/lid_top.png'))),
+                      ),
                     ),
                   ),
                   Positioned(
                     bottom: SizeConfig.safeBlockVertical * .02,
                     left: 0,
                     child: Container(
-                      width: SizeConfig.safeBlockVertical * .22,
-                      height: SizeConfig.safeBlockVertical * .07,
+                      width: SizeConfig.screenHeight * .22,
+                      height: SizeConfig.screenHeight * .1,
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.cover,
@@ -109,15 +114,23 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                   ),
                   Positioned(
                     bottom: 0,
+                    child: Container(
+                      color: Color(0xFF703D19),
+                      width: SizeConfig.screenHeight * .218,
+                      height: SizeConfig.screenHeight * .02,
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
                     left: 0,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25.0),
-                        bottomRight: Radius.circular(25.0),
+                        topRight: Radius.circular(40),
+                        bottomRight: Radius.circular(50.0),
                       ),
                       child: Container(
-                        width: SizeConfig.blockSizeVertical * .25,
-                        height: SizeConfig.blockSizeVertical * .06,
+                        width: SizeConfig.screenHeight * .28,
+                        height: SizeConfig.blockSizeVertical * .1,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
@@ -133,9 +146,8 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     child: Stack(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(
-                          bottom: SizeConfig.blockSizeVertical * .06,
-                          right: SizeConfig.blockSizeVertical * .07),
+                      padding:
+                          EdgeInsets.only(right: SizeConfig.screenWidth * .135),
                       child: Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
@@ -144,10 +156,13 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                                       "assets/images/cup_body.png")))),
                     ),
                     Positioned(
-                      child: Container(
-                        color: Color(0xFF703D19),
-                        width: SizeConfig.blockSizeVertical * .2,
-                        height: SizeConfig.safeBlockVertical * .02,
+                      child: ClipPath(
+                        clipper: CoffeeDrawerClipper(),
+                        child: Container(
+                          color: Color(0xFF703D19),
+                          width: SizeConfig.screenHeight * .218,
+                          height: SizeConfig.screenHeight * .02,
+                        ),
                       ),
                     ),
                     ListView(
@@ -230,9 +245,9 @@ class CoffeeDrawerClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height);
-    path.lineTo(size.width / 1.5, size.height);
+    path.lineTo(size.width - 3, size.height);
 
-    path.lineTo(size.width - 30, 0);
+    path.lineTo(size.width, 0);
     return path;
   }
 
