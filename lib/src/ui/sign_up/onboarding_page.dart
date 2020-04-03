@@ -67,22 +67,6 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage>
               SizedBox(
                 height: SizeConfig.blockSizeVertical * .2,
               ),
-              /*  Container(
-        padding: EdgeInsets.only(
-            top: SizeConfig.safeBlockVertical * .1,
-            bottom: SizeConfig.safeBlockVertical * .05),
-        child: Column(children: [
-          Text(
-            "Cortado",
-            style: TextStyles.kWelcomeTitleLightTextStyle,
-          ),
-          Text(
-            "The app for coffee lovers.",
-            style: TextStyles.kSubtitleTextStyle,
-          ),
-        ]),
-      ), */
-
               Expanded(
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,

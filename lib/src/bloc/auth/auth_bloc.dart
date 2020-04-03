@@ -38,8 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           User user = await _userService.getUser(firebaseUser);
 
           if (user != null) {
-            //await _notificationService.start();
-            print(user.email);
+         
             yield SignedInState(user);
           } else {
             yield SignedOutState();

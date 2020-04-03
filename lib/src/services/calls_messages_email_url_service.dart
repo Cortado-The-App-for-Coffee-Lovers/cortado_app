@@ -147,6 +147,10 @@ class UrlElement extends LinkableElement {
 
   @override
   bool equals(other) => other is UrlElement && super.equals(other);
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 /// Represents an element containing a link
@@ -163,6 +167,10 @@ class PhoneElement extends LinkableElement {
 
   @override
   bool equals(other) => other is PhoneElement && super.equals(other);
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 /// Represents an element containing an email address
@@ -184,6 +192,10 @@ class EmailElement extends LinkableElement {
       other is EmailElement &&
       super.equals(other) &&
       other.emailAddress == emailAddress;
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 final _urlRegex = RegExp(
