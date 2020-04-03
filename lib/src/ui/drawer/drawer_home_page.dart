@@ -66,7 +66,6 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
   _drawer(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      width: SizeConfig.safeBlockHorizontal * .6,
       child: Drawer(
         elevation: 0,
         child: Container(
@@ -78,7 +77,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: SizeConfig.screenHeight * .34,
+                    height: SizeConfig.screenHeight * .2,
                     color: Colors.transparent,
                     alignment: Alignment.center,
                   ),
@@ -89,7 +88,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                       borderRadius:
                           BorderRadius.only(topRight: Radius.circular(12.0)),
                       child: Container(
-                        width: SizeConfig.blockSizeVertical * .2,
+                        width: SizeConfig.blockSizeVertical * .24,
                         height: SizeConfig.blockSizeVertical * .07,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -103,7 +102,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     bottom: SizeConfig.safeBlockVertical * .02,
                     left: 0,
                     child: Container(
-                      width: SizeConfig.screenHeight * .22,
+                      width: SizeConfig.screenHeight * .245,
                       height: SizeConfig.screenHeight * .1,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -116,7 +115,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     bottom: 0,
                     child: Container(
                       color: Color(0xFF703D19),
-                      width: SizeConfig.screenHeight * .218,
+                      width: SizeConfig.screenHeight * .25,
                       height: SizeConfig.screenHeight * .02,
                     ),
                   ),
@@ -129,7 +128,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                         bottomRight: Radius.circular(50.0),
                       ),
                       child: Container(
-                        width: SizeConfig.screenHeight * .28,
+                        width: SizeConfig.screenHeight * .32,
                         height: SizeConfig.blockSizeVertical * .1,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -147,7 +146,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                   children: <Widget>[
                     Padding(
                       padding:
-                          EdgeInsets.only(right: SizeConfig.screenWidth * .135),
+                          EdgeInsets.only(right: SizeConfig.screenWidth * .2),
                       child: Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
@@ -160,7 +159,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                         clipper: CoffeeDrawerClipper(),
                         child: Container(
                           color: Color(0xFF703D19),
-                          width: SizeConfig.screenHeight * .218,
+                          width: SizeConfig.screenHeight * .25,
                           height: SizeConfig.screenHeight * .02,
                         ),
                       ),
@@ -179,7 +178,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                             padding: EdgeInsets.only(bottom: 45),
                             child: Text(
                               'Coffee Shops',
-                              style: TextStyles.kDefaultLightTextStyle,
+                              style: TextStyles.kCoffeeDrawerTextStyle,
                             ),
                           ),
                           onTap: () {
@@ -191,7 +190,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                             padding: EdgeInsets.only(bottom: 45),
                             child: Text(
                               'Coffee Map',
-                              style: TextStyles.kDefaultLightTextStyle,
+                              style: TextStyles.kCoffeeDrawerTextStyle,
                             ),
                           ),
                           onTap: () {
@@ -202,8 +201,8 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                           child: Container(
                             padding: EdgeInsets.only(bottom: 45),
                             child: Text(
-                              'Account',
-                              style: TextStyles.kDefaultLightTextStyle,
+                              'My Account',
+                              style: TextStyles.kCoffeeDrawerTextStyle,
                             ),
                           ),
                           onTap: () {

@@ -109,7 +109,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                       itemBuilder: (context, index) {
                         CoffeeShop coffeeShop = updatedCoffeeShopList[index];
 
-                        return CoffeeShopTile(coffeeShop: coffeeShop);
+                        return CoffeeShopTile(coffeeShop: coffeeShop, user: user);
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return Container(

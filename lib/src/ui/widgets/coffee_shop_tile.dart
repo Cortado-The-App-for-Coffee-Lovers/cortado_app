@@ -1,4 +1,5 @@
 import 'package:cortado_app/src/data/coffee_shop.dart';
+import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/style.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,10 +8,9 @@ import '../router.dart';
 
 class CoffeeShopTile extends StatefulWidget {
   final CoffeeShop coffeeShop;
-  final double userDistance;
+  final User user;
 
-  CoffeeShopTile({Key key, this.coffeeShop, this.userDistance})
-      : super(key: key);
+  CoffeeShopTile({Key key, this.coffeeShop, this.user}) : super(key: key);
 
   @override
   _CoffeeShopTileState createState() => _CoffeeShopTileState();
@@ -23,8 +23,8 @@ class _CoffeeShopTileState extends State<CoffeeShopTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .pushNamed(kCoffeeShopRoute, arguments: widget.coffeeShop),
+      onTap: () => Navigator.of(context).pushNamed(kCoffeeShopRoute,
+          arguments: [widget.coffeeShop, widget.user]),
       child: Container(
           margin: EdgeInsets.all(8.0),
           child: Card(

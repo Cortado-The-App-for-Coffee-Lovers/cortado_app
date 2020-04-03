@@ -1,3 +1,5 @@
+import 'package:cortado_app/src/data/coffee_shop.dart';
+import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 
 import 'coffee_shop/coffee_shop_page.dart';
@@ -51,10 +53,10 @@ class Router {
                 DrawerHomePage(initialRoute: DrawerRoute.coffeeShops));
 
       case kCoffeeShopRoute:
-        return MaterialPageRoute(
-            builder: (_) => CoffeeShopPage(
-                  coffeeShop: settings.arguments,
-                ));
+        return MaterialPageRoute(builder: (_) {
+          List args = settings.arguments;
+          return CoffeeShopPage(CoffeeShopPageArguments(args[0], args[1]));
+        });
 
       default:
         return MaterialPageRoute(builder: (_) => HomePage());
@@ -69,4 +71,11 @@ class Router {
       },
     );
   }
+}
+
+class CoffeeShopPageArguments {
+  final CoffeeShop coffeeShop;
+  final User user;
+
+  CoffeeShopPageArguments(this.coffeeShop, this.user);
 }
