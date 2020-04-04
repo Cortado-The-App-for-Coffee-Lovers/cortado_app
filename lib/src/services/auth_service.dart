@@ -24,7 +24,7 @@ class AuthService {
   Future<bool> isEmailInUse(String email) async {
     var list;
     try {
-      print("checking email");
+      print(email);
       list = await _firebaseAuth.fetchSignInMethodsForEmail(email: email);
     } catch (e) {
       print(e);
@@ -51,7 +51,6 @@ class AuthService {
   Future<void> signOut() async {
     return _firebaseAuth.signOut();
   }
-
 
   Future<void> sendEmailVerification() async {
     FirebaseUser user = await _firebaseAuth.currentUser();

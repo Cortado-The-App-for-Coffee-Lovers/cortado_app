@@ -26,6 +26,10 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
   CoffeeShopsBloc _coffeeShopsBloc;
   _DrawerHomePageState(this._currentRoute);
 
+  bool _coffeeShopsSelected = true;
+  bool _coffeeMapSelected = false;
+  bool _accountSelected = false;
+
   @override
   void initState() {
     super.initState();
@@ -165,9 +169,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                       ),
                     ),
                     ListView(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.blockSizeVertical * .03,
-                          vertical: 30),
+                      padding: EdgeInsets.only(right: 60),
                       shrinkWrap: true,
                       children: <Widget>[
                         Container(
@@ -175,37 +177,82 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                         ),
                         GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 45),
-                            child: Text(
-                              'Coffee Shops',
-                              style: TextStyles.kCoffeeDrawerTextStyle,
+                            decoration: _coffeeShopsSelected
+                                ? BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.fitWidth,
+                                        image: AssetImage(
+                                            "assets/images/coffee_guard.png")))
+                                : BoxDecoration(),
+                            child: Container(
+                              height: SizeConfig.screenHeight * .1,
+                              padding: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * .039,
+                                  left: SizeConfig.screenWidth * .05),
+                              child: Text(
+                                'Coffee Shops',
+                                style: _coffeeShopsSelected
+                                    ? TextStyles.kCoffeeDrawerSelectedTextStyle
+                                    : TextStyles.kCoffeeDrawerTextStyle,
+                              ),
                             ),
                           ),
                           onTap: () {
+                            _moveCoffeeGuard(0);
                             _changeRoute(context, DrawerRoute.coffeeShops);
                           },
                         ),
                         GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 45),
-                            child: Text(
-                              'Coffee Map',
-                              style: TextStyles.kCoffeeDrawerTextStyle,
+                            decoration: _coffeeMapSelected
+                                ? BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.fitWidth,
+                                        image: AssetImage(
+                                            "assets/images/coffee_guard.png")))
+                                : BoxDecoration(),
+                            child: Container(
+                              height: SizeConfig.screenHeight * .1,
+                              padding: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * .039,
+                                  left: SizeConfig.screenWidth * .05),
+                              child: Text(
+                                'Coffee Map',
+                                style: _coffeeMapSelected
+                                    ? TextStyles.kCoffeeDrawerSelectedTextStyle
+                                    : TextStyles.kCoffeeDrawerTextStyle,
+                              ),
                             ),
                           ),
                           onTap: () {
+                            _moveCoffeeGuard(1);
                             _changeRoute(context, DrawerRoute.map);
                           },
                         ),
                         GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.only(bottom: 45),
-                            child: Text(
-                              'My Account',
-                              style: TextStyles.kCoffeeDrawerTextStyle,
+                            decoration: _accountSelected
+                                ? BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.fitWidth,
+                                        image: AssetImage(
+                                            "assets/images/coffee_guard.png")))
+                                : BoxDecoration(),
+                            child: Container(
+                              height: SizeConfig.screenHeight * .1,
+                              padding: EdgeInsets.only(
+                                  top: SizeConfig.screenHeight * .039,
+                                  left: SizeConfig.screenWidth * .05),
+                              child: Text(
+                                'My Account',
+                                style: _accountSelected
+                                    ? TextStyles.kCoffeeDrawerSelectedTextStyle
+                                    : TextStyles.kCoffeeDrawerTextStyle,
+                              ),
                             ),
                           ),
                           onTap: () {
+                            _moveCoffeeGuard(2);
                             _changeRoute(context, DrawerRoute.account);
                           },
                         ),
@@ -219,6 +266,33 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
         ),
       ),
     );
+  }
+
+  _moveCoffeeGuard(int index) {
+    switch (index) {
+      case 0:
+        setState(() {
+          _coffeeShopsSelected = true;
+          _coffeeMapSelected = false;
+          _accountSelected = false;
+        });
+        break;
+      case 1:
+        setState(() {
+          _coffeeShopsSelected = false;
+          _coffeeMapSelected = true;
+          _accountSelected = false;
+        });
+        break;
+
+      case 2:
+        setState(() {
+          _coffeeShopsSelected = false;
+          _coffeeMapSelected = false;
+          _accountSelected = true;
+        });
+        break;
+    }
   }
 
   _changeRoute(BuildContext context, DrawerRoute route) async {

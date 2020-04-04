@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // ignore: close_sinks
     AuthBloc authbloc = BlocProvider.of<AuthBloc>(context);
+    // ignore: close_sinks
     SignUpBloc signUpBloc = BlocProvider.of<SignUpBloc>(context);
     SizeConfig().init(context);
     return Scaffold(

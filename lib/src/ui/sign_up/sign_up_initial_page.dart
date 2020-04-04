@@ -20,11 +20,11 @@ class SignUpInitialPage extends StatefulWidget {
 class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _firstName;
-  String _lastName;
-  String _email;
-  String _password;
-  String _retypedPassword;
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _retypedController = TextEditingController();
 
   FocusNode _firstNameFocus = FocusNode();
   FocusNode _lastNameFocus = FocusNode();
@@ -42,7 +42,7 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
           body: Form(
             key: _formKey,
             child: Container(
-              padding: EdgeInsets.only(bottom: 150),
+              padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * .21),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -64,11 +64,10 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                               top: 30, left: 40, right: 50),
                           width: SizeConfig.screenWidth * .55,
                           child: CortadoInputField(
+                            controller: _firstNameController,
                             textAlign: TextAlign.start,
                             isPassword: false,
-                            onChanged: (value) => setState(() {
-                              _firstName = value;
-                            }),
+                            onChanged: (value) => setState(() {}),
                             horizontalPadding: 0,
                             hint: "First Name",
                             enabled: true,
@@ -86,11 +85,10 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 30, right: 40),
                             child: CortadoInputField(
+                              controller: _lastNameController,
                               textAlign: TextAlign.start,
                               isPassword: false,
-                              onChanged: (value) => setState(() {
-                                _firstName = value;
-                              }),
+                              onChanged: (value) => setState(() {}),
                               horizontalPadding: 0,
                               hint: "Last Name",
                               enabled: true,
@@ -111,11 +109,10 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                       child: Column(
                         children: <Widget>[
                           CortadoInputField(
+                            controller: _emailController,
                             focusNode: _emailFocus,
                             hint: "Email",
-                            onChanged: (value) => setState(() {
-                              _email = value;
-                            }),
+                            onChanged: (value) => setState(() {}),
                             validator: _emailValidator,
                             textAlign: TextAlign.start,
                             autofocus: false,
@@ -132,11 +129,10 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                       ),
                     ),
                     CortadoInputField(
+                      controller: _passwordController,
                       focusNode: _passwordFocus,
                       hint: "Password",
-                      onChanged: (value) => setState(() {
-                        _password = value;
-                      }),
+                      onChanged: (value) => setState(() {}),
                       validator: (value) {
                         if (value.length < 6) {
                           return "Password must be at least 6 characters in length.";
@@ -154,11 +150,10 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                       },
                     ),
                     CortadoInputField(
+                      controller: _retypedController,
                       focusNode: _retypeFocus,
                       hint: "Retype Password",
-                      onChanged: (value) => setState(() {
-                        _retypedPassword = value;
-                      }),
+                      onChanged: (value) => setState(() {}),
                       textAlign: TextAlign.start,
                       autofocus: false,
                       isPassword: true,
@@ -183,9 +178,11 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                         onTap: () {
                           if (_formKey.currentState.validate())
                             signUpBloc.add(SignUpEmailPassword(
-                                email: _email,
-                                password: _password,
-                                retypePassword: _retypedPassword));
+                                firstName: _firstNameController.text.trim(),
+                                lastName: _lastNameController.text.trim(),
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text,
+                                retypePassword: _retypedController.text));
                         }),
                   ),
                 ),

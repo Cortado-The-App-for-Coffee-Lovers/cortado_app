@@ -5,11 +5,18 @@ import 'package:flutter/material.dart';
 abstract class SignUpEvent {}
 
 class SignUpEmailPassword extends SignUpEvent {
+  final String firstName;
+  final String lastName;
   final String email;
   final String password;
   final String retypePassword;
 
-  SignUpEmailPassword({this.email, this.password, this.retypePassword});
+  SignUpEmailPassword(
+      {this.firstName,
+      this.lastName,
+      this.email,
+      this.password,
+      this.retypePassword});
 }
 
 class SignUpPhonePressed extends SignUpEvent {

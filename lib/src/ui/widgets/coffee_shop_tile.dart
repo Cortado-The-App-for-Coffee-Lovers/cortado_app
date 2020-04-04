@@ -63,9 +63,21 @@ class _CoffeeShopTileState extends State<CoffeeShopTile> {
                         padding: const EdgeInsets.only(
                           left: 8.0,
                         ),
-                        child: Text(
-                          widget.coffeeShop.address['street'],
-                          style: TextStyles.kDefaultSmallTextStyle,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              widget.coffeeShop.address['street'] + ',',
+                              style: TextStyles.kDefaultSmallTextStyle,
+                            ),
+                            Text(
+                              widget.coffeeShop.address['city'] +
+                                  ',' +
+                                  widget.coffeeShop.address['state'] +
+                                  widget.coffeeShop.address['zipcode'],
+                              style: TextStyles.kDefaultSmallTextStyle,
+                            ),
+                          ],
                         ),
                       ),
                       Padding(

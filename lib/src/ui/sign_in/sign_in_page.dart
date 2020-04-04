@@ -54,10 +54,12 @@ class _SignInPageState extends State<SignInPage> {
               child: Form(
                 key: _formKey,
                 child: Container(
-                  padding: EdgeInsets.only(bottom: 215),
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        SizedBox(
+                          height: SizeConfig.screenHeight * .17,
+                        ),
                         Column(children: [
                           Text(
                             "Cortado",
@@ -68,40 +70,45 @@ class _SignInPageState extends State<SignInPage> {
                             style: TextStyles.kSubtitleTextStyle,
                           ),
                         ]),
-                        Container(
-                          padding: EdgeInsets.only(top: 30),
-                          child: Column(
-                            children: <Widget>[
-                              CortadoInputField(
-                                hint: "Email",
-                                onChanged: (value) => setState(() {
-                                  _email = value;
-                                }),
-                                textAlign: TextAlign.start,
-                                autofocus: false,
-                                isPassword: false,
-                                enabled: true,
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                onSubmitted: (_) {
-                                  FocusScope.of(context)
-                                      .requestFocus(_passwordFocus);
-                                },
+                        Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(top: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  CortadoInputField(
+                                    hint: "Email",
+                                    onChanged: (value) => setState(() {
+                                      _email = value;
+                                    }),
+                                    textAlign: TextAlign.start,
+                                    autofocus: false,
+                                    isPassword: false,
+                                    enabled: true,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    onSubmitted: (_) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_passwordFocus);
+                                    },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            CortadoInputField(
+                              hint: "Password",
+                              onChanged: (value) => setState(() {
+                                _password = value;
+                              }),
+                              textAlign: TextAlign.start,
+                              autofocus: false,
+                              isPassword: true,
+                              enabled: true,
+                              textCapitalization: TextCapitalization.sentences,
+                            ),
+                          ],
                         ),
-                        CortadoInputField(
-                          hint: "Password",
-                          onChanged: (value) => setState(() {
-                            _password = value;
-                          }),
-                          textAlign: TextAlign.start,
-                          autofocus: false,
-                          isPassword: true,
-                          enabled: true,
-                          textCapitalization: TextCapitalization.sentences,
-                        ),
+                        Spacer()
                       ]),
                 ),
               ),

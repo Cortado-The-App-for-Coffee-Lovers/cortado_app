@@ -37,9 +37,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           yield SignUpLoadingState();
           var user = User();
           user
+            ..firstName = event.firstName
+            ..lastName = event.lastName
             ..email = event.email
             ..password = event.password;
+
           bool emailInUse = await _authService.isEmailInUse(event.email);
+
           if (!emailInUse) {
             yield SignUpInitialComplete(user);
           } else {

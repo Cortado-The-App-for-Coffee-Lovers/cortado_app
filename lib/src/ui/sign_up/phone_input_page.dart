@@ -46,28 +46,39 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
             backgroundColor: AppColors.light,
             body: Container(
               decoration: BoxDecoration(
-                  color: AppColors.light,
                   border: Border.all(width: 0.0, color: Colors.transparent)),
-              margin: EdgeInsets.only(top: SizeConfig.safeBlockVertical * .025),
               child: Column(children: [
                 Column(children: [
-                  Text(
-                    "Cortado",
-                    style: TextStyles.kWelcomeTitleTextStyle,
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: SizeConfig.screenHeight * .02),
+                    child: Text(
+                      "Cortado",
+                      style: TextStyles.kWelcomeTitleTextStyle,
+                    ),
                   ),
                   Text(
                     "The app for coffee lovers.",
                     style: TextStyles.kSubtitleTextStyle,
                   ),
+                  Container(
+                    margin: EdgeInsets.only(top: SizeConfig.screenHeight * .06),
+                    child: Text(
+                      "Verify your account.",
+                      style: TextStyle(
+                          color: AppColors.dark,
+                          fontFamily: kFontFamilyNormal,
+                          fontSize: 34),
+                    ),
+                  ),
                   Form(
                     key: _formKey,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: AppColors.light,
                           border:
                               Border.all(width: 0.0, color: AppColors.light)),
                       padding: EdgeInsets.only(
-                          top: SizeConfig.safeBlockVertical * .075),
+                          top: SizeConfig.safeBlockVertical * .05),
                       child: CortadoInputField(
                         textInputType: TextInputType.phone,
                         inputFormatters: [UsNumberTextInputFormatter()],
@@ -84,12 +95,26 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
                       ),
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("or verify with ",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: kFontFamilyNormal,
+                              color: AppColors.dark)),
+                      _emailButton(context)
+                    ],
+                  ),
                 ]),
                 Expanded(
                   child: Container(
-                    color: AppColors.dark,
-                    margin: EdgeInsets.only(
-                        top: SizeConfig.safeBlockVertical * .25),
+                    decoration: BoxDecoration(
+                        color: AppColors.dark,
+                        border:
+                            Border.all(width: 0.0, color: Colors.transparent)),
+                    margin:
+                        EdgeInsets.only(top: SizeConfig.safeBlockVertical * .1),
                     child: Stack(
                       children: <Widget>[
                         Positioned(
@@ -164,6 +189,21 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
 
     return null;
   }
+}
+
+_emailButton(BuildContext context) {
+  return ButtonTheme(
+    minWidth: 10,
+    child: FlatButton(
+        padding: EdgeInsets.zero,
+        onPressed: () => {},
+        child: Text("email.",
+            style: TextStyle(
+                color: AppColors.caramel,
+                fontSize: 20,
+                fontFamily: kFontFamilyNormal,
+                decoration: TextDecoration.underline))),
+  );
 }
 
 class PhoneInputClippingClass extends CustomClipper<Path> {

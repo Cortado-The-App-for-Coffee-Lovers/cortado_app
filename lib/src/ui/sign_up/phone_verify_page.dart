@@ -51,7 +51,17 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
               ]),
               Expanded(
                 child: Container(
-                  color: AppColors.dark,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          AppColors.dark,
+                          AppColors.caramel,
+                          AppColors.cream
+                        ],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topLeft,
+                        stops: [.72, .8, .9]),
+                  ),
                   margin:
                       EdgeInsets.only(top: SizeConfig.safeBlockVertical * .05),
                   child: Stack(
@@ -121,6 +131,20 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                                 width: SizeConfig.safeBlockHorizontal * .5,
                               ),
                             ],
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              top: SizeConfig.screenHeight * .09),
+                          child: Text(
+                            "Enter verification code.",
+                            style: TextStyle(
+                                color: AppColors.light,
+                                fontFamily: kFontFamilyNormal,
+                                fontSize: 34),
                           ),
                         ),
                       ),
