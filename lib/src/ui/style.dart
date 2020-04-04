@@ -62,16 +62,21 @@ class TextStyles {
     fontSize: 24,
     color: AppColors.light,
   );
+  static final TextStyle kDefaultCreamTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 24,
+    color: AppColors.cream,
+  );
 
   static final TextStyle kCoffeeDrawerTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 24,
+    fontSize: 28,
     color: AppColors.light,
   );
 
   static final TextStyle kCoffeeDrawerSelectedTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 24,
+    fontSize: 28,
     color: AppColors.caramel,
   );
 

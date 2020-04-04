@@ -77,89 +77,78 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
           color: Colors.transparent,
           child: Column(
             children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    color: Colors.transparent,
-                    height: SizeConfig.screenHeight * .25,
-                    alignment: Alignment.center,
-                  ),
-                  Positioned(
-                    top: SizeConfig.screenHeight * .08,
-                    left: 0,
-                    child: Container(
-                      width: SizeConfig.blockSizeVertical * .27,
-                      height: SizeConfig.blockSizeVertical * .1,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image: AssetImage('assets/images/lid_top.png'))),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: SizeConfig.safeBlockVertical * .04,
-                    left: 0,
-                    child: Container(
-                      width: SizeConfig.screenHeight * .27,
-                      height: SizeConfig.screenHeight * .1,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image:
-                                  AssetImage('assets/images/lid_shadow.png'))),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      color: Color(0xFF703D19),
-                      width: SizeConfig.screenHeight * .302,
-                      height: SizeConfig.screenHeight * .02,
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: Container(
-                      width: SizeConfig.screenWidth * .8,
-                      height: SizeConfig.screenHeight * .12,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.contain,
-                              image:
-                                  AssetImage('assets/images/lid_bottom.png'))),
-                    ),
-                  ),
-                ],
-              ),
               Expanded(
                 child: Container(
                     child: Stack(
                   children: <Widget>[
-                    Container(
-                        width: SizeConfig.screenWidth * .65,
+                    Positioned(
+                      top: SizeConfig.screenHeight * .05,
+                      left: 0,
+                      child: Container(
+                        width: SizeConfig.blockSizeVertical * .3,
+                        height: SizeConfig.blockSizeVertical * .11,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.fitWidth,
                                 image:
-                                    AssetImage("assets/images/cup_body.png")))),
+                                    AssetImage('assets/images/lid_top.png'))),
+                      ),
+                    ),
                     Positioned(
+                      top: SizeConfig.screenHeight * .105,
+                      left: 0,
+                      child: Container(
+                        width: SizeConfig.screenWidth * .65,
+                        height: SizeConfig.screenHeight * .04,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage(
+                                    'assets/images/lid_shadow.png'))),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                          height: SizeConfig.screenHeight * .815,
+                          width: SizeConfig.screenWidth * .685,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.fitHeight,
+                                  image: AssetImage(
+                                      "assets/images/cup_body.png")))),
+                    ),
+                    Positioned(
+                      top: SizeConfig.screenHeight * .208,
                       child: ClipPath(
                         clipper: CoffeeDrawerClipper(),
                         child: Container(
                           color: Color(0xFF703D19),
-                          width: SizeConfig.screenHeight * .302,
-                          height: SizeConfig.screenHeight * .02,
+                          width: SizeConfig.screenHeight * .315,
+                          height: SizeConfig.screenHeight * .03,
                         ),
+                      ),
+                    ),
+                    Positioned(
+                      top: SizeConfig.screenHeight * .1,
+                      left: 0,
+                      child: Container(
+                        width: SizeConfig.screenWidth * .83,
+                        height: SizeConfig.screenHeight * .13,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage(
+                                    'assets/images/lid_bottom.png'))),
                       ),
                     ),
                     ListView(
                       padding:
-                          EdgeInsets.only(right: SizeConfig.screenWidth * .3),
+                          EdgeInsets.only(right: SizeConfig.screenWidth * .2),
                       shrinkWrap: true,
                       children: <Widget>[
                         Container(
-                          height: SizeConfig.safeBlockVertical * .15,
+                          height: SizeConfig.screenHeight * .3,
                         ),
                         GestureDetector(
                           child: Container(
@@ -174,7 +163,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .05),
+                                  left: SizeConfig.screenWidth * .07),
                               child: Text(
                                 'Coffee Shops',
                                 style: _coffeeShopsSelected
@@ -201,7 +190,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .05),
+                                  left: SizeConfig.screenWidth * .07),
                               child: Text(
                                 'Coffee Map',
                                 style: _coffeeMapSelected
@@ -228,7 +217,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .05),
+                                  left: SizeConfig.screenWidth * .07),
                               child: Text(
                                 'My Account',
                                 style: _accountSelected
@@ -304,7 +293,7 @@ class CoffeeDrawerClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height);
-    path.lineTo(size.width - 3, size.height);
+    path.lineTo(size.width - 2, size.height);
 
     path.lineTo(size.width, 0);
     return path;

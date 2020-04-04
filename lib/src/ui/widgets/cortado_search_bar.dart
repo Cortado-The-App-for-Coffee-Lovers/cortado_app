@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import '../style.dart';
 
 class CortadoSearchBar extends StatefulWidget {
-  CortadoSearchBar({Key key}) : super(key: key);
+  CortadoSearchBar({Key key, this.list, this.filterList}) : super(key: key);
+  final List list;
+  final Function(String) filterList;
 
   @override
   _CortadoSearchBarState createState() => _CortadoSearchBarState();
@@ -18,11 +20,17 @@ class _CortadoSearchBarState extends State<CortadoSearchBar> {
       color: AppColors.dark,
       height: SizeConfig.screenHeight * .1,
       child: CortadoInputField(
-          isPassword: false,
-          autofocus: false,
-          textAlign: TextAlign.start,
-          enabled: true,
-          textCapitalization: TextCapitalization.sentences),
+        style: TextStyles.kDefaultLightTextStyle,
+        hint: "Search...",
+        hintStyle: TextStyles.kDefaultCreamTextStyle,
+        color: AppColors.cream,
+        isPassword: false,
+        autofocus: false,
+        textAlign: TextAlign.start,
+        enabled: true,
+        textCapitalization: TextCapitalization.sentences,
+        onChanged: widget.filterList,
+      ),
     );
   }
 }

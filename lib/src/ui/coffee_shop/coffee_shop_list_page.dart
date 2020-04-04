@@ -22,6 +22,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
   // ignore: close_sinks
   CoffeeShopsBloc _coffeeShopsBloc;
   User user;
+  List<CoffeeShop> _coffeeShops;
 
   @override
   void initState() {
@@ -95,6 +96,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                   List<CoffeeShop> updatedCoffeeShopList;
                   updatedCoffeeShopList =
                       _sortAndFilterCoffeeList(state.coffeeShops);
+                  _coffeeShops = updatedCoffeeShopList;
                   return Container(
                     height: SizeConfig.blockSizeVertical * .66,
                     child: ListView.separated(

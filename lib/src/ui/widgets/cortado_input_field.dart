@@ -82,7 +82,7 @@ class _CortadoInputFieldState extends State<CortadoInputField> {
         enableInteractiveSelection: true,
         readOnly: false,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 8.0),
+          contentPadding: EdgeInsets.only(left: 8.0, bottom: -10),
           suffix: widget.suffix,
           prefixIcon: widget.prefix,
           hintText: widget.hint,
