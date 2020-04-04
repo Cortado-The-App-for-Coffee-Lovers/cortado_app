@@ -20,10 +20,14 @@ class SignUpInitialPage extends StatefulWidget {
 class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
   final _formKey = GlobalKey<FormState>();
 
+  String _firstName;
+  String _lastName;
   String _email;
   String _password;
   String _retypedPassword;
 
+  FocusNode _firstNameFocus = FocusNode();
+  FocusNode _lastNameFocus = FocusNode();
   FocusNode _emailFocus = FocusNode();
   FocusNode _passwordFocus = FocusNode();
   FocusNode _retypeFocus = FocusNode();
@@ -52,8 +56,58 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                         style: TextStyles.kSubtitleTextStyle,
                       ),
                     ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 30, left: 40, right: 50),
+                          width: SizeConfig.screenWidth * .55,
+                          child: CortadoInputField(
+                            textAlign: TextAlign.start,
+                            isPassword: false,
+                            onChanged: (value) => setState(() {
+                              _firstName = value;
+                            }),
+                            horizontalPadding: 0,
+                            hint: "First Name",
+                            enabled: true,
+                            focusNode: _firstNameFocus,
+                            autofocus: false,
+                            textCapitalization: TextCapitalization.sentences,
+                            textInputType: TextInputType.text,
+                            onSubmitted: (_) {
+                              FocusScope.of(context)
+                                  .requestFocus(_lastNameFocus);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 30, right: 40),
+                            child: CortadoInputField(
+                              textAlign: TextAlign.start,
+                              isPassword: false,
+                              onChanged: (value) => setState(() {
+                                _firstName = value;
+                              }),
+                              horizontalPadding: 0,
+                              hint: "Last Name",
+                              enabled: true,
+                              focusNode: _lastNameFocus,
+                              autofocus: false,
+                              textCapitalization: TextCapitalization.sentences,
+                              textInputType: TextInputType.text,
+                              onSubmitted: (_) {
+                                FocusScope.of(context)
+                                    .requestFocus(_emailFocus);
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                     Container(
-                      padding: EdgeInsets.only(top: 30),
                       child: Column(
                         children: <Widget>[
                           CortadoInputField(
@@ -64,10 +118,10 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                             }),
                             validator: _emailValidator,
                             textAlign: TextAlign.start,
-                            autofocus: true,
+                            autofocus: false,
                             isPassword: false,
                             enabled: true,
-                            textCapitalization: TextCapitalization.sentences,
+                            textCapitalization: TextCapitalization.none,
                             textInputType: TextInputType.emailAddress,
                             onSubmitted: (_) {
                               FocusScope.of(context)
@@ -91,7 +145,7 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                         }
                       },
                       textAlign: TextAlign.start,
-                      autofocus: true,
+                      autofocus: false,
                       isPassword: true,
                       enabled: true,
                       textCapitalization: TextCapitalization.sentences,
@@ -106,7 +160,7 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                         _retypedPassword = value;
                       }),
                       textAlign: TextAlign.start,
-                      autofocus: true,
+                      autofocus: false,
                       isPassword: true,
                       enabled: true,
                       textCapitalization: TextCapitalization.sentences,

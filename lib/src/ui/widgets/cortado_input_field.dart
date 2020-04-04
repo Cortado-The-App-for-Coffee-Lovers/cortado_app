@@ -24,6 +24,7 @@ class CortadoInputField extends StatefulWidget {
   final Color color;
   final TextStyle style;
   final TextStyle hintStyle;
+  final double horizontalPadding;
   CortadoInputField(
       {Key key,
       this.hint,
@@ -44,7 +45,9 @@ class CortadoInputField extends StatefulWidget {
       @required this.enabled,
       @required this.textCapitalization,
       this.color,
-      this.hintStyle, this.style})
+      this.hintStyle,
+      this.style,
+      this.horizontalPadding})
       : super(key: key);
 
   @override
@@ -56,7 +59,7 @@ class _CortadoInputFieldState extends State<CortadoInputField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 40,
+        horizontal: widget.horizontalPadding ?? 40,
         vertical: 10,
       ),
       child: TextFormField(

@@ -38,3 +38,5 @@ class SignUpPhoneVerificationComplete extends SignUpState {
 
   SignUpPhoneVerificationComplete(this.user);
 }
+
+class SignUpStart extends SignUpState {}

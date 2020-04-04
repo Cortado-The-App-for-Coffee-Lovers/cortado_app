@@ -24,6 +24,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Stream<SignUpState> mapEventToState(
     SignUpEvent event,
   ) async* {
+    if (event is SignUpPressed) {
+      yield SignUpStart();
+    }
     if (event is SignUpEmailPassword) {
       try {
         if (event.password != event.retypePassword) {

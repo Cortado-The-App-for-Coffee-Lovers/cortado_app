@@ -8,11 +8,13 @@ import 'sign_in/sign_in_page.dart';
 import 'sign_up/onboarding_page.dart';
 import 'sign_up/phone_input_page.dart';
 import 'sign_up/phone_verify_page.dart';
+import 'sign_up/sign_up_cards_page.dart';
 import 'sign_up/sign_up_initial_page.dart';
 import 'package:flutter/material.dart';
 
 const String kHomeRoute = '/home';
 const String kSignInRoute = '/signin';
+const String kSignUpCardsRoute = '/signup/signup-cards';
 const String kSignUpInitialRoute = '/signup/initial';
 const String kPhoneInputRoute = '/signup/phone-input';
 const String kPhoneVerifyRoute = '/signup/phone-verify';
@@ -25,7 +27,8 @@ class Router {
     switch (settings.name) {
       case kHomeRoute:
         return MaterialPageRoute(builder: (_) => HomePage());
-
+      case kSignUpCardsRoute:
+        return MaterialPageRoute(builder: (_) => SignUpCardsPage());
       case kSignInRoute:
         return MaterialPageRoute(builder: (_) => SignInPage());
       case kSignUpInitialRoute:

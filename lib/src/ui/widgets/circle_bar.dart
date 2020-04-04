@@ -15,7 +15,7 @@ class _CircleBarState extends State<CircleBar> {
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-        angle: -10,
+        angle: -6.3,
         child: Container(
             child: AnimatedContainer(
           duration: Duration(milliseconds: 150),

@@ -1,3 +1,4 @@
+import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,22 +28,36 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // ignore: close_sinks
-    AuthBloc bloc = BlocProvider.of<AuthBloc>(context);
+    AuthBloc authbloc = BlocProvider.of<AuthBloc>(context);
+    SignUpBloc signUpBloc = BlocProvider.of<SignUpBloc>(context);
     SizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.light,
-      body: BlocListener(
-        bloc: bloc,
-        listener: (context, state) {
-          UserModel userModel = Provider.of<UserModel>(context, listen: false);
-          if (state is SignedInState) {
-            userModel.updateUser(state.user);
-            Navigator.of(context).pushReplacementNamed(kHomeRoute);
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener(
+            bloc: authbloc,
+            listener: (BuildContext context, state) {
+              UserModel userModel =
+                  Provider.of<UserModel>(context, listen: false);
+              if (state is SignedInState) {
+                userModel.updateUser(state.user);
+                Navigator.of(context).pushReplacementNamed(kHomeRoute);
+              }
+            },
+          ),
+          BlocListener(
+            bloc: signUpBloc,
+            listener: (BuildContext context, state) {
+              if (state is SignUpStart) {
+                Navigator.of(context).pushNamed(kSignUpCardsRoute);
+              }
+            },
+          )
+        ],
         child: BlocBuilder(
-            bloc: bloc,
+            bloc: authbloc,
             builder: (context, state) {
               if (state is SignedInState) {
                 return DrawerHomePage(
@@ -74,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                               top: SizeConfig.safeBlockVertical * .07,
                               child: Container(
                                 height: SizeConfig.safeBlockVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .29,
+                                width: SizeConfig.safeBlockHorizontal * .26,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
@@ -110,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                               bottom: SizeConfig.safeBlockVertical * .3,
                               child: Container(
                                 height: SizeConfig.safeBlockVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .3,
+                                width: SizeConfig.safeBlockHorizontal * .28,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage(
@@ -147,8 +162,7 @@ class _HomePageState extends State<HomePage> {
                               bottom: SizeConfig.blockSizeVertical * .2,
                               left: SizeConfig.blockSizeHorizontal * .37,
                               child: GestureDetector(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(kSignUpInitialRoute),
+                                onTap: () => signUpBloc.add(SignUpPressed()),
                                 child: Text(
                                   "Sign Up",
                                   style: TextStyles.kSubtitleTextStyle,

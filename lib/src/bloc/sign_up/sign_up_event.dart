@@ -26,3 +26,5 @@ class SignUpVerifyPressed extends SignUpEvent {
 
   SignUpVerifyPressed({this.user, this.verificationId, this.code});
 }
+
+class SignUpPressed extends SignUpEvent {}

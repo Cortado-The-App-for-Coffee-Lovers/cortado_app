@@ -24,6 +24,8 @@ class _SignInPageState extends State<SignInPage> {
   String _email;
   String _password;
 
+  FocusNode _passwordFocus = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -76,11 +78,15 @@ class _SignInPageState extends State<SignInPage> {
                                   _email = value;
                                 }),
                                 textAlign: TextAlign.start,
-                                autofocus: true,
+                                autofocus: false,
                                 isPassword: false,
                                 enabled: true,
                                 textCapitalization:
                                     TextCapitalization.sentences,
+                                onSubmitted: (_) {
+                                  FocusScope.of(context)
+                                      .requestFocus(_passwordFocus);
+                                },
                               ),
                             ],
                           ),
@@ -91,7 +97,7 @@ class _SignInPageState extends State<SignInPage> {
                             _password = value;
                           }),
                           textAlign: TextAlign.start,
-                          autofocus: true,
+                          autofocus: false,
                           isPassword: true,
                           enabled: true,
                           textCapitalization: TextCapitalization.sentences,
