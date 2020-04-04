@@ -1,5 +1,6 @@
 import 'package:cortado_app/src/ui/router.dart';
 import 'package:cortado_app/src/ui/sign_up/sign_up_page.dart';
+import 'package:cortado_app/src/ui/widgets/bean_tile.dart';
 import 'package:flutter/material.dart';
 import '../widgets/onboarding_card.dart';
 import '../style.dart';
@@ -38,9 +39,10 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage> {
                 stops: [.6, .8, .9]),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: SizeConfig.blockSizeVertical * .2,
+                height: SizeConfig.blockSizeVertical * .1,
               ),
               Expanded(
                 child: OnBoardingCard(
@@ -50,6 +52,19 @@ class _OnboardingPageState extends SignUpPageState<OnboardingPage> {
                   title: 'Get your daily cup of joe.',
                 ),
               ),
+              Container(
+                padding: EdgeInsets.only(
+                    bottom: SizeConfig.screenHeight * .26,
+                    left: SizeConfig.screenWidth * .17),
+                child: Column(
+                  children: <Widget>[
+                    BeanTile("""Save over 60% on your
+monthly coffee spend
+"""),
+                    BeanTile('Plans as low as \$9.99')
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
+import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -35,7 +36,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
       backgroundColor: AppColors.light,
       appBar: GradientAppBar(
         gradient: LinearGradient(
-            stops: [.65, .4],
+            stops: [.6, .5],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
             colors: [AppColors.light, AppColors.dark]),
@@ -72,26 +73,18 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
       body: Column(
         children: <Widget>[
           Container(
-            height: SizeConfig.blockSizeVertical * .15,
+            height: SizeConfig.blockSizeVertical * .22,
+            width: SizeConfig.screenWidth,
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  top: SizeConfig.safeBlockVertical * .13,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.0),
-                    color: AppColors.dark,
-                    height: 2.0,
-                    width: SizeConfig.safeBlockHorizontal * .9,
-                  ),
-                ),
-                Positioned(
-                  child: Container(
-                      height: SizeConfig.blockSizeVertical * .27,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/coffee_shop.png')))),
-                ),
+                    bottom: 0,
+                    child: Container(
+                        width: SizeConfig.screenWidth,
+                        child: CortadoSearchBar())),
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset("assets/images/coffee_shop.png")),
               ],
             ),
           ),
@@ -103,13 +96,14 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                   updatedCoffeeShopList =
                       _sortAndFilterCoffeeList(state.coffeeShops);
                   return Container(
-                    height: SizeConfig.blockSizeVertical * .7,
+                    height: SizeConfig.blockSizeVertical * .66,
                     child: ListView.separated(
                       itemCount: updatedCoffeeShopList.length,
                       itemBuilder: (context, index) {
                         CoffeeShop coffeeShop = updatedCoffeeShopList[index];
 
-                        return CoffeeShopTile(coffeeShop: coffeeShop, user: user);
+                        return CoffeeShopTile(
+                            coffeeShop: coffeeShop, user: user);
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return Container(

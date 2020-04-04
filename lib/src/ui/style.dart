@@ -59,7 +59,7 @@ class TextStyles {
 
   static final TextStyle kDefaultLightTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 20,
+    fontSize: 24,
     color: AppColors.light,
   );
 

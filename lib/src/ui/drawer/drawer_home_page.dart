@@ -70,43 +70,37 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
   _drawer(BuildContext context) {
     return Container(
       color: Colors.transparent,
+      width: SizeConfig.screenWidth,
       child: Drawer(
         elevation: 0,
         child: Container(
           color: Colors.transparent,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Stack(
                 children: <Widget>[
                   Container(
-                    height: SizeConfig.screenHeight * .2,
                     color: Colors.transparent,
+                    height: SizeConfig.screenHeight * .25,
                     alignment: Alignment.center,
                   ),
                   Positioned(
-                    bottom: SizeConfig.screenHeight * .07,
+                    top: SizeConfig.screenHeight * .08,
                     left: 0,
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.only(topRight: Radius.circular(12.0)),
-                      child: Container(
-                        width: SizeConfig.blockSizeVertical * .24,
-                        height: SizeConfig.blockSizeVertical * .07,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image:
-                                    AssetImage('assets/images/lid_top.png'))),
-                      ),
+                    child: Container(
+                      width: SizeConfig.blockSizeVertical * .27,
+                      height: SizeConfig.blockSizeVertical * .1,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage('assets/images/lid_top.png'))),
                     ),
                   ),
                   Positioned(
-                    bottom: SizeConfig.safeBlockVertical * .02,
+                    bottom: SizeConfig.safeBlockVertical * .04,
                     left: 0,
                     child: Container(
-                      width: SizeConfig.screenHeight * .245,
+                      width: SizeConfig.screenHeight * .27,
                       height: SizeConfig.screenHeight * .1,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -119,27 +113,21 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     bottom: 0,
                     child: Container(
                       color: Color(0xFF703D19),
-                      width: SizeConfig.screenHeight * .25,
+                      width: SizeConfig.screenHeight * .302,
                       height: SizeConfig.screenHeight * .02,
                     ),
                   ),
                   Positioned(
                     bottom: 0,
                     left: 0,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40),
-                        bottomRight: Radius.circular(50.0),
-                      ),
-                      child: Container(
-                        width: SizeConfig.screenHeight * .32,
-                        height: SizeConfig.blockSizeVertical * .1,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage(
-                                    'assets/images/lid_bottom.png'))),
-                      ),
+                    child: Container(
+                      width: SizeConfig.screenWidth * .8,
+                      height: SizeConfig.screenHeight * .12,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image:
+                                  AssetImage('assets/images/lid_bottom.png'))),
                     ),
                   ),
                 ],
@@ -148,28 +136,26 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                 child: Container(
                     child: Stack(
                   children: <Widget>[
-                    Padding(
-                      padding:
-                          EdgeInsets.only(right: SizeConfig.screenWidth * .2),
-                      child: Container(
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      "assets/images/cup_body.png")))),
-                    ),
+                    Container(
+                        width: SizeConfig.screenWidth * .65,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image:
+                                    AssetImage("assets/images/cup_body.png")))),
                     Positioned(
                       child: ClipPath(
                         clipper: CoffeeDrawerClipper(),
                         child: Container(
                           color: Color(0xFF703D19),
-                          width: SizeConfig.screenHeight * .25,
+                          width: SizeConfig.screenHeight * .302,
                           height: SizeConfig.screenHeight * .02,
                         ),
                       ),
                     ),
                     ListView(
-                      padding: EdgeInsets.only(right: 60),
+                      padding:
+                          EdgeInsets.only(right: SizeConfig.screenWidth * .3),
                       shrinkWrap: true,
                       children: <Widget>[
                         Container(

@@ -36,7 +36,7 @@ class _CoffeeShopPageState extends State<CoffeeShopPage> {
             child:
                 Tab(icon: Image.asset("assets/images/icons/back_arrow.png"))),
         gradient: LinearGradient(
-            stops: [.65, .4],
+            stops: [.6, .5],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
             colors: [AppColors.light, AppColors.dark]),
