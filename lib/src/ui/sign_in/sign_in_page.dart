@@ -2,6 +2,7 @@ import 'package:cortado_app/src/bloc/auth/bloc.dart';
 import 'package:cortado_app/src/bloc/sign_in/bloc.dart';
 import 'package:cortado_app/src/bloc/sign_in/sign_in_bloc.dart';
 import 'package:cortado_app/src/ui/style.dart';
+import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_input_field.dart';
 import 'package:cortado_app/src/ui/widgets/loading_state_button.dart';
 import 'package:cortado_app/src/ui/widgets/snackbar.dart';
@@ -97,6 +98,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             CortadoInputField(
                               hint: "Password",
+                              focusNode: _passwordFocus,
                               onChanged: (value) => setState(() {
                                 _password = value;
                               }),
@@ -116,31 +118,22 @@ class _SignInPageState extends State<SignInPage> {
           );
         }),
         floatingActionButton: Container(
-          height: 150,
+          height: 125,
+          padding: EdgeInsets.only(bottom: 30),
           child: Column(
             children: <Widget>[
-              LoadingStateButton<SignInLoadingState>(
-                bloc: _signInBloc,
-                button: Container(
-                  child: GestureDetector(
-                      child: Text(
-                        "Continue",
-                        style: TextStyles.kContinueTextStyle,
-                      ),
-                      onTap: () =>
-                          _signInBloc.add(SignInPressed(_email, _password))),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 8.0),
-                color: AppColors.caramel,
-                height: 1.0,
-                width: SizeConfig.safeBlockHorizontal * .5,
+              Expanded(
+                child: LoadingStateButton<SignInLoadingState>(
+                    bloc: _signInBloc,
+                    button: CortadoButton(
+                        text: "Continue",
+                        onTap: () => _signInBloc
+                            .add(SignInPressed(_email, _password)))),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Have an account?",
+                  Text("Need an account? ",
                       style: TextStyle(
                           fontSize: 20,
                           fontFamily: kFontFamilyNormal,
@@ -160,6 +153,7 @@ class _SignInPageState extends State<SignInPage> {
     return ButtonTheme(
       minWidth: 30,
       child: FlatButton(
+          padding: EdgeInsets.zero,
           onPressed: () => Navigator.of(context).pushNamed(kSignUpInitialRoute),
           child: Text("Sign Up",
               style: TextStyle(

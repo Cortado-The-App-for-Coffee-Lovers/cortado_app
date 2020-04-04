@@ -1,3 +1,5 @@
+import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
+
 import '../../data/user.dart';
 
 import '../router.dart';
@@ -164,38 +166,29 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
             ),
           ),
           floatingActionButton: Container(
-            height: 150,
+            height: 125,
+            padding: EdgeInsets.only(bottom: 30),
             child: Column(
               children: <Widget>[
-                LoadingStateButton<SignUpLoadingState>(
-                  bloc: signUpBloc,
-                  button: Container(
-                    child: GestureDetector(
-                        child: Text(
-                          "Continue",
-                          style: TextStyles.kContinueTextStyle,
-                        ),
-                        onTap: () {
-                          if (_formKey.currentState.validate())
-                            signUpBloc.add(SignUpEmailPassword(
-                                firstName: _firstNameController.text.trim(),
-                                lastName: _lastNameController.text.trim(),
-                                email: _emailController.text.trim(),
-                                password: _passwordController.text,
-                                retypePassword: _retypedController.text));
-                        }),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.0),
-                  color: AppColors.caramel,
-                  height: 1.0,
-                  width: SizeConfig.safeBlockHorizontal * .5,
+                Expanded(
+                  child: LoadingStateButton<SignUpLoadingState>(
+                      bloc: signUpBloc,
+                      button: CortadoButton(
+                          text: "Sign Up",
+                          onTap: () {
+                            if (_formKey.currentState.validate())
+                              signUpBloc.add(SignUpEmailPassword(
+                                  firstName: _firstNameController.text.trim(),
+                                  lastName: _lastNameController.text.trim(),
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text,
+                                  retypePassword: _retypedController.text));
+                          })),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Have an account?",
+                    Text("Have an account? ",
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: kFontFamilyNormal,
@@ -215,6 +208,7 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
     return ButtonTheme(
       minWidth: 30,
       child: FlatButton(
+          padding: EdgeInsets.zero,
           onPressed: () => Navigator.of(context).pushNamed(kSignInRoute),
           child: Text("Log in",
               style: TextStyle(

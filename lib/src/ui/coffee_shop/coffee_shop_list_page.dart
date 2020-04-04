@@ -4,6 +4,7 @@ import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
+import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -121,7 +122,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                 return Container(
                     padding:
                         EdgeInsets.only(top: SizeConfig.safeBlockVertical * .3),
-                    child: CircularProgressIndicator());
+                    child: LatteLoader());
               }),
         ],
       ),

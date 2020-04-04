@@ -1,5 +1,8 @@
 import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
+import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
+import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
+import 'package:cortado_app/src/ui/widgets/loading_state_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -159,46 +162,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ]),
                             ),
-                            Positioned(
-                              bottom: SizeConfig.blockSizeVertical * .2,
-                              left: SizeConfig.blockSizeHorizontal * .37,
-                              child: GestureDetector(
-                                onTap: () => signUpBloc.add(SignUpPressed()),
-                                child: Text(
-                                  "Sign Up",
-                                  style: TextStyles.kSubtitleTextStyle,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: SizeConfig.blockSizeVertical * .18,
-                              left: SizeConfig.blockSizeHorizontal * .245,
-                              child: Container(
-                                margin: EdgeInsets.symmetric(vertical: 8.0),
-                                color: AppColors.caramel,
-                                height: 1.0,
-                                width: SizeConfig.safeBlockHorizontal * .5,
-                              ),
-                            ),
-                            Positioned(
-                              bottom: SizeConfig.blockSizeVertical * .04,
-                              left: SizeConfig.blockSizeHorizontal * .2,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: SizeConfig.blockSizeVertical * .07),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text("Have an account?",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontFamily: kFontFamilyNormal,
-                                            color: AppColors.dark)),
-                                    _loginButton(context)
-                                  ],
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -208,10 +171,37 @@ class _HomePageState extends State<HomePage> {
               }
               return Container(
                 color: Colors.white,
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: LatteLoader()),
               );
             }),
       ),
+      floatingActionButton: Container(
+        height: 125,
+        padding: EdgeInsets.only(bottom: 30),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: LoadingStateButton<SignUpLoadingState>(
+                  bloc: signUpBloc,
+                  button: CortadoButton(
+                      text: "Sign Up",
+                      onTap: () => () => signUpBloc.add(SignUpPressed()))),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Have an account? ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: kFontFamilyNormal,
+                        color: AppColors.dark)),
+                _loginButton(context)
+              ],
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -219,6 +209,7 @@ class _HomePageState extends State<HomePage> {
     return ButtonTheme(
       minWidth: 30,
       child: FlatButton(
+          padding: EdgeInsets.zero,
           onPressed: () => Navigator.of(context).pushNamed(kSignInRoute),
           child: Text("Log in",
               style: TextStyle(
