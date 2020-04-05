@@ -1,7 +1,6 @@
 import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../style.dart';
@@ -16,12 +15,9 @@ class CoffeeShopsList extends StatefulWidget {
 }
 
 class _CoffeeShopsListState extends State<CoffeeShopsList> {
-  List<CoffeeShop> _coffeeShops;
-
   @override
   void initState() {
     super.initState();
-    _coffeeShops = widget.coffeeShops;
   }
 
   @override
@@ -32,7 +28,7 @@ class _CoffeeShopsListState extends State<CoffeeShopsList> {
         final int itemIndex = index ~/ 2;
         if (index.isEven) {
           return CoffeeShopTile(
-              coffeeShop: _coffeeShops[itemIndex], user: widget.user);
+              coffeeShop: widget.coffeeShops[itemIndex], user: widget.user);
         }
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16.0),
@@ -41,7 +37,7 @@ class _CoffeeShopsListState extends State<CoffeeShopsList> {
           width: SizeConfig.safeBlockHorizontal * .9,
         );
       },
-      childCount: (_coffeeShops.length * 2) - 1,
+      childCount: (widget.coffeeShops.length * 2) - 1,
     ));
   }
 }

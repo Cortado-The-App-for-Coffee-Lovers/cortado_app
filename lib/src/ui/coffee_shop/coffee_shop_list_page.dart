@@ -24,7 +24,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
   // ignore: close_sinks
   CoffeeShopsBloc _coffeeShopsBloc;
   User user;
-  List<CoffeeShop> _coffeeShops;
+  List<CoffeeShop> _currentCoffeeShopList;
 
   @override
   void initState() {
@@ -44,12 +44,18 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
         ),
         child: widget.drawer,
       ),
-      body: BlocBuilder(
+      body: BlocConsumer(
         bloc: _coffeeShopsBloc,
+        listener: (BuildContext context, state) {
+          if (state is CoffeeShopsLoaded) {
+            setState(() {
+              _currentCoffeeShopList =
+                  _sortAndFilterCoffeeList(state.coffeeShops);
+            });
+          }
+        },
         builder: (context, state) {
           if (state is CoffeeShopsLoaded) {
-            List<CoffeeShop> updatedCoffeeShops =
-                _sortAndFilterCoffeeList(state.coffeeShops);
             return CustomScrollView(
               slivers: <Widget>[
                 AppBarWithImage(
@@ -57,10 +63,13 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                       height: SizeConfig.screenHeight * .2,
                       child: Image.asset("assets/images/coffee_shop.png")),
                   actions: coffeeRedemptionWidget(user),
-                  lower: CortadoSearchBar(),
+                  lower: CortadoSearchBar(
+                    onChanged: _onCoffeeSearch,
+                  ),
                 ),
                 CoffeeShopsList(
-                  coffeeShops: updatedCoffeeShops,
+                  coffeeShops: _currentCoffeeShopList ??
+                      _sortAndFilterCoffeeList(_coffeeShopsBloc.coffeeShops),
                   user: user,
                 ),
               ],
@@ -71,6 +80,44 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
         },
       ),
     );
+  }
+
+  _onCoffeeSearch(dynamic input) {
+    setState(() {
+      _currentCoffeeShopList = _updateCoffeeShopsList(input);
+    });
+  }
+
+  _updateCoffeeShopsList(String input) {
+    int len = input.length;
+    String name;
+    List<String> splitName;
+    List<CoffeeShop> filteredCoffeeShops;
+    String inputUpper;
+
+    if (input == '') {
+      return _coffeeShopsBloc.coffeeShops;
+    } else {
+      splitName = input.split(' ');
+
+      if (splitName.length > 1 && splitName[1] != '') {
+        inputUpper = capitalize(splitName[0]) + " " + capitalize(splitName[1]);
+      } else {
+        inputUpper = capitalize(input);
+      }
+
+      filteredCoffeeShops = _coffeeShopsBloc.coffeeShops.where((coffeeShop) {
+        name = coffeeShop.name;
+        return (name.substring(0, len) == input ||
+            name.substring(0, len) == inputUpper);
+      }).toList();
+
+      return filteredCoffeeShops;
+    }
+  }
+
+  String capitalize(String word) {
+    return word[0].toUpperCase() + word.substring(1);
   }
 
   List<CoffeeShop> _sortAndFilterCoffeeList(List<CoffeeShop> coffeeShops) {

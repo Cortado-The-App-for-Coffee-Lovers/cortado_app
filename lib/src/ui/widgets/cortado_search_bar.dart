@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import '../style.dart';
 
 class CortadoSearchBar extends StatefulWidget {
-  CortadoSearchBar({Key key, this.list, this.filterList}) : super(key: key);
-  final List list;
-  final Function(String) filterList;
+  CortadoSearchBar({
+    Key key,
+    this.onChanged,
+  }) : super(key: key);
+  final Function onChanged;
 
   @override
   _CortadoSearchBarState createState() => _CortadoSearchBarState();
@@ -31,7 +33,7 @@ class _CortadoSearchBarState extends State<CortadoSearchBar> {
             textAlign: TextAlign.start,
             enabled: true,
             textCapitalization: TextCapitalization.sentences,
-            onChanged: widget.filterList,
+            onChanged: widget.onChanged,
           ),
           Positioned(
             right: 34,

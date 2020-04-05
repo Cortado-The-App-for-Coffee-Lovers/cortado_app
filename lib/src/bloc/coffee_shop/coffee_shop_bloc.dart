@@ -10,9 +10,8 @@ import 'package:geolocator/geolocator.dart';
 
 class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   CoffeeShopRepository coffeeShopRepository;
-  List<CoffeeShop> _coffeeShops = [];
   Stream<CoffeeShop> coffeeShopStream;
-  List<CoffeeShop> updatedCoffeeShops = [];
+  List<CoffeeShop> _coffeeShops = [];
 
   Position _currentUserLocation;
   Geolocator geolocator = Geolocator();
@@ -46,9 +45,9 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
 
         coffeeShopStream = addDistancesToShops(coffeeShopStream);
 
-        updatedCoffeeShops = await coffeeListFromStream(coffeeShopStream);
+        _coffeeShops = await coffeeListFromStream(coffeeShopStream);
 
-        yield CoffeeShopsLoaded(updatedCoffeeShops);
+        yield CoffeeShopsLoaded(_coffeeShops);
       } catch (e) {
         yield CoffeeShopsError(kCoffeeShopsLoadingError);
       }
@@ -56,7 +55,6 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   }
 
   List<CoffeeShop> get coffeeShops => _coffeeShops;
-
   Future<CoffeeShop> _getUserDistance(CoffeeShop coffeeShop) async {
     GeoPoint coffeeShopCoords = coffeeShop.address['coordinates'];
 
