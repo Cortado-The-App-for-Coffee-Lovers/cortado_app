@@ -144,7 +144,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                     ),
                     ListView(
                       padding:
-                          EdgeInsets.only(right: SizeConfig.screenWidth * .2),
+                          EdgeInsets.only(right: SizeConfig.screenWidth * .24),
                       shrinkWrap: true,
                       children: <Widget>[
                         Container(
@@ -163,7 +163,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .07),
+                                  left: SizeConfig.screenWidth * .09),
                               child: Text(
                                 'Coffee Shops',
                                 style: _coffeeShopsSelected
@@ -190,7 +190,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .07),
+                                  left: SizeConfig.screenWidth * .09),
                               child: Text(
                                 'Coffee Map',
                                 style: _coffeeMapSelected
@@ -217,7 +217,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .07),
+                                  left: SizeConfig.screenWidth * .09),
                               child: Text(
                                 'My Account',
                                 style: _accountSelected

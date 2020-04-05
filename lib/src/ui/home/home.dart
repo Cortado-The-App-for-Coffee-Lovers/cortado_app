@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   void initState() {
     super.initState();
@@ -70,103 +71,134 @@ class _HomePageState extends State<HomePage> {
               } else if (state is SignedOutState) {
                 var error = state.error;
                 if (error.isNotEmpty) showSnackbar(context, Text(error));
-                return Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Stack(
-                          children: <Widget>[
-                            Positioned(
-                              left: 0,
-                              top: SizeConfig.safeBlockVertical * .18,
-                              child: Container(
-                                height: SizeConfig.blockSizeVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .21,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/beans_left.png'))),
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: SizeConfig.safeBlockVertical * .07,
-                              child: Container(
-                                height: SizeConfig.safeBlockVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .26,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/latte_right.png'))),
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              bottom: SizeConfig.safeBlockVertical * .05,
-                              child: Container(
-                                height: SizeConfig.safeBlockVertical * .6,
-                                width: SizeConfig.safeBlockHorizontal * .35,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/blob_right.png'))),
-                              ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              child: Container(
-                                height: SizeConfig.safeBlockVertical * .6,
-                                width: SizeConfig.safeBlockHorizontal * .9,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            'assets/images/blob_left.png'))),
-                              ),
-                            ),
-                            Positioned(
-                              left: 0,
-                              bottom: SizeConfig.safeBlockVertical * .3,
-                              child: Container(
-                                height: SizeConfig.safeBlockVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .28,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/latte_left.png'))),
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              bottom: SizeConfig.blockSizeVertical * .225,
-                              child: Container(
-                                height: SizeConfig.blockSizeVertical * .2,
-                                width: SizeConfig.safeBlockHorizontal * .23,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/beans_right.png'))),
-                              ),
-                            ),
-                            Positioned(
-                              top: SizeConfig.safeBlockVertical * .4,
-                              left: SizeConfig.safeBlockHorizontal * .12,
-                              child: Column(children: [
-                                Text(
-                                  "Cortado",
-                                  style: TextStyles.kWelcomeTitleTextStyle,
+                return Scaffold(
+                  body: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: Stack(
+                            children: <Widget>[
+                              Positioned(
+                                left: 0,
+                                top: SizeConfig.safeBlockVertical * .18,
+                                child: Container(
+                                  height: SizeConfig.blockSizeVertical * .2,
+                                  width: SizeConfig.safeBlockHorizontal * .21,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/beans_left.png'))),
                                 ),
-                                Text(
-                                  "The app for coffee lovers.",
-                                  style: TextStyles.kSubtitleTextStyle,
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: SizeConfig.safeBlockVertical * .07,
+                                child: Container(
+                                  height: SizeConfig.safeBlockVertical * .2,
+                                  width: SizeConfig.safeBlockHorizontal * .26,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/latte_right.png'))),
                                 ),
-                              ]),
-                            ),
-                          ],
+                              ),
+                              Positioned(
+                                right: 0,
+                                bottom: SizeConfig.safeBlockVertical * .05,
+                                child: Container(
+                                  height: SizeConfig.safeBlockVertical * .6,
+                                  width: SizeConfig.safeBlockHorizontal * .35,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/blob_right.png'))),
+                                ),
+                              ),
+                              Positioned(
+                                top: 0,
+                                child: Container(
+                                  height: SizeConfig.safeBlockVertical * .6,
+                                  width: SizeConfig.safeBlockHorizontal * .9,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: AssetImage(
+                                              'assets/images/blob_left.png'))),
+                                ),
+                              ),
+                              Positioned(
+                                left: 0,
+                                bottom: SizeConfig.safeBlockVertical * .3,
+                                child: Container(
+                                  height: SizeConfig.safeBlockVertical * .2,
+                                  width: SizeConfig.safeBlockHorizontal * .28,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/latte_left.png'))),
+                                ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                bottom: SizeConfig.blockSizeVertical * .225,
+                                child: Container(
+                                  height: SizeConfig.blockSizeVertical * .2,
+                                  width: SizeConfig.safeBlockHorizontal * .23,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/beans_right.png'))),
+                                ),
+                              ),
+                              Positioned(
+                                top: SizeConfig.safeBlockVertical * .4,
+                                left: SizeConfig.safeBlockHorizontal * .12,
+                                child: Column(children: [
+                                  Text(
+                                    "Cortado",
+                                    style: TextStyles.kWelcomeTitleTextStyle,
+                                  ),
+                                  Text(
+                                    "The app for coffee lovers.",
+                                    style: TextStyles.kSubtitleTextStyle,
+                                  ),
+                                ]),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                  floatingActionButton: Container(
+                    height: 125,
+                    padding: EdgeInsets.only(bottom: 30),
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: LoadingStateButton<SignUpLoadingState>(
+                              bloc: signUpBloc,
+                              button: CortadoButton(
+                                  text: "Sign Up",
+                                  onTap: () =>
+                                      () => signUpBloc.add(SignUpPressed()))),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text("Have an account? ",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: kFontFamilyNormal,
+                                    color: AppColors.dark)),
+                            _loginButton(context)
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.centerFloat,
                 );
               }
               return Container(
@@ -175,33 +207,6 @@ class _HomePageState extends State<HomePage> {
               );
             }),
       ),
-      floatingActionButton: Container(
-        height: 125,
-        padding: EdgeInsets.only(bottom: 30),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: LoadingStateButton<SignUpLoadingState>(
-                  bloc: signUpBloc,
-                  button: CortadoButton(
-                      text: "Sign Up",
-                      onTap: () => () => signUpBloc.add(SignUpPressed()))),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Have an account? ",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: kFontFamilyNormal,
-                        color: AppColors.dark)),
-                _loginButton(context)
-              ],
-            ),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 

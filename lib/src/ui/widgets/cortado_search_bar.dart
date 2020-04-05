@@ -19,17 +19,31 @@ class _CortadoSearchBarState extends State<CortadoSearchBar> {
     return Container(
       color: AppColors.dark,
       height: SizeConfig.screenHeight * .1,
-      child: CortadoInputField(
-        style: TextStyles.kDefaultLightTextStyle,
-        hint: "Search...",
-        hintStyle: TextStyles.kDefaultCreamTextStyle,
-        color: AppColors.cream,
-        isPassword: false,
-        autofocus: false,
-        textAlign: TextAlign.start,
-        enabled: true,
-        textCapitalization: TextCapitalization.sentences,
-        onChanged: widget.filterList,
+      child: Stack(
+        children: <Widget>[
+          CortadoInputField(
+            style: TextStyles.kDefaultLightTextStyle,
+            hint: "Search...",
+            hintStyle: TextStyles.kDefaultCreamTextStyle,
+            color: AppColors.cream,
+            isPassword: false,
+            autofocus: false,
+            textAlign: TextAlign.start,
+            enabled: true,
+            textCapitalization: TextCapitalization.sentences,
+            onChanged: widget.filterList,
+          ),
+          Positioned(
+            right: 34,
+            top: 15,
+            child: IconButton(
+                icon: Image.asset(
+                  "assets/images/icons/my_location.png",
+                  color: AppColors.cream,
+                ),
+                onPressed: () => {}),
+          )
+        ],
       ),
     );
   }
