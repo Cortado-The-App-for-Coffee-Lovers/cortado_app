@@ -8,22 +8,21 @@ import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
 import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:provider/provider.dart';
-
 import '../style.dart';
 
 class CoffeeShopsListPage extends DrawerPage {
-  CoffeeShopsListPage(Widget drawer) : super(drawer);
-
+  CoffeeShopsListPage(Widget drawer, this.user) : super(drawer);
+  final User user;
   @override
   _CoffeeShopsListPageState createState() => _CoffeeShopsListPageState();
 }
 
 class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
+  User user;
+
   // ignore: close_sinks
   CoffeeShopsBloc _coffeeShopsBloc;
-  User user;
+
   List<CoffeeShop> _currentCoffeeShopList;
 
   @override
@@ -33,53 +32,22 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
     _coffeeShopsBloc.add(GetCoffeeShops());
   }
 
-  @override
-  Widget build(BuildContext context) {
-    user = Provider.of<UserModel>(context).user;
-    return Scaffold(
-      backgroundColor: AppColors.light,
-      drawer: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.transparent,
-        ),
-        child: widget.drawer,
-      ),
-      body: BlocConsumer(
-        bloc: _coffeeShopsBloc,
-        listener: (BuildContext context, state) {
-          if (state is CoffeeShopsLoaded) {
-            setState(() {
-              _currentCoffeeShopList =
-                  _sortAndFilterCoffeeList(state.coffeeShops);
-            });
-          }
-        },
-        builder: (context, state) {
-          if (state is CoffeeShopsLoaded) {
-            return CustomScrollView(
-              slivers: <Widget>[
-                AppBarWithImage(
-                  image: Container(
-                      height: SizeConfig.screenHeight * .2,
-                      child: Image.asset("assets/images/coffee_shop.png")),
-                  actions: coffeeRedemptionWidget(user),
-                  lower: CortadoSearchBar(
-                    onChanged: _onCoffeeSearch,
-                  ),
-                ),
-                CoffeeShopsList(
-                  coffeeShops: _currentCoffeeShopList ??
-                      _sortAndFilterCoffeeList(_coffeeShopsBloc.coffeeShops),
-                  user: user,
-                ),
-              ],
-            );
-          }
-
-          return Center(child: LatteLoader());
-        },
-      ),
-    );
+  _coffeeShopImage() {
+    return Container(
+        height: SizeConfig.screenHeight * .2,
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+                left: SizeConfig.screenWidth * .26,
+                top: SizeConfig.screenHeight * .173,
+                child: Image.asset("assets/images/left_plant.png")),
+            Align(child: Image.asset("assets/images/coffee_shop.png")),
+            Positioned(
+                right: SizeConfig.screenWidth * .35,
+                top: SizeConfig.screenHeight * .176,
+                child: Image.asset("assets/images/right_plant.png")),
+          ],
+        ));
   }
 
   _onCoffeeSearch(dynamic input) {
@@ -120,16 +88,49 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
     return word[0].toUpperCase() + word.substring(1);
   }
 
-  List<CoffeeShop> _sortAndFilterCoffeeList(List<CoffeeShop> coffeeShops) {
-    List<CoffeeShop> sortedAndFilterList;
-    coffeeShops.sort((a, b) => a.currentDistance.compareTo(b.currentDistance));
-    sortedAndFilterList = coffeeShops.where((coffeeShop) {
-      if (coffeeShop.currentDistance > 20.0)
-        return false;
-      else
-        return true;
-    }).toList();
-    return sortedAndFilterList;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.light,
+      drawer: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.transparent,
+        ),
+        child: widget.drawer,
+      ),
+      body: BlocConsumer(
+        bloc: _coffeeShopsBloc,
+        listener: (BuildContext context, state) {
+          if (state is CoffeeShopsLoaded) {
+            setState(() {
+              _currentCoffeeShopList = state.coffeeShops;
+            });
+          }
+        },
+        builder: (context, state) {
+          if (state is CoffeeShopsLoaded) {
+            return CustomScrollView(
+              slivers: <Widget>[
+                AppBarWithImage(
+                  image: _coffeeShopImage(),
+                  actions: coffeeRedemptionWidget(widget.user),
+                  lower: CortadoSearchBar(
+                    onChanged: _onCoffeeSearch,
+                  ),
+                ),
+                CoffeeShopsList(
+                  coffeeShops:
+                      _currentCoffeeShopList ?? _coffeeShopsBloc.coffeeShops,
+                  user: widget.user,
+                ),
+              ],
+            );
+          }
+
+          return Center(child: LatteLoader());
+        },
+      ),
+    );
   }
 }
 

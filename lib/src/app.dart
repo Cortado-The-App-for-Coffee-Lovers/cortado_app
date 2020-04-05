@@ -11,8 +11,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../config.dart';
 
 class App extends StatefulWidget {
+  final Config config;
+
+  const App(prodConfig, {Key key, this.config}) : super(key: key);
   @override
   _AppState createState() => _AppState();
 }
@@ -21,6 +25,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    locator.registerSingleton<Config>(widget.config);
     registerLocatorItems();
   }
 

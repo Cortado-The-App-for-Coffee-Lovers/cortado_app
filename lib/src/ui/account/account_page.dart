@@ -1,23 +1,23 @@
 import 'package:cortado_app/src/bloc/auth/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
+import 'package:cortado_app/src/ui/coffee_shop/coffee_shop_list_page.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
+import 'package:cortado_app/src/ui/widgets/app_bar_with_pic.dart';
+import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
 import 'package:cortado_app/src/ui/widgets/loading_state_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-
 import '../style.dart';
 
 class AccountPage extends DrawerPage {
-  AccountPage(Widget drawer) : super(drawer);
-
+  AccountPage(Widget drawer, this.user) : super(drawer);
+  final User user;
   @override
   _AccountPageState createState() => _AccountPageState();
 }
 
 class _AccountPageState extends State<AccountPage> {
   AuthBloc _authBloc;
-  User user;
 
   @override
   void initState() {
@@ -27,14 +27,9 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserModel>(context).user;
     SizeConfig().init(context);
     return Scaffold(
       backgroundColor: AppColors.light,
-      appBar: AppBar(
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppColors.dark),
-      ),
       drawer: Theme(
         data: Theme.of(context).copyWith(
           // Set the transparency here
@@ -46,33 +41,16 @@ class _AccountPageState extends State<AccountPage> {
       body: Container(
           child: Column(
         children: <Widget>[
-          Container(
-            height: SizeConfig.blockSizeVertical * .175,
-            width: SizeConfig.blockSizeVertical * 1,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Positioned(
-                  top: SizeConfig.safeBlockVertical * .12,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.0),
-                    color: AppColors.dark,
-                    height: 2.0,
-                    width: SizeConfig.safeBlockVertical * .46,
-                  ),
-                ),
-                Center(
-                  child: Container(
-                      width: SizeConfig.blockSizeVertical * .17,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/account.png')))),
-                ),
-              ],
+          CustomScrollView(shrinkWrap: true, slivers: <Widget>[
+            AppBarWithImage(
+              actions: coffeeRedemptionWidget(widget.user),
+              image: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/account.png")))),
+              lower: CortadoSearchBar(),
             ),
-          ),
+          ]),
           Container(
             child: Text(
               "Name:",
@@ -83,7 +61,7 @@ class _AccountPageState extends State<AccountPage> {
             margin: EdgeInsets.all(18.0),
             child: GestureDetector(
               child: Text(
-                user.email,
+                widget.user.email,
                 textAlign: TextAlign.center,
                 style: TextStyles.kAccountTitleTextStyle,
               ),
@@ -113,7 +91,7 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           Text(
-            "Reloads on ${user.reloadDate}",
+            "Reloads on ${widget.user.reloadDate}",
             style: TextStyles.kDefaultDarkTextStyle,
           ),
           Container(

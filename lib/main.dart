@@ -1,3 +1,4 @@
+import 'package:cortado_app/config.dart';
 import 'package:cortado_app/src/app.dart';
 import 'package:cortado_app/src/bloc/auth/bloc.dart';
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
@@ -28,5 +29,11 @@ void main() {
 
       ],
       child: ChangeNotifierProvider(
-          create: (BuildContext context) => UserModel(), child: App())));
+          create: (BuildContext context) => UserModel(), child: App( _ProdConfig()))));
+}
+
+
+class _ProdConfig extends Config {
+  @override
+  String get placesAPIKey => 'AIzaSyDD869xbMke9u828cKhXmoZSUXOghOqMhY';
 }

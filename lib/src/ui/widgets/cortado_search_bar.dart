@@ -7,8 +7,10 @@ class CortadoSearchBar extends StatefulWidget {
   CortadoSearchBar({
     Key key,
     this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
-  final Function onChanged;
+  final Function(String) onChanged;
+  final Function(String) onSubmitted;
 
   @override
   _CortadoSearchBarState createState() => _CortadoSearchBarState();
@@ -23,21 +25,25 @@ class _CortadoSearchBarState extends State<CortadoSearchBar> {
       height: SizeConfig.screenHeight * .1,
       child: Stack(
         children: <Widget>[
-          CortadoInputField(
-            style: TextStyles.kDefaultLightTextStyle,
-            hint: "Search...",
-            hintStyle: TextStyles.kDefaultCreamTextStyle,
-            color: AppColors.cream,
-            isPassword: false,
-            autofocus: false,
-            textAlign: TextAlign.start,
-            enabled: true,
-            textCapitalization: TextCapitalization.sentences,
-            onChanged: widget.onChanged,
+          Padding(
+            padding: EdgeInsets.only(top: SizeConfig.screenHeight * .01),
+            child: CortadoInputField(
+              style: TextStyles.kDefaultLightTextStyle,
+              hint: "Search...",
+              hintStyle: TextStyles.kDefaultCreamTextStyle,
+              color: AppColors.cream,
+              isPassword: false,
+              autofocus: false,
+              textAlign: TextAlign.start,
+              enabled: true,
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: widget.onChanged,
+              onSubmitted: widget.onSubmitted,
+            ),
           ),
           Positioned(
             right: 34,
-            top: 15,
+            top: SizeConfig.screenHeight * .03,
             child: IconButton(
                 icon: Image.asset(
                   "assets/images/icons/my_location.png",

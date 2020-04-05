@@ -21,7 +21,9 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Dark</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>	
+	<true/>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -64,7 +66,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
 </dict>
 </plist>

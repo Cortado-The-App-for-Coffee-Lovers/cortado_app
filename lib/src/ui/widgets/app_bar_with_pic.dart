@@ -7,13 +7,15 @@ class AppBarWithImage extends StatelessWidget implements PreferredSizeWidget {
   @required
   final Widget image;
   final Widget lower;
+  final double imagePadding;
 
-  const AppBarWithImage({
-    Key key,
-    this.actions,
-    this.lower,
-    this.image,
-  }) : super(key: key);
+  const AppBarWithImage(
+      {Key key,
+      this.actions,
+      this.lower,
+      @required this.image,
+      this.imagePadding})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

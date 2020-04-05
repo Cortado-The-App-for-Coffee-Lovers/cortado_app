@@ -1,8 +1,10 @@
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/account/account_page.dart';
 import 'package:cortado_app/src/ui/map/coffee_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import '../coffee_shop/coffee_shop_list_page.dart';
 
 import '../style.dart';
@@ -20,6 +22,7 @@ class DrawerHomePage extends StatefulWidget {
 }
 
 class _DrawerHomePageState extends State<DrawerHomePage> {
+  User user;
   DrawerRoute _currentRoute;
   DrawerPage _currentPage;
 
@@ -39,28 +42,33 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserModel>(context).user;
     Widget drawer = _drawer(context);
 
     switch (_currentRoute) {
       case DrawerRoute.coffeeShops:
         _currentPage = CoffeeShopsListPage(
           drawer,
+          user
         );
         break;
       case DrawerRoute.map:
         _currentPage = CoffeeShopMapPage(
           drawer,
+          user
         );
         break;
       case DrawerRoute.account:
         _currentPage = AccountPage(
           drawer,
+          user
         );
         break;
 
       default:
         _currentPage = CoffeeShopsListPage(
           drawer,
+          user
         );
     }
 

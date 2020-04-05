@@ -122,6 +122,13 @@ flutter:
     - assets/images/piggy_bank.png
     - assets/images/coffee_guard.png
     - assets/images/icons/my_location.png
+    - assets/images/left_plant.png
+    - assets/images/right_plant.png
+
+
+    #Google Map Styling
+    - assets/map_style.txt
+    
 
    
 

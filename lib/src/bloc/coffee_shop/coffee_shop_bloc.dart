@@ -47,6 +47,8 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
 
         _coffeeShops = await coffeeListFromStream(coffeeShopStream);
 
+        _coffeeShops = _sortAndFilterCoffeeList(_coffeeShops);
+
         yield CoffeeShopsLoaded(_coffeeShops);
       } catch (e) {
         yield CoffeeShopsError(kCoffeeShopsLoadingError);
@@ -68,6 +70,18 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     coffeeShop.currentDistance = distance;
 
     return coffeeShop;
+  }
+
+  List<CoffeeShop> _sortAndFilterCoffeeList(List<CoffeeShop> coffeeShops) {
+    List<CoffeeShop> sortedAndFilterList;
+    coffeeShops.sort((a, b) => a.currentDistance.compareTo(b.currentDistance));
+    sortedAndFilterList = coffeeShops.where((coffeeShop) {
+      if (coffeeShop.currentDistance > 20.0)
+        return false;
+      else
+        return true;
+    }).toList();
+    return sortedAndFilterList;
   }
 
   Future<void> _getCurrentLocation() async {
