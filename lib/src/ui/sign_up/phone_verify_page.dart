@@ -1,3 +1,4 @@
+import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import './sign_up_page.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +63,6 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                         end: Alignment.topLeft,
                         stops: [.72, .8, .9]),
                   ),
-                  margin:
-                      EdgeInsets.only(top: SizeConfig.safeBlockVertical * .05),
                   child: Stack(
                     children: <Widget>[
                       Padding(
@@ -97,43 +96,6 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                               color: AppColors.light),
                         ),
                       ),
-                      Positioned(
-                        bottom: 70,
-                        left: 100,
-                        child: Container(
-                          color: AppColors.dark,
-                          child: Column(
-                            children: <Widget>[
-                              LoadingStateButton<SignUpLoadingState>(
-                                bloc: signUpBloc,
-                                button: Container(
-                                  child: GestureDetector(
-                                      child: Text(
-                                        "Continue",
-                                        style: TextStyle(
-                                          fontFamily: kFontFamilyNormal,
-                                          color: AppColors.light,
-                                          fontSize: 28,
-                                        ),
-                                      ),
-                                      onTap: () => signUpBloc.add(
-                                          SignUpVerifyPressed(
-                                              user: widget.user,
-                                              verificationId:
-                                                  widget.verificationId,
-                                              code: _pinController.text))),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(vertical: 8.0),
-                                color: AppColors.light,
-                                height: 1.0,
-                                width: SizeConfig.safeBlockHorizontal * .5,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       Align(
                         alignment: Alignment.topCenter,
                         child: Container(
@@ -163,6 +125,25 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
               ),
             ]),
           ),
+          floatingActionButton: Container(
+            height: 125,
+            padding: EdgeInsets.only(bottom: 30),
+            child: LoadingStateButton<SignUpLoadingState>(
+              bloc: signUpBloc,
+              button: CortadoButton(
+                text: "Continue",
+                onTap: () => signUpBloc.add(
+                  SignUpVerifyPressed(
+                      user: widget.user,
+                      verificationId: widget.verificationId,
+                      code: _pinController.text),
+                ),
+                color: AppColors.light,
+              ),
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         ),
       );
 }

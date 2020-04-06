@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,6 +57,14 @@ class CortadoInputField extends StatefulWidget {
 }
 
 class _CortadoInputFieldState extends State<CortadoInputField> {
+  bool obscure = false;
+
+  @override
+  void initState() {
+    super.initState();
+    obscure = widget.isPassword;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,48 +72,71 @@ class _CortadoInputFieldState extends State<CortadoInputField> {
         horizontal: widget.horizontalPadding ?? 40,
         vertical: 10,
       ),
-      child: TextFormField(
-        cursorColor: widget.color ?? Colors.brown,
-        enabled: widget.enabled,
-        validator: widget.validator,
-        onSaved: widget.onSaved,
-        inputFormatters: widget.inputFormatters,
-        textAlign: widget.textAlign,
-        controller: widget.controller,
-        onFieldSubmitted: widget.onSubmitted,
-        focusNode: widget.focusNode,
-        autofocus: widget.autofocus,
-        textCapitalization: widget.textCapitalization,
-        keyboardType: widget.textInputType,
-        textInputAction: widget.textInputAction,
-        style: widget.style ?? TextStyles.kDefaultTextStyle,
-        obscureText: widget.isPassword,
-        onChanged: widget.onChanged,
-        enableInteractiveSelection: true,
-        readOnly: false,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 8.0, bottom: -10),
-          suffix: widget.suffix,
-          prefixIcon: widget.prefix,
-          hintText: widget.hint,
-          hintStyle: widget.hintStyle ?? TextStyles.kHintTextStyle,
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: widget.color ?? AppColors.dark,
+      child: Stack(
+        children: <Widget>[
+          TextFormField(
+            cursorColor: widget.color ?? Colors.brown,
+            enabled: widget.enabled,
+            validator: widget.validator,
+            onSaved: widget.onSaved,
+            inputFormatters: widget.inputFormatters,
+            textAlign: widget.textAlign,
+            controller: widget.controller,
+            onFieldSubmitted: widget.onSubmitted,
+            focusNode: widget.focusNode,
+            autofocus: widget.autofocus,
+            textCapitalization: widget.textCapitalization,
+            keyboardType: widget.textInputType,
+            textInputAction: widget.textInputAction,
+            style: widget.style ?? TextStyles.kDefaultTextStyle,
+            obscureText: obscure ?? false,
+            onChanged: widget.onChanged,
+            enableInteractiveSelection: true,
+            readOnly: false,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 8.0, bottom: -10),
+              suffix: widget.suffix,
+              prefixIcon: widget.prefix,
+              hintText: widget.hint,
+              hintStyle: widget.hintStyle ?? TextStyles.kHintTextStyle,
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.color ?? AppColors.dark,
+                ),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.color ?? AppColors.dark,
+                ),
+              ),
+              disabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.color ?? AppColors.dark,
+                ),
+              ),
             ),
           ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: widget.color ?? AppColors.dark,
-            ),
-          ),
-          disabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: widget.color ?? AppColors.dark,
-            ),
-          ),
-        ),
+          widget.isPassword
+              ? Positioned(
+                  right: 8,
+                  top: 20,
+                  child: GestureDetector(
+                      child: Icon(Icons.remove_red_eye),
+                      onTap: _toggleObscurity))
+              : SizedBox.shrink()
+        ],
       ),
     );
+  }
+
+  _toggleObscurity() {
+    setState(() {
+      obscure = false;
+    });
+    return Timer(Duration(seconds: 3), () {
+      setState(() {
+        obscure = true;
+      });
+    });
   }
 }

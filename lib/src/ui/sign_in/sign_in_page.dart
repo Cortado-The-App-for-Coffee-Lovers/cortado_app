@@ -71,44 +71,47 @@ class _SignInPageState extends State<SignInPage> {
                             style: TextStyles.kSubtitleTextStyle,
                           ),
                         ]),
-                        Column(
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.only(top: 30),
-                              child: Column(
-                                children: <Widget>[
-                                  CortadoInputField(
-                                    hint: "Email",
-                                    onChanged: (value) => setState(() {
-                                      _email = value;
-                                    }),
-                                    textAlign: TextAlign.start,
-                                    autofocus: false,
-                                    isPassword: false,
-                                    enabled: true,
-                                    textCapitalization:
-                                        TextCapitalization.sentences,
-                                    onSubmitted: (_) {
-                                      FocusScope.of(context)
-                                          .requestFocus(_passwordFocus);
-                                    },
-                                  ),
-                                ],
+                        SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(top: 30),
+                                child: Column(
+                                  children: <Widget>[
+                                    CortadoInputField(
+                                      hint: "Email",
+                                      onChanged: (value) => setState(() {
+                                        _email = value;
+                                      }),
+                                      textAlign: TextAlign.start,
+                                      autofocus: false,
+                                      isPassword: false,
+                                      enabled: true,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      onSubmitted: (_) {
+                                        FocusScope.of(context)
+                                            .requestFocus(_passwordFocus);
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            CortadoInputField(
-                              hint: "Password",
-                              focusNode: _passwordFocus,
-                              onChanged: (value) => setState(() {
-                                _password = value;
-                              }),
-                              textAlign: TextAlign.start,
-                              autofocus: false,
-                              isPassword: true,
-                              enabled: true,
-                              textCapitalization: TextCapitalization.sentences,
-                            ),
-                          ],
+                              CortadoInputField(
+                                hint: "Password",
+                                focusNode: _passwordFocus,
+                                onChanged: (value) => setState(() {
+                                  _password = value;
+                                }),
+                                textAlign: TextAlign.start,
+                                autofocus: false,
+                                isPassword: true,
+                                enabled: true,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                              ),
+                            ],
+                          ),
                         ),
                         Spacer()
                       ]),
@@ -127,8 +130,8 @@ class _SignInPageState extends State<SignInPage> {
                     bloc: _signInBloc,
                     button: CortadoButton(
                         text: "Continue",
-                        onTap: () => _signInBloc
-                            .add(SignInPressed(_email, _password)))),
+                        onTap: () =>
+                            _signInBloc.add(SignInPressed(_email, _password)))),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

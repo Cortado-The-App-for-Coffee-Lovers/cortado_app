@@ -2,7 +2,6 @@ import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../style.dart';
 
 class LoadingStateButton<LoadingState> extends StatelessWidget {
   final dynamic button;
@@ -17,7 +16,7 @@ class LoadingStateButton<LoadingState> extends StatelessWidget {
       builder: (context, state) {
         if (state is LoadingState) {
           return Container(
-            color: AppColors.light,
+            color: Colors.transparent,
             child: Center(child: LatteLoader()),
           );
         }

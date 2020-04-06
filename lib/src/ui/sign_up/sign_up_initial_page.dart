@@ -58,109 +58,116 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                         style: TextStyles.kSubtitleTextStyle,
                       ),
                     ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                    SingleChildScrollView(
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              padding: const EdgeInsets.only(
+                                  top: 30, left: 40, right: 50),
+                              width: SizeConfig.screenWidth * .55,
+                              child: CortadoInputField(
+                                controller: _firstNameController,
+                                textAlign: TextAlign.start,
+                                isPassword: false,
+                                onChanged: (value) => setState(() {}),
+                                horizontalPadding: 0,
+                                hint: "First Name",
+                                enabled: true,
+                                focusNode: _firstNameFocus,
+                                autofocus: false,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                textInputType: TextInputType.text,
+                                onSubmitted: (_) {
+                                  FocusScope.of(context)
+                                      .requestFocus(_lastNameFocus);
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 30, right: 40),
+                                child: CortadoInputField(
+                                  controller: _lastNameController,
+                                  textAlign: TextAlign.start,
+                                  isPassword: false,
+                                  onChanged: (value) => setState(() {}),
+                                  horizontalPadding: 0,
+                                  hint: "Last Name",
+                                  enabled: true,
+                                  focusNode: _lastNameFocus,
+                                  autofocus: false,
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  textInputType: TextInputType.text,
+                                  onSubmitted: (_) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_emailFocus);
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                         Container(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 40, right: 50),
-                          width: SizeConfig.screenWidth * .55,
-                          child: CortadoInputField(
-                            controller: _firstNameController,
-                            textAlign: TextAlign.start,
-                            isPassword: false,
-                            onChanged: (value) => setState(() {}),
-                            horizontalPadding: 0,
-                            hint: "First Name",
-                            enabled: true,
-                            focusNode: _firstNameFocus,
-                            autofocus: false,
-                            textCapitalization: TextCapitalization.sentences,
-                            textInputType: TextInputType.text,
-                            onSubmitted: (_) {
-                              FocusScope.of(context)
-                                  .requestFocus(_lastNameFocus);
-                            },
+                          child: Column(
+                            children: <Widget>[
+                              CortadoInputField(
+                                controller: _emailController,
+                                focusNode: _emailFocus,
+                                hint: "Email",
+                                onChanged: (value) => setState(() {}),
+                                validator: _emailValidator,
+                                textAlign: TextAlign.start,
+                                autofocus: false,
+                                isPassword: false,
+                                enabled: true,
+                                textCapitalization: TextCapitalization.none,
+                                textInputType: TextInputType.emailAddress,
+                                onSubmitted: (_) {
+                                  FocusScope.of(context)
+                                      .requestFocus(_passwordFocus);
+                                },
+                              ),
+                            ],
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 30, right: 40),
-                            child: CortadoInputField(
-                              controller: _lastNameController,
-                              textAlign: TextAlign.start,
-                              isPassword: false,
-                              onChanged: (value) => setState(() {}),
-                              horizontalPadding: 0,
-                              hint: "Last Name",
-                              enabled: true,
-                              focusNode: _lastNameFocus,
-                              autofocus: false,
-                              textCapitalization: TextCapitalization.sentences,
-                              textInputType: TextInputType.text,
-                              onSubmitted: (_) {
-                                FocusScope.of(context)
-                                    .requestFocus(_emailFocus);
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          CortadoInputField(
-                            controller: _emailController,
-                            focusNode: _emailFocus,
-                            hint: "Email",
-                            onChanged: (value) => setState(() {}),
-                            validator: _emailValidator,
-                            textAlign: TextAlign.start,
-                            autofocus: false,
-                            isPassword: false,
-                            enabled: true,
-                            textCapitalization: TextCapitalization.none,
-                            textInputType: TextInputType.emailAddress,
-                            onSubmitted: (_) {
-                              FocusScope.of(context)
-                                  .requestFocus(_passwordFocus);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    CortadoInputField(
-                      controller: _passwordController,
-                      focusNode: _passwordFocus,
-                      hint: "Password",
-                      onChanged: (value) => setState(() {}),
-                      validator: (value) {
-                        if (value.length < 6) {
-                          return "Password must be at least 6 characters in length.";
-                        } else {
-                          return null;
-                        }
-                      },
-                      textAlign: TextAlign.start,
-                      autofocus: false,
-                      isPassword: true,
-                      enabled: true,
-                      textCapitalization: TextCapitalization.sentences,
-                      onSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_retypeFocus);
-                      },
-                    ),
-                    CortadoInputField(
-                      controller: _retypedController,
-                      focusNode: _retypeFocus,
-                      hint: "Retype Password",
-                      onChanged: (value) => setState(() {}),
-                      textAlign: TextAlign.start,
-                      autofocus: false,
-                      isPassword: true,
-                      enabled: true,
-                      textCapitalization: TextCapitalization.sentences,
+                        CortadoInputField(
+                          controller: _passwordController,
+                          focusNode: _passwordFocus,
+                          hint: "Password",
+                          onChanged: (value) => setState(() {}),
+                          validator: (value) {
+                            if (value.length < 6) {
+                              return "Password must be at least 6 characters in length.";
+                            } else {
+                              return null;
+                            }
+                          },
+                          textAlign: TextAlign.start,
+                          autofocus: false,
+                          isPassword: true,
+                          enabled: true,
+                          textCapitalization: TextCapitalization.sentences,
+                          onSubmitted: (_) {
+                            FocusScope.of(context).requestFocus(_retypeFocus);
+                          },
+                        ),
+                        CortadoInputField(
+                          controller: _retypedController,
+                          focusNode: _retypeFocus,
+                          hint: "Retype Password",
+                          onChanged: (value) => setState(() {}),
+                          textAlign: TextAlign.start,
+                          autofocus: false,
+                          isPassword: true,
+                          enabled: true,
+                          textCapitalization: TextCapitalization.sentences,
+                        ),
+                      ]),
                     ),
                   ]),
             ),

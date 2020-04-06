@@ -38,6 +38,7 @@ class _LatteLoaderState extends State<LatteLoader>
         child: Container(
             width: 40,
             decoration: BoxDecoration(
+                color: Colors.transparent,
                 image: DecorationImage(
                     image: AssetImage('assets/images/latte_spin.png')))));
   }

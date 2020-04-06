@@ -45,6 +45,12 @@ class TextStyles {
     color: AppColors.caramel,
   );
 
+  static final TextStyle kDefaultTextSmallStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 16,
+    color: AppColors.caramel,
+  );
+
   static final TextStyle kDefaultSmallTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
     fontSize: 16,

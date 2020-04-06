@@ -1,4 +1,5 @@
 import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
+import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../router.dart';
@@ -115,66 +116,41 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
                             Border.all(width: 0.0, color: Colors.transparent)),
                     margin:
                         EdgeInsets.only(top: SizeConfig.safeBlockVertical * .1),
-                    child: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          bottom: 70,
-                          left: 100,
-                          child: Container(
-                            color: AppColors.dark,
-                            child: Column(
-                              children: <Widget>[
-                                LoadingStateButton<SignUpLoadingState>(
-                                  bloc: signUpBloc,
-                                  button: Container(
-                                    child: GestureDetector(
-                                        child: Text(
-                                          "Continue",
-                                          style: TextStyle(
-                                            fontFamily: kFontFamilyNormal,
-                                            color: AppColors.light,
-                                            fontSize: 28,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            signUpBloc.add(SignUpPhonePressed(
-                                                user: widget.user,
-                                                phone: Format.phoneToE164(
-                                                    _phone)));
-                                          }
-                                        }),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 8.0),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.light,
-                                      border: Border.all(
-                                          width: 0.0, color: AppColors.light)),
-                                  height: 1.0,
-                                  width: SizeConfig.safeBlockHorizontal * .5,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ClipPath(
-                          clipper: PhoneInputClippingClass(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.light,
-                                border: Border.all(
-                                    width: 0.0, color: Colors.transparent)),
-                          ),
-                        )
-                      ],
+                    child: ClipPath(
+                      clipper: PhoneInputClippingClass(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.light,
+                            border: Border.all(
+                                width: 0.0, color: Colors.transparent)),
+                      ),
                     ),
                   ),
                 ),
               ]),
             ),
+            floatingActionButton: Container(
+              color: Colors.transparent,
+              height: 125,
+              padding: EdgeInsets.only(bottom: 30),
+              child: LoadingStateButton<SignUpLoadingState>(
+                bloc: signUpBloc,
+                button: Container(
+                    child: CortadoButton(
+                  color: AppColors.light,
+                  text: "Continue",
+                  onTap: () {
+                    if (_formKey.currentState.validate()) {
+                      signUpBloc.add(SignUpPhonePressed(
+                          user: widget.user,
+                          phone: Format.phoneToE164(_phone)));
+                    }
+                  },
+                )),
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
           ),
         ),
       );

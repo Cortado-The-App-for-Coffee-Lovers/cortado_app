@@ -133,23 +133,3 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
   }
 }
 
-List<Widget> coffeeRedemptionWidget(User user) {
-  return <Widget>[
-    Container(
-      margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
-      child: Row(
-        children: <Widget>[
-          user.redemptionsLeft != null
-              ? Text(user.redemptionsLeft.toString())
-              : Tab(icon: (Image.asset("assets/images/infinity.png"))),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Tab(
-              icon: Image.asset("assets/images/icons/coffee.png"),
-            ),
-          ),
-        ],
-      ),
-    ),
-  ];
-}

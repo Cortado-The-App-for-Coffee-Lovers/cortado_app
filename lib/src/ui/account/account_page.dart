@@ -1,6 +1,5 @@
 import 'package:cortado_app/src/bloc/auth/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
-import 'package:cortado_app/src/ui/coffee_shop/coffee_shop_list_page.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/app_bar_with_pic.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';

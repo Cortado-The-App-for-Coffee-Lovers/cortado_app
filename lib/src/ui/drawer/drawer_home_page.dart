@@ -39,6 +39,8 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
   @override
   void initState() {
     super.initState();
+
+    // initiate coffee shop list request
     _coffeeShopsBloc = BlocProvider.of<CoffeeShopsBloc>(context);
     _coffeeShopsBloc.add(GetCoffeeShops());
   }
@@ -50,29 +52,17 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
 
     switch (_currentRoute) {
       case DrawerRoute.coffeeShops:
-        _currentPage = CoffeeShopsListPage(
-          drawer,
-          user
-        );
+        _currentPage = CoffeeShopsListPage(drawer, user);
         break;
       case DrawerRoute.map:
-        _currentPage = CoffeeShopMapPage(
-          drawer,
-          user
-        );
+        _currentPage = CoffeeShopMapPage(drawer, user);
         break;
       case DrawerRoute.account:
-        _currentPage = AccountPage(
-          drawer,
-          user
-        );
+        _currentPage = AccountPage(drawer, user);
         break;
 
       default:
-        _currentPage = CoffeeShopsListPage(
-          drawer,
-          user
-        );
+        _currentPage = CoffeeShopsListPage(drawer, user);
     }
 
     return _currentPage;
@@ -314,4 +304,25 @@ class CoffeeDrawerClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
+}
+
+List<Widget> coffeeRedemptionWidget(User user) {
+  return <Widget>[
+    Container(
+      margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
+      child: Row(
+        children: <Widget>[
+          user.redemptionsLeft != null
+              ? Text(user.redemptionsLeft.toString())
+              : Tab(icon: (Image.asset("assets/images/infinity.png"))),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Tab(
+              icon: Image.asset("assets/images/icons/coffee.png"),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ];
 }
