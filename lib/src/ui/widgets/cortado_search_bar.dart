@@ -1,6 +1,5 @@
 import 'package:cortado_app/src/ui/widgets/cortado_input_field.dart';
 import 'package:flutter/material.dart';
-
 import '../style.dart';
 
 class CortadoSearchBar extends StatefulWidget {

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
 import 'package:cortado_app/src/constants.dart';
 import 'package:cortado_app/src/data/coffee_shop.dart';
+import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/repositories/coffee_shop_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -12,18 +13,18 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   CoffeeShopRepository coffeeShopRepository;
   Stream<CoffeeShop> coffeeShopStream;
   List<CoffeeShop> _coffeeShops = [];
+  User user;
 
-  Position _currentUserLocation;
   Geolocator geolocator = Geolocator();
 
-  CoffeeShopsBloc(this.coffeeShopRepository) {
+  CoffeeShopsBloc(this.coffeeShopRepository, this.user) {
     _getCurrentLocation();
 
     geolocator
         .getPositionStream(LocationOptions(
             accuracy: LocationAccuracy.best, timeInterval: 1000))
         .listen((position) {
-      _currentUserLocation = position;
+      user.currentLocation = position;
     });
   }
 
@@ -61,8 +62,8 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     GeoPoint coffeeShopCoords = coffeeShop.address['coordinates'];
 
     double distance = await geolocator.distanceBetween(
-        _currentUserLocation.latitude,
-        _currentUserLocation.longitude,
+        user.currentLocation.latitude,
+        user.currentLocation.longitude,
         coffeeShopCoords.latitude,
         coffeeShopCoords.longitude);
 
@@ -86,10 +87,10 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
 
   Future<void> _getCurrentLocation() async {
     try {
-      _currentUserLocation = await geolocator.getCurrentPosition(
+      user.currentLocation = await geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.best);
     } catch (e) {
-      _currentUserLocation = null;
+      user.currentLocation = null;
     }
   }
 

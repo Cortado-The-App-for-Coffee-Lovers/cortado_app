@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class UserModel extends ChangeNotifier {
   User user;
@@ -24,6 +25,7 @@ class User {
   String email;
   int redemptionsLeft;
   DateTime reloadDate;
+  Position currentLocation;
 
   // only temp stored when doing sign up
   String password;
@@ -33,10 +35,8 @@ class User {
   bool termsAgreed = true;
   DocumentReference reference;
 
-  User({
-    this.firebaseUser,
-    this.grade,
-  })  : this.email = firebaseUser?.email,
+  User({this.firebaseUser, this.currentLocation})
+      : this.email = firebaseUser?.email,
         this.phone = firebaseUser?.phoneNumber;
 
   String get id => firebaseUser?.uid;
