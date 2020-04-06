@@ -68,14 +68,14 @@ class _CoffeeShopTileState extends State<CoffeeShopTile> {
                           children: <Widget>[
                             Text(
                               widget.coffeeShop.address['street'] + ',',
-                              style: TextStyles.kDefaultSmallTextStyle,
+                              style: TextStyles.kDefaultSmallTextCaramelStyle,
                             ),
                             Text(
                               widget.coffeeShop.address['city'] +
                                   ',' +
                                   widget.coffeeShop.address['state'] +
                                   widget.coffeeShop.address['zipcode'],
-                              style: TextStyles.kDefaultSmallTextStyle,
+                              style: TextStyles.kDefaultSmallTextCaramelStyle,
                             ),
                           ],
                         ),

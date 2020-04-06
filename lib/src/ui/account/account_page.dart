@@ -2,7 +2,7 @@ import 'package:cortado_app/src/bloc/auth/bloc.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/app_bar_with_pic.dart';
-import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
+import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
 import 'package:cortado_app/src/ui/widgets/loading_state_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,33 +47,33 @@ class _AccountPageState extends State<AccountPage> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/images/account.png")))),
-              lower: CortadoSearchBar(),
+              lower: Container(
+                color: AppColors.dark,
+                height: SizeConfig.screenHeight * .2,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        widget.user.firstName + " " + widget.user.lastName,
+                        style: TextStyles.kAccountNameTextStyle,
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          "Member Since: " +
+                              Format.dateFormatter
+                                  .format(widget.user.createdAt),
+                          style: TextStyles.kDefaultSmallTextStyle,
+                        )),
+                  ],
+                ),
+              ),
             ),
           ]),
           Container(
-            child: Text(
-              "Name:",
-              style: TextStyles.kDefaultDarkTextStyle,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(18.0),
-            child: GestureDetector(
-              child: Text(
-                widget.user.email,
-                textAlign: TextAlign.center,
-                style: TextStyles.kAccountTitleTextStyle,
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.0),
-            color: AppColors.dark,
-            height: 2.0,
-            width: SizeConfig.safeBlockHorizontal * .9,
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 25),
+            padding: EdgeInsets.only(top: 20),
             child: Text(
               "Subscription:",
               style: TextStyles.kDefaultDarkTextStyle,
@@ -81,28 +81,51 @@ class _AccountPageState extends State<AccountPage> {
           ),
           Container(
             margin: EdgeInsets.all(18.0),
-            child: GestureDetector(
-              child: Text(
-                "<Subscription Type>",
-                textAlign: TextAlign.center,
-                style: TextStyles.kAccountTitleTextStyle,
-              ),
+            child: CortadoButton(
+              lineDist: 0,
+              text: getAccountType(),
+              textStyle: TextStyles.kAccountTitleTextStyle,
+              onTap: () {},
             ),
           ),
-          Text(
-            "Reloads on ${widget.user.reloadDate}",
-            style: TextStyles.kDefaultDarkTextStyle,
-          ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
             color: AppColors.dark,
             height: 2.0,
             width: SizeConfig.safeBlockHorizontal * .9,
           ),
+          Container(
+            child: Text(
+              "Money saved:",
+              style: TextStyles.kDefaultDarkTextStyle,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(18.0),
+            child: CortadoButton(
+              lineDist: 0,
+              text: "\$ " + widget.user.moneySaved.toString(),
+              textStyle: TextStyles.kAccountTitleTextStyle,
+              onTap: () {},
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
+            color: AppColors.dark,
+            height: 2.0,
+            width: SizeConfig.safeBlockHorizontal * .9,
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 25),
+            child: Text(
+              "Past redemptions:",
+              style: TextStyles.kDefaultDarkTextStyle,
+            ),
+          ),
         ],
       )),
       floatingActionButton: Container(
-          height: 150,
+          height: 125,
           child: Column(children: <Widget>[
             Center(
               child: LoadingStateButton<AuthLoadingState>(
@@ -129,4 +152,23 @@ class _AccountPageState extends State<AccountPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+
+  getAccountType() {
+    switch (widget.user.cbPlanId) {
+      case "premium-unlimited":
+        return "Premium Unlimited";
+      case "black-unlimited":
+        return "Black Unlimited";
+      case "premium-daily":
+        return "Premium Daily";
+      case "black-daily":
+        return "Black Daily";
+      case "mini-pack":
+        return "Mini Pack";
+      default:
+        return "None";
+    }
+  }
 }
+
+enum AccountType { premium, regular }

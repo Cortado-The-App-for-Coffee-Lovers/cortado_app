@@ -33,6 +33,7 @@ dependencies:
 
   # FORMATTING
   auto_size_text: ^2.1.0
+  intl: ^0.16.1
 
   #UTILITIES
   equatable: ^1.1.0

@@ -26,6 +26,7 @@ class User {
   int redemptionsLeft;
   DateTime reloadDate;
   Position currentLocation;
+  double moneySaved;
 
   // only temp stored when doing sign up
   String password;
@@ -50,12 +51,18 @@ class User {
 
   User.fromData(Map<String, dynamic> data,
       {this.reference, this.firebaseUser}) {
+    firstName = data['firstName'];
+    lastName = data['lastName'];
+    moneySaved = data['moneySaved'];
     termsAgreed = data['termsAgreed'] ?? true;
     phone = data['phone'];
     email = data['email'];
     cbCustomerId = data['cbCustomerId'];
     cbPlanId = data['cbPlanId'];
-    createdAt = data['createdAt'];
+    Timestamp timestamp = data['createdAt'];
+    timestamp = timestamp ?? Timestamp.now();
+    createdAt =
+        DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
     updatedAt = data['updatedAt'];
     isAdmin = data['isAdmin'];
     redemptionsLeft = data['redemptionsLeft'] != null
@@ -66,6 +73,9 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      "firstName": this.firstName,
+      "lastName": this.lastName,
+      "moneySaved": this.moneySaved,
       "termsAgreed": this.termsAgreed,
       "email": this.email,
       "phone": this.phone,

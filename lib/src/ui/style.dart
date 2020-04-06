@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 final kCortadoTheme = ThemeData(
   primaryColor: AppColors.caramel,
@@ -36,6 +37,8 @@ class Format {
 
     return '+1' + formattedPhone;
   }
+
+  static final dateFormatter = DateFormat('yyyy-MM-dd');
 }
 
 class TextStyles {
@@ -52,6 +55,11 @@ class TextStyles {
   );
 
   static final TextStyle kDefaultSmallTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 16,
+    color: AppColors.cream,
+  );
+  static final TextStyle kDefaultSmallTextCaramelStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
     fontSize: 16,
     color: AppColors.caramel,
@@ -120,6 +128,12 @@ class TextStyles {
     fontFamily: kFontFamilyNormal,
     fontSize: 76,
     color: AppColors.light,
+  );
+
+  static final TextStyle kAccountNameTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 46,
+    color: AppColors.cream,
   );
 
   static final TextStyle kContinueTextStyle = TextStyle(
