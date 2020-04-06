@@ -42,7 +42,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
 
     // initiate coffee shop list request
     _coffeeShopsBloc = BlocProvider.of<CoffeeShopsBloc>(context);
-    _coffeeShopsBloc.add(GetCoffeeShops());
+    if (_coffeeShopsBloc.coffeeShops.isEmpty) {
+      _coffeeShopsBloc.add(GetCoffeeShops());
+    }
   }
 
   @override
@@ -112,7 +114,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                       bottom: 0,
                       child: Container(
                           height: SizeConfig.screenHeight * .815,
-                          width: SizeConfig.screenWidth * .685,
+                          width: (SizeConfig.iWidth == IphoneWidth.i414)
+                              ? SizeConfig.screenWidth * .685
+                              : SizeConfig.screenWidth * .56,
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   fit: BoxFit.fitHeight,
@@ -134,7 +138,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                       top: SizeConfig.screenHeight * .1,
                       left: 0,
                       child: Container(
-                        width: SizeConfig.screenWidth * .83,
+                        width: (SizeConfig.iWidth == IphoneWidth.i414)
+                            ? SizeConfig.screenWidth * .83
+                            : SizeConfig.screenWidth * .73,
                         height: SizeConfig.screenHeight * .13,
                         decoration: BoxDecoration(
                             image: DecorationImage(
@@ -144,12 +150,14 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                       ),
                     ),
                     ListView(
-                      padding:
-                          EdgeInsets.only(right: SizeConfig.screenWidth * .24),
+                      padding: (SizeConfig.iWidth == IphoneWidth.i414)
+                          ? EdgeInsets.only(right: SizeConfig.screenWidth * .24)
+                          : EdgeInsets.only(
+                              right: SizeConfig.screenWidth * .35),
                       shrinkWrap: true,
                       children: <Widget>[
                         Container(
-                          height: SizeConfig.screenHeight * .3,
+                          height: SizeConfig.screenHeight * .4,
                         ),
                         GestureDetector(
                           child: Container(
@@ -164,7 +172,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .09),
+                                  left: (SizeConfig.iWidth == IphoneWidth.i414)
+                                      ? SizeConfig.screenWidth * .09
+                                      : SizeConfig.screenWidth * .06),
                               child: Text(
                                 'Coffee Shops',
                                 style: _coffeeShopsSelected
@@ -191,7 +201,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .09),
+                                  left: (SizeConfig.iWidth == IphoneWidth.i414)
+                                      ? SizeConfig.screenWidth * .09
+                                      : SizeConfig.screenWidth * .06),
                               child: Text(
                                 'Coffee Map',
                                 style: _coffeeMapSelected
@@ -218,7 +230,9 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
                               height: SizeConfig.screenHeight * .1,
                               padding: EdgeInsets.only(
                                   top: SizeConfig.screenHeight * .039,
-                                  left: SizeConfig.screenWidth * .09),
+                                  left: (SizeConfig.iWidth == IphoneWidth.i414)
+                                      ? SizeConfig.screenWidth * .09
+                                      : SizeConfig.screenWidth * .06),
                               child: Text(
                                 'My Account',
                                 style: _accountSelected
@@ -309,7 +323,9 @@ class CoffeeDrawerClipper extends CustomClipper<Path> {
 List<Widget> coffeeRedemptionWidget(User user) {
   return <Widget>[
     Container(
-      margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
+      margin: EdgeInsets.only(
+          top: SizeConfig.iWidth == IphoneWidth.i375 ? 10 : 0,
+          right: SizeConfig.screenWidth * .03),
       child: Row(
         children: <Widget>[
           user.redemptionsLeft != null

@@ -45,9 +45,9 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
 
         coffeeShopStream = addDistancesToShops(coffeeShopStream);
 
-        _coffeeShops = await coffeeListFromStream(coffeeShopStream);
+        coffeeShops = await coffeeListFromStream(coffeeShopStream);
 
-        _coffeeShops = _sortAndFilterCoffeeList(_coffeeShops);
+        _coffeeShops = _sortAndFilterCoffeeList(coffeeShops);
 
         yield CoffeeShopsLoaded(_coffeeShops);
       } catch (e) {

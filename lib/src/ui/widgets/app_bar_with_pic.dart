@@ -21,7 +21,7 @@ class AppBarWithImage extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SliverAppBar(
-      expandedHeight: 250,
+      expandedHeight: SizeConfig.iHeight == IphoneHeight.i667 ? 220 : 250,
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

@@ -76,13 +76,13 @@ class TextStyles {
 
   static final TextStyle kCoffeeDrawerTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 28,
+    fontSize: (SizeConfig.iWidth == IphoneWidth.i414) ? 28 : 22,
     color: AppColors.light,
   );
 
   static final TextStyle kCoffeeDrawerSelectedTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 28,
+    fontSize: (SizeConfig.iWidth == IphoneWidth.i414) ? 28 : 22,
     color: AppColors.caramel,
   );
 
@@ -147,12 +147,18 @@ class SizeConfig {
   static double safeBlockHorizontal;
   static double safeBlockVertical;
 
+  static IphoneHeight iHeight;
+  static IphoneWidth iWidth;
+
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
     blockSizeHorizontal = screenWidth;
     blockSizeVertical = screenHeight;
+
+    iHeight = iphoneHeight(screenHeight);
+    iWidth = iphoneWidth(screenWidth);
 
     _safeAreaHorizontal =
         _mediaQueryData.padding.left + _mediaQueryData.padding.right;
@@ -161,7 +167,28 @@ class SizeConfig {
     safeBlockHorizontal = (screenWidth - _safeAreaHorizontal);
     safeBlockVertical = (screenHeight - _safeAreaVertical);
   }
+
+  IphoneWidth iphoneWidth(double screenWidth) {
+    if (screenWidth < 410) {
+      return IphoneWidth.i375;
+    } else {
+      return IphoneWidth.i414;
+    }
+  }
+
+  IphoneHeight iphoneHeight(double screenHeight) {
+    if (screenHeight > 740) {
+      return IphoneHeight.i812;
+    } else if (screenHeight < 730) {
+      return IphoneHeight.i667;
+    } else {
+      return IphoneHeight.i736;
+    }
+  }
 }
+
+enum IphoneWidth { i375, i414 }
+enum IphoneHeight { i812, i736, i667 }
 
 class UsNumberTextInputFormatter extends TextInputFormatter {
   WhitelistingTextInputFormatter formatter =

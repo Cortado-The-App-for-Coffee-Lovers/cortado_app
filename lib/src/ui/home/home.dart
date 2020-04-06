@@ -81,8 +81,13 @@ class _HomePageState extends State<HomePage> {
                                 left: 0,
                                 top: SizeConfig.safeBlockVertical * .18,
                                 child: Container(
-                                  height: SizeConfig.blockSizeVertical * .2,
-                                  width: SizeConfig.safeBlockHorizontal * .21,
+                                  height:
+                                      SizeConfig.iHeight == IphoneHeight.i667
+                                          ? SizeConfig.blockSizeVertical * .15
+                                          : SizeConfig.blockSizeVertical * .2,
+                                  width: SizeConfig.iWidth == IphoneWidth.i375
+                                      ? SizeConfig.safeBlockHorizontal * .15
+                                      : SizeConfig.screenWidth * .23,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
@@ -94,7 +99,9 @@ class _HomePageState extends State<HomePage> {
                                 top: SizeConfig.safeBlockVertical * .07,
                                 child: Container(
                                   height: SizeConfig.safeBlockVertical * .2,
-                                  width: SizeConfig.safeBlockHorizontal * .26,
+                                  width: SizeConfig.iWidth == IphoneWidth.i375
+                                      ? SizeConfig.safeBlockHorizontal * .23
+                                      : SizeConfig.safeBlockHorizontal * .26,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
@@ -105,8 +112,13 @@ class _HomePageState extends State<HomePage> {
                                 right: 0,
                                 bottom: SizeConfig.safeBlockVertical * .05,
                                 child: Container(
-                                  height: SizeConfig.safeBlockVertical * .6,
-                                  width: SizeConfig.safeBlockHorizontal * .35,
+                                  height:
+                                      SizeConfig.iHeight == IphoneHeight.i667
+                                          ? SizeConfig.safeBlockVertical * .5
+                                          : SizeConfig.safeBlockVertical * .6,
+                                  width: SizeConfig.iWidth == IphoneWidth.i375
+                                      ? SizeConfig.safeBlockHorizontal * .29
+                                      : SizeConfig.safeBlockHorizontal * .35,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
@@ -117,7 +129,9 @@ class _HomePageState extends State<HomePage> {
                                 top: 0,
                                 child: Container(
                                   height: SizeConfig.safeBlockVertical * .6,
-                                  width: SizeConfig.safeBlockHorizontal * .9,
+                                  width: SizeConfig.iWidth == IphoneWidth.i375
+                                      ? SizeConfig.safeBlockHorizontal * .6
+                                      : SizeConfig.safeBlockHorizontal * .9,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           fit: BoxFit.fill,
@@ -127,10 +141,14 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Positioned(
                                 left: 0,
-                                bottom: SizeConfig.safeBlockVertical * .3,
+                                bottom: SizeConfig.iHeight == IphoneHeight.i667
+                                    ? SizeConfig.safeBlockVertical * .26
+                                    : SizeConfig.safeBlockVertical * .3,
                                 child: Container(
                                   height: SizeConfig.safeBlockVertical * .2,
-                                  width: SizeConfig.safeBlockHorizontal * .28,
+                                  width: SizeConfig.iWidth == IphoneWidth.i375
+                                      ? SizeConfig.safeBlockHorizontal * .2
+                                      : SizeConfig.safeBlockHorizontal * .28,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
@@ -141,8 +159,13 @@ class _HomePageState extends State<HomePage> {
                                 right: 0,
                                 bottom: SizeConfig.blockSizeVertical * .225,
                                 child: Container(
-                                  height: SizeConfig.blockSizeVertical * .2,
-                                  width: SizeConfig.screenWidth * .23,
+                                  height:
+                                      SizeConfig.iHeight == IphoneHeight.i667
+                                          ? SizeConfig.blockSizeVertical * .15
+                                          : SizeConfig.blockSizeVertical * .2,
+                                  width: SizeConfig.iWidth == IphoneWidth.i375
+                                      ? SizeConfig.safeBlockHorizontal * .15
+                                      : SizeConfig.screenWidth * .23,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(

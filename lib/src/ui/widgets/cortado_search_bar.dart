@@ -43,7 +43,9 @@ class _CortadoSearchBarState extends State<CortadoSearchBar> {
           ),
           Positioned(
             right: 34,
-            top: SizeConfig.screenHeight * .03,
+            top: SizeConfig.iHeight == IphoneHeight.i667
+                ? SizeConfig.screenHeight * .026
+                : SizeConfig.screenHeight * .03,
             child: IconButton(
                 icon: Image.asset(
                   "assets/images/icons/my_location.png",
