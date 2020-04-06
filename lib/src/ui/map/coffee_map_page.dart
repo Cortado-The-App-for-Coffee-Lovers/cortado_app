@@ -43,6 +43,9 @@ class _CoffeeShopMapPageState extends State<CoffeeShopMapPage> {
   _searchGoogleMap(String input) {}
 
   userPositionToLatLng() {
+    if (widget.user.currentLocation == null) {
+      return LatLng(43.073051, -89.401230);
+    }
     return LatLng(widget.user.currentLocation.latitude,
         widget.user.currentLocation.longitude);
   }
