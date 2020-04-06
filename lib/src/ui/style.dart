@@ -59,6 +59,12 @@ class TextStyles {
     fontSize: 16,
     color: AppColors.cream,
   );
+
+  static final TextStyle kDefaultSmallTextDarkStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 16,
+    color: AppColors.dark,
+  );
   static final TextStyle kDefaultSmallTextCaramelStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
     fontSize: 16,
@@ -173,7 +179,7 @@ class SizeConfig {
 
     iHeight = iphoneHeight(screenHeight);
     iWidth = iphoneWidth(screenWidth);
-
+    
     _safeAreaHorizontal =
         _mediaQueryData.padding.left + _mediaQueryData.padding.right;
     _safeAreaVertical =

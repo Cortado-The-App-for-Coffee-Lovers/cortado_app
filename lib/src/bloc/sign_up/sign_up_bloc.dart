@@ -55,6 +55,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       }
     }
 
+    if (event is SignUpEmailPressed) {
+      try {
+        yield SignUpLoadingState();
+        User user = event.user;
+        await _authService.signUpWithVerification(user.email, user.password);
+      } catch (e) {
+        print(e);
+      }
+    }
+
     if (event is SignUpPhonePressed) {
       try {
         yield SignUpLoadingState();

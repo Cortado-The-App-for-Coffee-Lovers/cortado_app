@@ -53,7 +53,7 @@ class User {
       {this.reference, this.firebaseUser}) {
     firstName = data['firstName'];
     lastName = data['lastName'];
-    moneySaved = data['moneySaved'];
+    moneySaved = data['moneySaved'] ?? 0.0;
     termsAgreed = data['termsAgreed'] ?? true;
     phone = data['phone'];
     email = data['email'];
@@ -81,7 +81,8 @@ class User {
       "phone": this.phone,
       "cbCustomerId": this.cbCustomerId,
       "cbPlanId": this.cbPlanId,
-      "createdAt": this.createdAt,
+      "createdAt": this.createdAt ??
+          Timestamp(DateTime.now().millisecondsSinceEpoch ~/ 1000, 0),
       "updatedAt": this.updatedAt,
       "isAdmin": this.isAdmin,
       "redemptionsLeft": this.redemptionsLeft,

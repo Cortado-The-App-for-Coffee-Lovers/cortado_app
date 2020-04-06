@@ -31,9 +31,7 @@ class _AccountPageState extends State<AccountPage> {
       backgroundColor: AppColors.light,
       drawer: Theme(
         data: Theme.of(context).copyWith(
-          // Set the transparency here
-          canvasColor: Colors
-              .transparent, //or any other color you want. e.g Colors.blue.withOpacity(0.5)
+          canvasColor: Colors.transparent,
         ),
         child: widget.drawer,
       ),
@@ -104,7 +102,7 @@ class _AccountPageState extends State<AccountPage> {
             margin: EdgeInsets.all(18.0),
             child: CortadoButton(
               lineDist: 0,
-              text: "\$ " + widget.user.moneySaved.toString(),
+              text: "\$ " + widget.user.moneySaved.toString() ?? "0",
               textStyle: TextStyles.kAccountTitleTextStyle,
               onTap: () {},
             ),

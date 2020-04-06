@@ -14,7 +14,10 @@ class AuthService {
   Future<FirebaseUser> signIn(String email, String password) async {
     AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    return authResult.user;
+    if (authResult.user.isEmailVerified) {
+      return authResult.user;
+    }
+    return null;
   }
 
   Stream<FirebaseUser> listenForUser() {
@@ -35,6 +38,20 @@ class AuthService {
   Future<FirebaseUser> signUp(String email, String password) async {
     AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
+    return authResult.user;
+  }
+
+  Future<FirebaseUser> signUpWithVerification(
+      String email, String password) async {
+    AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    try {
+      await authResult.user.sendEmailVerification();
+    } catch (e) {
+      print("An error occured while trying to send email        verification");
+      print(e.message);
+    }
     return authResult.user;
   }
 

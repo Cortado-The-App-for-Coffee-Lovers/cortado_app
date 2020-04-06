@@ -26,6 +26,12 @@ class SignUpPhonePressed extends SignUpEvent {
   SignUpPhonePressed({this.user, this.phone});
 }
 
+class SignUpEmailPressed extends SignUpEvent{
+  final User user;
+
+  SignUpEmailPressed(this.user);
+}
+
 class SignUpVerifyPressed extends SignUpEvent {
   final User user;
   final String verificationId;

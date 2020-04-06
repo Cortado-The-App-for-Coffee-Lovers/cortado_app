@@ -34,10 +34,9 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.black, //top bar color
-      statusBarIconBrightness: Brightness.dark, //top bar icons
-      //bottom bar color
-      systemNavigationBarIconBrightness: Brightness.dark, //bottom bar icons
+      statusBarColor: Colors.black,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.dark,
     ));
     BlocProvider.of<AuthBloc>(context).add(AppStarted());
     CoffeeShopRepository _coffeeShopRepository = CoffeeShopRepository();
