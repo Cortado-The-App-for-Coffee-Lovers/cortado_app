@@ -29,7 +29,6 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
   void initState() {
     super.initState();
     _coffeeShopsBloc = BlocProvider.of<CoffeeShopsBloc>(context);
-    _coffeeShopsBloc.add(GetCoffeeShops());
   }
 
   _coffeeShopImage() {
@@ -137,7 +136,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
 List<Widget> coffeeRedemptionWidget(User user) {
   return <Widget>[
     Container(
-      margin: const EdgeInsets.only(right: 25.0),
+      margin: EdgeInsets.only(right: SizeConfig.screenWidth * .03),
       child: Row(
         children: <Widget>[
           user.redemptionsLeft != null

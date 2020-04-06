@@ -1,4 +1,5 @@
 import 'package:cortado_app/src/bloc/coffee_shop/bloc.dart';
+import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/account/account_page.dart';
 import 'package:cortado_app/src/ui/map/coffee_map_page.dart';
@@ -23,6 +24,8 @@ class DrawerHomePage extends StatefulWidget {
 
 class _DrawerHomePageState extends State<DrawerHomePage> {
   User user;
+  List<CoffeeShop> coffeeShops;
+
   DrawerRoute _currentRoute;
   DrawerPage _currentPage;
 

@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -143,26 +142,29 @@ class _HomePageState extends State<HomePage> {
                                 bottom: SizeConfig.blockSizeVertical * .225,
                                 child: Container(
                                   height: SizeConfig.blockSizeVertical * .2,
-                                  width: SizeConfig.safeBlockHorizontal * .23,
+                                  width: SizeConfig.screenWidth * .23,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
                                               'assets/images/beans_right.png'))),
                                 ),
                               ),
-                              Positioned(
-                                top: SizeConfig.safeBlockVertical * .4,
-                                left: SizeConfig.safeBlockHorizontal * .12,
-                                child: Column(children: [
-                                  Text(
-                                    "Cortado",
-                                    style: TextStyles.kWelcomeTitleTextStyle,
-                                  ),
-                                  Text(
-                                    "The app for coffee lovers.",
-                                    style: TextStyles.kSubtitleTextStyle,
-                                  ),
-                                ]),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    top: SizeConfig.screenHeight * .4),
+                                alignment: Alignment.bottomCenter,
+                                child: Center(
+                                  child: Column(children: [
+                                    Text(
+                                      "Cortado",
+                                      style: TextStyles.kWelcomeTitleTextStyle,
+                                    ),
+                                    Text(
+                                      "The app for coffee lovers.",
+                                      style: TextStyles.kSubtitleTextStyle,
+                                    ),
+                                  ]),
+                                ),
                               ),
                             ],
                           ),
@@ -181,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                               button: CortadoButton(
                                   text: "Sign Up",
                                   onTap: () =>
-                                      () => signUpBloc.add(SignUpPressed()))),
+                                      signUpBloc.add(SignUpPressed()))),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
