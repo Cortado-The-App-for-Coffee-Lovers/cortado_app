@@ -6,6 +6,7 @@ import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
 import 'package:cortado_app/src/ui/widgets/drink_tile.dart';
 import 'package:cortado_app/src/ui/widgets/loading_state_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 import '../router.dart';
@@ -23,6 +24,7 @@ class CoffeeShopPage extends StatefulWidget {
 class _CoffeeShopPageState extends State<CoffeeShopPage> {
   CoffeeShop coffeeShop;
   User user;
+  String _selectedDrink = "Drink Option #1";
   // ignore: close_sinks
   RedemptionBloc _redemptionBloc;
   @override
@@ -68,130 +70,19 @@ class _CoffeeShopPageState extends State<CoffeeShopPage> {
           ),
         ],
       ),
-      body: Column(children: [
-        CoffeeShopCard(
-          image: coffeeShop.picture,
-          shopName: coffeeShop.name,
-          distance: coffeeShop.currentDistance,
-        ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 20.0,
-                  left: 20.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      coffeeShop.address['street'] + ',',
-                      style: TextStyles.kDefaultSmallTextCaramelStyle,
-                    ),
-                    Text(
-                      coffeeShop.address['city'] +
-                          ',' +
-                          coffeeShop.address['state'] +
-                          coffeeShop.address['zipcode'],
-                      style: TextStyles.kDefaultSmallTextCaramelStyle,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20.0,
-                    right: 20.0,
-                  ),
-                  child: Column(children: [
-                    Text(
-                      "Mon-Fri   " + coffeeShop.hours["Mon-Fri"],
-                      style: TextStyles.kDefaultSmallTextCaramelStyle,
-                    ),
-                    Text(
-                      "Sat     " + coffeeShop.hours["Sat"],
-                      style: TextStyles.kDefaultSmallTextCaramelStyle,
-                    ),
-                    Text(
-                      "Sun    " + coffeeShop.hours["Sun"],
-                      style: TextStyles.kDefaultSmallTextCaramelStyle,
-                    )
-                  ]))
-            ]),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
-          color: AppColors.caramel,
-          height: .5,
-          width: SizeConfig.safeBlockHorizontal * .9,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-              ),
-              child: Text(
-                "Description",
-                style: TextStyles.kDefaultDarkTextStyle,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                left: 20.0,
-              ),
-              child: Text(
-                coffeeShop.description,
-                style: TextStyles.kDefaultSmallTextCaramelStyle,
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
-          color: AppColors.caramel,
-          height: .5,
-          width: SizeConfig.safeBlockHorizontal * .9,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-              ),
-              child: Text(
-                "Available Drinks",
-                style: TextStyles.kDefaultDarkTextStyle,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
-              child: Container(
-                height: SizeConfig.screenHeight * .3,
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: DrinkTile(
-                        title: "Black Coffees",
-                        description: "16 oz Black Coffee",
-                      ),
-                    ),
-                    DrinkTile(
-                      title: "Premium Coffees",
-                      description: "16 oz Latte",
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ]),
+      body: BlocListener(
+          bloc: _redemptionBloc,
+          listener: (context, state) {
+            if (state is RedeemState) {
+              Navigator.of(context).pushNamed(kCoffeeRedemptionRoute,
+                  arguments: [
+                    _redemptionBloc,
+                    coffeeShop.name,
+                    _selectedDrink
+                  ]);
+            }
+          },
+          child: _middleSection()),
       floatingActionButton: Container(
         height: 125,
         padding: EdgeInsets.only(bottom: 30),
@@ -206,5 +97,138 @@ class _CoffeeShopPageState extends State<CoffeeShopPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  _middleSection() {
+    return Column(children: [
+      CoffeeShopCard(
+        image: coffeeShop.picture,
+        shopName: coffeeShop.name,
+        distance: coffeeShop.currentDistance,
+      ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 20.0,
+            left: 20.0,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                coffeeShop.address['street'] + ',',
+                style: TextStyles.kDefaultSmallTextCaramelStyle,
+              ),
+              Text(
+                coffeeShop.address['city'] +
+                    ',' +
+                    coffeeShop.address['state'] +
+                    " " +
+                    coffeeShop.address['zipcode'],
+                style: TextStyles.kDefaultSmallTextCaramelStyle,
+              ),
+            ],
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.only(
+              top: 20.0,
+              right: 20.0,
+            ),
+            child: Column(children: [
+              Text(
+                "Mon-Fri   " + coffeeShop.hours["Mon-Fri"],
+                style: TextStyles.kDefaultSmallTextCaramelStyle,
+              ),
+              Text(
+                "Sat     " + coffeeShop.hours["Sat"],
+                style: TextStyles.kDefaultSmallTextCaramelStyle,
+              ),
+              Text(
+                "Sun    " + coffeeShop.hours["Sun"],
+                style: TextStyles.kDefaultSmallTextCaramelStyle,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 8.0,
+                  bottom: 0,
+                ),
+                child: Text(coffeeShop.phone,
+                    style: TextStyles.kDefaultSmallTextCaramelStyle),
+              )
+            ]))
+      ]),
+      Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
+        color: AppColors.caramel,
+        height: .5,
+        width: SizeConfig.safeBlockHorizontal * .9,
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20.0,
+            ),
+            child: Text(
+              "Description",
+              style: TextStyles.kDefaultDarkTextStyle,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10.0,
+              left: 20.0,
+            ),
+            child: Text(
+              coffeeShop.description,
+              style: TextStyles.kDefaultSmallTextCaramelStyle,
+            ),
+          )
+        ],
+      ),
+      Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
+        color: AppColors.caramel,
+        height: .5,
+        width: SizeConfig.safeBlockHorizontal * .9,
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20.0,
+            ),
+            child: Text(
+              "Available Drinks",
+              style: TextStyles.kDefaultDarkTextStyle,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
+            child: Container(
+              height: SizeConfig.screenHeight * .3,
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: DrinkTile(
+                      title: "Black Coffees",
+                      description: "16 oz Black Coffee",
+                    ),
+                  ),
+                  DrinkTile(
+                    title: "Premium Coffees",
+                    description: "16 oz Latte",
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    ]);
   }
 }

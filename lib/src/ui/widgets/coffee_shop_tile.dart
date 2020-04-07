@@ -74,6 +74,7 @@ class _CoffeeShopTileState extends State<CoffeeShopTile> {
                               widget.coffeeShop.address['city'] +
                                   ',' +
                                   widget.coffeeShop.address['state'] +
+                                  " " +
                                   widget.coffeeShop.address['zipcode'],
                               style: TextStyles.kDefaultSmallTextCaramelStyle,
                             ),

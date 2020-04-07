@@ -1,7 +1,9 @@
+import 'package:cortado_app/src/bloc/redemption/bloc.dart';
 import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 
+import 'coffee_shop/coffee_redemption_page.dart';
 import 'coffee_shop/coffee_shop_page.dart';
 import 'home/home.dart';
 import 'sign_in/sign_in_page.dart';
@@ -21,6 +23,8 @@ const String kPhoneVerifyRoute = '/signup/phone-verify';
 const String kOnBoardingRoute = '/signup/onboarding';
 const String kCoffeeShopsListRoute = '/coffee_shops';
 const String kCoffeeShopRoute = '/coffee_shops/coffee_shop_page';
+const String kCoffeeRedemptionRoute =
+    '/coffee_shops/coffee_shop_page/redemption';
 
 class Router {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -54,7 +58,14 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 DrawerHomePage(initialRoute: DrawerRoute.coffeeShops));
-
+      case kCoffeeRedemptionRoute:
+        return MaterialPageRoute(builder: (_) {
+          List args = settings.arguments;
+          return CoffeeRedemptionPage(
+            CoffeeRedemptionPageArguments(
+                redemptionBloc: args[0], coffeeShop: args[1], drink: args[2]),
+          );
+        });
       case kCoffeeShopRoute:
         return MaterialPageRoute(builder: (_) {
           List args = settings.arguments;
@@ -81,4 +92,13 @@ class CoffeeShopPageArguments {
   final User user;
 
   CoffeeShopPageArguments(this.coffeeShop, this.user);
+}
+
+class CoffeeRedemptionPageArguments {
+  final RedemptionBloc redemptionBloc;
+  final String coffeeShop;
+  final String drink;
+
+  CoffeeRedemptionPageArguments(
+      {this.redemptionBloc, this.coffeeShop, this.drink});
 }

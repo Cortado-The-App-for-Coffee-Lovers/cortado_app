@@ -40,3 +40,5 @@ class SignUpPhoneVerificationComplete extends SignUpState {
 }
 
 class SignUpStart extends SignUpState {}
+
+class SignUpEmailSent extends SignUpState {}

@@ -14,6 +14,7 @@ class AuthService {
   Future<FirebaseUser> signIn(String email, String password) async {
     AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
+      
     if (authResult.user.isEmailVerified) {
       return authResult.user;
     }
@@ -67,11 +68,6 @@ class AuthService {
 
   Future<void> signOut() async {
     return _firebaseAuth.signOut();
-  }
-
-  Future<void> sendEmailVerification() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    user.sendEmailVerification();
   }
 
   Future<bool> isEmailVerified() async {

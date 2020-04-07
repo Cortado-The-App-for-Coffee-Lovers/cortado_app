@@ -34,11 +34,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is AppStarted || event is SignedIn) {
       try {
         var firebaseUser = await _authService.getCurrentFBUser();
+
         if (firebaseUser != null) {
           User user = await _userService.getUser(firebaseUser);
 
           if (user != null) {
-         
             yield SignedInState(user);
           } else {
             yield SignedOutState();

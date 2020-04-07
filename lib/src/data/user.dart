@@ -81,8 +81,7 @@ class User {
       "phone": this.phone,
       "cbCustomerId": this.cbCustomerId,
       "cbPlanId": this.cbPlanId,
-      "createdAt": this.createdAt ??
-          Timestamp(DateTime.now().millisecondsSinceEpoch ~/ 1000, 0),
+      "createdAt": Timestamp(this.createdAt.millisecondsSinceEpoch ~/ 1000, 0),
       "updatedAt": this.updatedAt,
       "isAdmin": this.isAdmin,
       "redemptionsLeft": this.redemptionsLeft,

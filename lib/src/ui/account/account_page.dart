@@ -102,7 +102,9 @@ class _AccountPageState extends State<AccountPage> {
             margin: EdgeInsets.all(18.0),
             child: CortadoButton(
               lineDist: 0,
-              text: "\$ " + widget.user.moneySaved.toString() ?? "0",
+              text: widget.user.moneySaved != null
+                  ? "\$ " + widget.user.moneySaved.toString()
+                  : "0\$",
               textStyle: TextStyles.kAccountTitleTextStyle,
               onTap: () {},
             ),

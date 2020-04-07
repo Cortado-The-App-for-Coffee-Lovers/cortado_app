@@ -4,3 +4,7 @@ import 'package:flutter/material.dart';
 abstract class RedemptionEvent {}
 
 class RedeemPressed extends RedemptionEvent {}
+
+class RedemptionConfirmed extends RedemptionEvent {}
+
+

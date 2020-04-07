@@ -15,7 +15,10 @@ class RedemptionBloc extends Bloc<RedemptionEvent, RedemptionState> {
     RedemptionEvent event,
   ) async* {
     if (event is RedeemPressed){
-      yield RedemptionLoadingState();
+      yield RedeemState();
+    }
+    if (event is RedemptionConfirmed){
+      yield ConfirmedRedemptionState();
     }
   }
 }

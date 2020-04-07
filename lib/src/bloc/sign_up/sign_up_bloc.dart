@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cortado_app/src/bloc/sign_up/bloc.dart';
 import 'package:cortado_app/src/services/user_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import '../../data/user.dart';
 import '../../locator.dart';
@@ -17,7 +18,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   @override
   void onTransition(Transition<SignUpEvent, SignUpState> transition) {
     super.onTransition(transition);
-    print(transition);
+ 
   }
 
   @override
@@ -59,7 +60,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       try {
         yield SignUpLoadingState();
         User user = event.user;
-        await _authService.signUpWithVerification(user.email, user.password);
+        FirebaseUser firebaseUser = await _authService.signUpWithVerification(
+            user.email, user.password);
+        user.firebaseUser = firebaseUser;
+        user.createdAt = DateTime.now();
+        await _userService.saveUser(user);
+        yield SignUpEmailSent();
       } catch (e) {
         print(e);
       }
@@ -141,6 +147,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     await firebaseUser.linkWithCredential(user.phoneAuthCredentials);
     print('_phoneVerified: $firebaseUser');
     user.firebaseUser = firebaseUser;
+    user.createdAt = DateTime.now();
     user = await _userService.saveUser(user);
     return user;
   }

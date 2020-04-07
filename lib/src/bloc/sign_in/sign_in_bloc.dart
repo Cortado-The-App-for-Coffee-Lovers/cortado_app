@@ -31,11 +31,15 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       try {
         FirebaseUser firebaseUser =
             await _authService.signIn(event.email, event.password);
-        User user = await _userService.getUser(firebaseUser);
-        if (firebaseUser != null && user != null) {
-          authBloc.add(SignedIn());
+        if (firebaseUser == null) {
+          yield SignInErrorState(kEmailNotVerifiedError);
         } else {
-          yield SignInErrorState(kGenericSignInError);
+          User user = await _userService.getUser(firebaseUser);
+          if (firebaseUser != null && user != null) {
+            authBloc.add(SignedIn());
+          } else {
+            yield SignInErrorState(kGenericSignInError);
+          }
         }
       } catch (e) {
         print(e);

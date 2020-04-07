@@ -15,7 +15,7 @@ final kCortadoTheme = ThemeData(
 
 const String kFontFamilyNormal = 'Mermaid';
 
-class AppColors {
+class AppColors {   
   AppColors._();
   static const Color light = Color(0xFFFFF6EE);
   static const Color cream = Color(0xFFEDCAA6);
@@ -85,6 +85,11 @@ class TextStyles {
   static final TextStyle kDefaultCreamTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
     fontSize: 24,
+    color: AppColors.cream,
+  );
+   static final TextStyle kLargeCreamTextStyle = TextStyle(
+    fontFamily: kFontFamilyNormal,
+    fontSize: 28,
     color: AppColors.cream,
   );
 
@@ -179,7 +184,7 @@ class SizeConfig {
 
     iHeight = iphoneHeight(screenHeight);
     iWidth = iphoneWidth(screenWidth);
-    
+
     _safeAreaHorizontal =
         _mediaQueryData.padding.left + _mediaQueryData.padding.right;
     _safeAreaVertical =

@@ -165,21 +165,21 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
 
     return null;
   }
-}
 
-_emailButton(BuildContext context) {
-  return ButtonTheme(
-    minWidth: 10,
-    child: FlatButton(
-        padding: EdgeInsets.zero,
-        onPressed: () => {},
-        child: Text("email.",
-            style: TextStyle(
-                color: AppColors.caramel,
-                fontSize: 20,
-                fontFamily: kFontFamilyNormal,
-                decoration: TextDecoration.underline))),
-  );
+  _emailButton(BuildContext context) {
+    return ButtonTheme(
+      minWidth: 10,
+      child: FlatButton(
+          padding: EdgeInsets.zero,
+          onPressed: () => signUpBloc.add(SignUpEmailPressed(widget.user)),
+          child: Text("email.",
+              style: TextStyle(
+                  color: AppColors.caramel,
+                  fontSize: 20,
+                  fontFamily: kFontFamilyNormal,
+                  decoration: TextDecoration.underline))),
+    );
+  }
 }
 
 class PhoneInputClippingClass extends CustomClipper<Path> {

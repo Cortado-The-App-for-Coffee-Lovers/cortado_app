@@ -68,7 +68,7 @@ class _CoffeeShopMapPageState extends State<CoffeeShopMapPage> {
 
   void setCustomMapPin() async {
     final Uint8List markerIcon = await getBytesFromAsset(
-        'assets/images/icons/white_coffee_bean.png', 100);
+        'assets/images/icons/white_coffee_bean.png', 50);
     pinLocationIcon = BitmapDescriptor.fromBytes(markerIcon);
   }
 
