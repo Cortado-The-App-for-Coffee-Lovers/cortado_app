@@ -5,6 +5,7 @@ import 'package:cortado_app/src/ui/coffee_shop/coffee_shop_list.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/app_bar_with_pic.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
+import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../style.dart';
@@ -109,23 +110,42 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
               });
             }
           },
-          child: CustomScrollView(
-            slivers: <Widget>[
-              AppBarWithImage(
-                image: _coffeeShopImage(),
-                actions: coffeeRedemptionWidget(widget.user),
-                lower: CortadoSearchBar(
-                  onChanged: _onCoffeeSearch,
-                ),
-              ),
-              CoffeeShopsList(
-                coffeeShops: _currentCoffeeShopMap.isNotEmpty
-                    ? _currentCoffeeShopMap.values.toList()
-                    : _coffeeShopsBloc.coffeeMap.values.toList(),
-                user: widget.user,
-              ),
-            ],
-          )),
+          child: _coffeeShopsBloc.coffeeMap.isNotEmpty
+              ? CustomScrollView(
+                  slivers: <Widget>[
+                    AppBarWithImage(
+                      image: _coffeeShopImage(),
+                      actions: coffeeRedemptionWidget(widget.user),
+                      lower: CortadoSearchBar(
+                        onChanged: _onCoffeeSearch,
+                      ),
+                    ),
+                    CoffeeShopsList(
+                      coffeeShops: _currentCoffeeShopMap.isNotEmpty
+                          ? _currentCoffeeShopMap.values.toList()
+                          : _coffeeShopsBloc.coffeeMap.values.toList(),
+                      user: widget.user,
+                    ),
+                  ],
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: CustomScrollView(slivers: <Widget>[
+                          AppBarWithImage(
+                            image: _coffeeShopImage(),
+                            actions: coffeeRedemptionWidget(widget.user),
+                            lower: CortadoSearchBar(
+                              onChanged: _onCoffeeSearch,
+                            ),
+                          ),
+                        ]),
+                      ),
+                    ),
+                    Expanded(child: Center(child: LatteLoader()))
+                  ],
+                )),
     );
   }
 }

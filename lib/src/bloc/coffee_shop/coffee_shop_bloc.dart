@@ -18,7 +18,7 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
       coffeeMap.addAll({coffeeShop.currentDistance: coffeeShop});
     });
 
-    coffeeSubject.stream.transform(_transformCoffeeShops()).pipe(_coffeeOutput);
+    
 
     geolocator
         .getPositionStream(LocationOptions(
