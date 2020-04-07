@@ -1,6 +1,7 @@
 import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
+import 'package:cortado_app/src/ui/widgets/loading_container.dart';
 import 'package:flutter/material.dart';
 
 import '../style.dart';
@@ -27,6 +28,7 @@ class _CoffeeShopsListState extends State<CoffeeShopsList> {
       (BuildContext context, int index) {
         final int itemIndex = index ~/ 2;
         if (index.isEven) {
+          if (widget.coffeeShops[itemIndex] == null) return LoadingContainer();
           return CoffeeShopTile(
               coffeeShop: widget.coffeeShops[itemIndex], user: widget.user);
         }

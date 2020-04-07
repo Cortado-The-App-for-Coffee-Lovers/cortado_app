@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
     AuthBloc authbloc = BlocProvider.of<AuthBloc>(context);
     // ignore: close_sinks
     SignUpBloc signUpBloc = BlocProvider.of<SignUpBloc>(context);
+
     SizeConfig().init(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,

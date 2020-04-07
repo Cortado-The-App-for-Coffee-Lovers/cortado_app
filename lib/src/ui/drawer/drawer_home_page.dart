@@ -42,9 +42,7 @@ class _DrawerHomePageState extends State<DrawerHomePage> {
 
     // initiate coffee shop list request
     _coffeeShopsBloc = BlocProvider.of<CoffeeShopsBloc>(context);
-    if (_coffeeShopsBloc.coffeeShops.isEmpty) {
-      _coffeeShopsBloc.add(GetCoffeeShops());
-    }
+    _coffeeShopsBloc.add(GetCoffeeShops());
   }
 
   @override

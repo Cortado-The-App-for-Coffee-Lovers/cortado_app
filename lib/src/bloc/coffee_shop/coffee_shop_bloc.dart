@@ -8,17 +8,17 @@ import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/repositories/coffee_shop_repository.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:sortedmap/sortedmap.dart';
 
 class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
-  CoffeeShopRepository coffeeShopRepository;
-  Stream<CoffeeShop> coffeeShopStream;
-  List<CoffeeShop> _coffeeShops = [];
-  User user;
-
-  Geolocator geolocator = Geolocator();
-
   CoffeeShopsBloc(this.coffeeShopRepository, this.user) {
     _getCurrentLocation();
+    coffeeSubject.listen((coffeeShop) {
+      coffeeMap.addAll({coffeeShop.currentDistance: coffeeShop});
+    });
+
+    coffeeSubject.stream.transform(_transformCoffeeShops()).pipe(_coffeeOutput);
 
     geolocator
         .getPositionStream(LocationOptions(
@@ -28,8 +28,19 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     });
   }
 
+  SortedMap<double, CoffeeShop> coffeeMap = SortedMap(Ordering.byKey());
+  CoffeeShopRepository coffeeShopRepository;
+  var coffeeSubject = PublishSubject<CoffeeShop>();
+  final _coffeeOutput = BehaviorSubject<Map<double, CoffeeShop>>();
+
+  Geolocator geolocator = Geolocator();
+  User user;
+
   @override
   CoffeeShopState get initialState => CoffeeShopInitial();
+
+  ValueStream<Map<double, CoffeeShop>> get coffeeMapStream =>
+      _coffeeOutput.stream;
 
   @override
   Stream<CoffeeShopState> mapEventToState(
@@ -37,27 +48,35 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   ) async* {
     List<CoffeeShop> coffeeShops;
 
-    if (event is GetCoffeeShops) {
+    if (event is GetCoffeeShops && coffeeMap.isEmpty) {
+      print("hellow");
+
       yield CoffeeShopsLoadingState();
       try {
         await _getCurrentLocation();
         coffeeShops = await coffeeShopRepository.read();
+
         Stream<CoffeeShop> coffeeShopStream = Stream.fromIterable(coffeeShops);
 
         coffeeShopStream = addDistancesToShops(coffeeShopStream);
 
         coffeeShops = await coffeeListFromStream(coffeeShopStream);
 
-        _coffeeShops = _sortAndFilterCoffeeList(coffeeShops);
-
-        yield CoffeeShopsLoaded(_coffeeShops);
+        yield CoffeeShopsLoaded();
       } catch (e) {
         yield CoffeeShopsError(kCoffeeShopsLoadingError);
       }
     }
   }
 
-  List<CoffeeShop> get coffeeShops => _coffeeShops;
+  _transformCoffeeShops() {
+    return ScanStreamTransformer(
+        (Map<double, CoffeeShop> cache, CoffeeShop coffeeShop, index) {
+      cache[coffeeShop.currentDistance] = coffeeShop;
+      return cache;
+    }, <double, CoffeeShop>{});
+  }
+
   Future<CoffeeShop> _getUserDistance(CoffeeShop coffeeShop) async {
     GeoPoint coffeeShopCoords = coffeeShop.address['coordinates'];
 
@@ -71,18 +90,6 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     coffeeShop.currentDistance = distance;
 
     return coffeeShop;
-  }
-
-  List<CoffeeShop> _sortAndFilterCoffeeList(List<CoffeeShop> coffeeShops) {
-    List<CoffeeShop> sortedAndFilterList;
-    coffeeShops.sort((a, b) => a.currentDistance.compareTo(b.currentDistance));
-    sortedAndFilterList = coffeeShops.where((coffeeShop) {
-      if (coffeeShop.currentDistance > 20.0)
-        return false;
-      else
-        return true;
-    }).toList();
-    return sortedAndFilterList;
   }
 
   Future<void> _getCurrentLocation() async {
@@ -99,6 +106,8 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     CoffeeShop updatedCoffeeShop;
     await for (CoffeeShop coffeeShop in coffeeShops) {
       updatedCoffeeShop = await _getUserDistance(coffeeShop);
+      coffeeMap.addAll({updatedCoffeeShop.currentDistance: updatedCoffeeShop});
+      coffeeSubject.add(updatedCoffeeShop);
       yield updatedCoffeeShop;
     }
   }

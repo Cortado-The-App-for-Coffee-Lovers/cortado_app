@@ -53,7 +53,7 @@ class _CoffeeShopMapPageState extends State<CoffeeShopMapPage> {
   void initCoffeeShopMarkers() {
     Set<Marker> coffeeShopMarkers = Set();
     Marker coffeeShopMarker;
-    _coffeeShopsBloc.coffeeShops.forEach((coffeeShop) {
+    _coffeeShopsBloc.coffeeMap.values.forEach((coffeeShop) {
       GeoPoint coffeeShopCoords = coffeeShop.address['coordinates'];
       LatLng coffeeShopPosition =
           LatLng(coffeeShopCoords.latitude, coffeeShopCoords.longitude);

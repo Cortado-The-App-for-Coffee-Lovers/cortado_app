@@ -5,14 +5,15 @@ import 'package:cortado_app/src/ui/coffee_shop/coffee_shop_list.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/app_bar_with_pic.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
-import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../style.dart';
 
 class CoffeeShopsListPage extends DrawerPage {
   CoffeeShopsListPage(Widget drawer, this.user) : super(drawer);
+
   final User user;
+
   @override
   _CoffeeShopsListPageState createState() => _CoffeeShopsListPageState();
 }
@@ -23,7 +24,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
   // ignore: close_sinks
   CoffeeShopsBloc _coffeeShopsBloc;
 
-  List<CoffeeShop> _currentCoffeeShopList;
+  Map<double, CoffeeShop> _currentCoffeeShopMap = {};
 
   @override
   void initState() {
@@ -51,19 +52,21 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
 
   _onCoffeeSearch(dynamic input) {
     setState(() {
-      _currentCoffeeShopList = _updateCoffeeShopsList(input);
+      _currentCoffeeShopMap = _updateCoffeeShopsMap(input);
     });
   }
 
-  _updateCoffeeShopsList(String input) {
+  _updateCoffeeShopsMap(String input) {
     int len = input.length;
     String name;
     List<String> splitName;
-    List<CoffeeShop> filteredCoffeeShops;
+    Map<double, CoffeeShop> filteredCoffeeShops =
+        Map.from(_coffeeShopsBloc.coffeeMap);
+
     String inputUpper;
 
     if (input == '') {
-      return _coffeeShopsBloc.coffeeShops;
+      return _coffeeShopsBloc.coffeeMap;
     } else {
       splitName = input.split(' ');
 
@@ -73,11 +76,11 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
         inputUpper = capitalize(input);
       }
 
-      filteredCoffeeShops = _coffeeShopsBloc.coffeeShops.where((coffeeShop) {
+      filteredCoffeeShops.removeWhere((k, coffeeShop) {
         name = coffeeShop.name;
-        return (name.substring(0, len) == input ||
-            name.substring(0, len) == inputUpper);
-      }).toList();
+        return (name.substring(0, len) != input ||
+            name.substring(0, len) != inputUpper);
+      });
 
       return filteredCoffeeShops;
     }
@@ -97,39 +100,32 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
         ),
         child: widget.drawer,
       ),
-      body: BlocConsumer(
-        bloc: _coffeeShopsBloc,
-        listener: (BuildContext context, state) {
-          if (state is CoffeeShopsLoaded) {
-            setState(() {
-              _currentCoffeeShopList = state.coffeeShops;
-            });
-          }
-        },
-        builder: (context, state) {
-          if (state is CoffeeShopsLoaded) {
-            return CustomScrollView(
-              slivers: <Widget>[
-                AppBarWithImage(
-                  image: _coffeeShopImage(),
-                  actions: coffeeRedemptionWidget(widget.user),
-                  lower: CortadoSearchBar(
-                    onChanged: _onCoffeeSearch,
-                  ),
+      body: BlocListener(
+          bloc: _coffeeShopsBloc,
+          listener: (BuildContext context, state) {
+            if (state is CoffeeShopsLoaded) {
+              setState(() {
+                _currentCoffeeShopMap = _coffeeShopsBloc.coffeeMap;
+              });
+            }
+          },
+          child: CustomScrollView(
+            slivers: <Widget>[
+              AppBarWithImage(
+                image: _coffeeShopImage(),
+                actions: coffeeRedemptionWidget(widget.user),
+                lower: CortadoSearchBar(
+                  onChanged: _onCoffeeSearch,
                 ),
-                CoffeeShopsList(
-                  coffeeShops:
-                      _currentCoffeeShopList ?? _coffeeShopsBloc.coffeeShops,
-                  user: widget.user,
-                ),
-              ],
-            );
-          }
-
-          return Center(child: LatteLoader());
-        },
-      ),
+              ),
+              CoffeeShopsList(
+                coffeeShops: _currentCoffeeShopMap.isNotEmpty
+                    ? _currentCoffeeShopMap.values.toList()
+                    : _coffeeShopsBloc.coffeeMap.values.toList(),
+                user: widget.user,
+              ),
+            ],
+          )),
     );
   }
 }
-

@@ -49,6 +49,8 @@ dependencies:
   #BLOC and PROVIDER
   flutter_bloc: ^3.2.0
   provider: ^4.0.4
+  rxdart: ^0.23.1
+  sortedmap: ^0.4.2+1
   
  
   # FIREBASE
