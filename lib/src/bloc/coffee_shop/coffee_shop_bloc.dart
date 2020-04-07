@@ -18,8 +18,6 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
       coffeeMap.addAll({coffeeShop.currentDistance: coffeeShop});
     });
 
-    
-
     geolocator
         .getPositionStream(LocationOptions(
             accuracy: LocationAccuracy.best, timeInterval: 1000))
@@ -49,8 +47,6 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     List<CoffeeShop> coffeeShops;
 
     if (event is GetCoffeeShops && coffeeMap.isEmpty) {
-      print("hellow");
-
       yield CoffeeShopsLoadingState();
       try {
         await _getCurrentLocation();

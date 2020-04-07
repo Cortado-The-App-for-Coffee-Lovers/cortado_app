@@ -16,9 +16,13 @@ class CoffeeShopsList extends StatefulWidget {
 }
 
 class _CoffeeShopsListState extends State<CoffeeShopsList> {
+  List<CoffeeShop> filteredList;
   @override
   void initState() {
     super.initState();
+    filteredList = widget.coffeeShops
+        .where((coffeeShop) => coffeeShop.currentDistance < 20.0)
+        .toList();
   }
 
   @override
@@ -28,9 +32,9 @@ class _CoffeeShopsListState extends State<CoffeeShopsList> {
       (BuildContext context, int index) {
         final int itemIndex = index ~/ 2;
         if (index.isEven) {
-          if (widget.coffeeShops[itemIndex] == null) return LoadingContainer();
+          if (filteredList[itemIndex] == null) return LoadingContainer();
           return CoffeeShopTile(
-              coffeeShop: widget.coffeeShops[itemIndex], user: widget.user);
+              coffeeShop: filteredList[itemIndex], user: widget.user);
         }
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 16.0),
@@ -39,7 +43,7 @@ class _CoffeeShopsListState extends State<CoffeeShopsList> {
           width: SizeConfig.safeBlockHorizontal * .9,
         );
       },
-      childCount: (widget.coffeeShops.length * 2) - 1,
+      childCount: (filteredList.length * 2) - 1,
     ));
   }
 }
