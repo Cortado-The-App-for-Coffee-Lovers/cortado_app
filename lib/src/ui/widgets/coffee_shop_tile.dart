@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/style.dart';
@@ -36,10 +37,11 @@ class _CoffeeShopTileState extends State<CoffeeShopTile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
+                      width: SizeConfig.screenWidth * .7,
                       padding:
                           EdgeInsets.only(top: 12.0, left: 8.0, bottom: 8.0),
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: AutoSizeText(
                         widget.coffeeShop.name,
                         softWrap: true,
                         style: TextStyle(

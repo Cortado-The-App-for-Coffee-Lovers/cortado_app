@@ -117,13 +117,10 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                     builder: (context,
                         AsyncSnapshot<SortedMap<double, CoffeeShop>> snapshot) {
                       if (snapshot.hasData) {
-                        List<CoffeeShop> filteredList = snapshot.data.values
-                            .toList()
-                            .where((coffeeShop) =>
-                                coffeeShop.currentDistance < 20.0)
-                            .toList();
+                        List<CoffeeShop> list = snapshot.data.values.toList();
+
                         return CoffeeShopsList(
-                            coffeeShops: filteredList, user: widget.user);
+                            coffeeShops: list, user: widget.user);
                       }
 
                       return SliverToBoxAdapter(
