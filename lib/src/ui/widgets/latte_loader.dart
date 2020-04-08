@@ -37,6 +37,7 @@ class _LatteLoaderState extends State<LatteLoader>
         turns: Tween(begin: 0.0, end: 1.0).animate(controller),
         child: Container(
             width: 40,
+            height: 40,
             decoration: BoxDecoration(
                 color: Colors.transparent,
                 image: DecorationImage(

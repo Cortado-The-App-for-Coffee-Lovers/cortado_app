@@ -14,10 +14,7 @@ import 'package:sortedmap/sortedmap.dart';
 class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   CoffeeShopsBloc(this.coffeeShopRepository, this.user) {
     _getCurrentLocation();
-    coffeeSubject.listen((coffeeShop) {
-      coffeeMap.addAll({coffeeShop.currentDistance: coffeeShop});
-    });
-
+    coffeeSubject.transform(_transformCoffeeShops()).pipe(_coffeeOutput);
     geolocator
         .getPositionStream(LocationOptions(
             accuracy: LocationAccuracy.best, timeInterval: 1000))
@@ -68,7 +65,11 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   _transformCoffeeShops() {
     return ScanStreamTransformer(
         (Map<double, CoffeeShop> cache, CoffeeShop coffeeShop, index) {
-      cache[coffeeShop.currentDistance] = coffeeShop;
+      if (coffeeShop.currentDistance < 20) {
+        cache[coffeeShop.currentDistance] = coffeeShop;
+        coffeeMap.addAll({coffeeShop.currentDistance: coffeeShop});
+      }
+
       return cache;
     }, <double, CoffeeShop>{});
   }

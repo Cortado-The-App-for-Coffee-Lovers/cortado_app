@@ -4,8 +4,10 @@ import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/coffee_shop/coffee_shop_list.dart';
 import 'package:cortado_app/src/ui/drawer/drawer_home_page.dart';
 import 'package:cortado_app/src/ui/widgets/app_bar_with_pic.dart';
+import 'package:cortado_app/src/ui/widgets/coffee_shop_tile.dart';
 import 'package:cortado_app/src/ui/widgets/cortado_search_bar.dart';
 import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
+import 'package:cortado_app/src/ui/widgets/loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../style.dart';
@@ -94,58 +96,53 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.light,
-      drawer: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.transparent,
+        backgroundColor: AppColors.light,
+        drawer: Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.transparent,
+          ),
+          child: widget.drawer,
         ),
-        child: widget.drawer,
-      ),
-      body: BlocListener(
-          bloc: _coffeeShopsBloc,
-          listener: (BuildContext context, state) {
-            if (state is CoffeeShopsLoaded) {
-              setState(() {
-                _currentCoffeeShopMap = _coffeeShopsBloc.coffeeMap;
-              });
-            }
-          },
-          child: _coffeeShopsBloc.coffeeMap.isNotEmpty
-              ? CustomScrollView(
-                  slivers: <Widget>[
-                    AppBarWithImage(
-                      image: _coffeeShopImage(),
-                      actions: coffeeRedemptionWidget(widget.user),
-                      lower: CortadoSearchBar(
-                        onChanged: _onCoffeeSearch,
-                      ),
-                    ),
-                    CoffeeShopsList(
-                      coffeeShops: _currentCoffeeShopMap.isNotEmpty
-                          ? _currentCoffeeShopMap.values.toList()
-                          : _coffeeShopsBloc.coffeeMap.values.toList(),
-                      user: widget.user,
-                    ),
-                  ],
-                )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        child: CustomScrollView(slivers: <Widget>[
-                          AppBarWithImage(
-                            image: _coffeeShopImage(),
-                            actions: coffeeRedemptionWidget(widget.user),
-                            lower: CortadoSearchBar(
-                              onChanged: _onCoffeeSearch,
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ),
-                    Expanded(child: Center(child: LatteLoader()))
-                  ],
-                )),
-    );
+        body: CustomScrollView(
+          slivers: <Widget>[
+            AppBarWithImage(
+              image: _coffeeShopImage(),
+              actions: coffeeRedemptionWidget(widget.user),
+              lower: CortadoSearchBar(
+                onChanged: _onCoffeeSearch,
+              ),
+            ),
+            _currentCoffeeShopMap.isEmpty
+                ? StreamBuilder(
+                    stream: _coffeeShopsBloc.coffeeMapStream,
+                    builder: (context,
+                        AsyncSnapshot<Map<double, CoffeeShop>> snapshot) {
+                      if (snapshot.hasData) {
+                        List<CoffeeShop> filteredList = snapshot.data.values
+                            .toList()
+                            .where((coffeeShop) =>
+                                coffeeShop.currentDistance < 20.0)
+                            .toList();
+                        return CoffeeShopsList(
+                            coffeeShops: filteredList, user: widget.user);
+                      }
+
+                      return SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.screenHeight * .2),
+                          child: Container(
+                              constraints:
+                                  BoxConstraints.tight(Size.fromHeight(40)),
+                              child: LatteLoader()),
+                        ),
+                      );
+                    },
+                  )
+                : CoffeeShopsList(
+                    coffeeShops: _currentCoffeeShopMap.values.toList(),
+                    user: widget.user)
+          ],
+        ));
   }
 }

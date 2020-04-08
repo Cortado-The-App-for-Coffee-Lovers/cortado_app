@@ -66,8 +66,11 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                   child: Stack(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 200, horizontal: 70),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 200,
+                            horizontal: SizeConfig.iWidth == IphoneWidth.i375
+                                ? 50
+                                : 70),
                         child: PinCodeTextField(
                           textStyle: TextStyle(color: AppColors.light),
                           backgroundColor: AppColors.dark,
@@ -77,6 +80,7 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
                           selectedColor: AppColors.light,
                           controller: _pinController,
                           length: 6,
+                          textInputType: TextInputType.phone,
                           obsecureText: false,
                           animationType: AnimationType.fade,
                           shape: PinCodeFieldShape.box,
@@ -126,7 +130,7 @@ class _PhoneVerifyPageState extends SignUpPageState<PhoneVerifyPage> {
             ]),
           ),
           floatingActionButton: Container(
-            height: 125,
+            height: SizeConfig.iWidth == IphoneWidth.i375 ? 75 : 125,
             padding: EdgeInsets.only(bottom: 30),
             child: LoadingStateButton<SignUpLoadingState>(
               bloc: signUpBloc,

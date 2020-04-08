@@ -6,11 +6,13 @@ class OnBoardingCard extends StatelessWidget {
   final Color backgroundColor;
   final Widget image;
   final String title;
+  final double fontSize;
 
   OnBoardingCard({
     this.backgroundColor,
     @required this.image,
     @required this.title,
+    this.fontSize,
   });
 
   @override
@@ -38,7 +40,7 @@ class OnBoardingCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: kFontFamilyNormal,
-                fontSize: 34,
+                fontSize: fontSize ?? 34,
                 color: AppColors.light,
               ),
             ),

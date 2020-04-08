@@ -1,4 +1,5 @@
 import 'package:cortado_app/src/ui/widgets/cortado_button.dart';
+import 'package:keyboard_avoider/keyboard_avoider.dart';
 
 import '../../data/user.dart';
 
@@ -41,24 +42,27 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
           extendBody: true,
           resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.light,
-          body: Form(
-            key: _formKey,
+          body: KeyboardAvoider(
+            autoScroll: true,
             child: Container(
-              padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * .21),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(children: [
-                      Text(
-                        "Cortado",
-                        style: TextStyles.kWelcomeTitleTextStyle,
-                      ),
-                      Text(
-                        "The app for coffee lovers.",
-                        style: TextStyles.kSubtitleTextStyle,
-                      ),
-                    ]),
-                    SingleChildScrollView(
+                children: <Widget>[
+                  SizedBox(
+                    height: SizeConfig.screenHeight * .1,
+                  ),
+                  Column(children: [
+                    Text(
+                      "Cortado",
+                      style: TextStyles.kWelcomeTitleTextStyle,
+                    ),
+                    Text(
+                      "The app for coffee lovers.",
+                      style: TextStyles.kSubtitleTextStyle,
+                    ),
+                  ]),
+                  Form(
+                    key: _formKey,
+                    child: Container(
                       child: Column(children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +173,9 @@ class _SignUpInitialPageState extends SignUpPageState<SignUpInitialPage> {
                         ),
                       ]),
                     ),
-                  ]),
+                  ),
+                ],
+              ),
             ),
           ),
           floatingActionButton: Container(

@@ -21,7 +21,7 @@ class AppBarWithImage extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SliverAppBar(
-      expandedHeight: SizeConfig.iHeight == IphoneHeight.i667 ? 220 : 250,
+      expandedHeight: SizeConfig.iHeight == IphoneHeight.i667 ? 250 : 250,
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -40,7 +40,9 @@ class AppBarWithImage extends StatelessWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(SizeConfig.screenHeight * .2),
         child: Container(
-          height: SizeConfig.screenHeight * .1,
+          height: SizeConfig.iHeight == IphoneHeight.i667
+              ? SizeConfig.screenHeight * .12
+              : SizeConfig.screenHeight * .1,
           width: SizeConfig.screenWidth,
           child: this.lower,
         ),

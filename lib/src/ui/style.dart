@@ -15,7 +15,7 @@ final kCortadoTheme = ThemeData(
 
 const String kFontFamilyNormal = 'Mermaid';
 
-class AppColors {   
+class AppColors {
   AppColors._();
   static const Color light = Color(0xFFFFF6EE);
   static const Color cream = Color(0xFFEDCAA6);
@@ -79,7 +79,7 @@ class TextStyles {
 
   static final TextStyle kDefaultLightTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 24,
+    fontSize: SizeConfig.iHeight == IphoneHeight.i667 ? 18 : 24,
     color: AppColors.light,
   );
   static final TextStyle kDefaultCreamTextStyle = TextStyle(
@@ -87,9 +87,9 @@ class TextStyles {
     fontSize: 24,
     color: AppColors.cream,
   );
-   static final TextStyle kLargeCreamTextStyle = TextStyle(
+  static final TextStyle kLargeCreamTextStyle = TextStyle(
     fontFamily: kFontFamilyNormal,
-    fontSize: 28,
+    fontSize: SizeConfig.iHeight == IphoneHeight.i667 ? 22 : 28,
     color: AppColors.cream,
   );
 
@@ -107,7 +107,7 @@ class TextStyles {
 
   static final TextStyle kCoffeeShopTitleTextStyle = TextStyle(
       fontFamily: kFontFamilyNormal,
-      fontSize: 28,
+      fontSize: (SizeConfig.iWidth == IphoneWidth.i414) ? 28 : 22,
       color: AppColors.light,
       fontWeight: FontWeight.bold);
 

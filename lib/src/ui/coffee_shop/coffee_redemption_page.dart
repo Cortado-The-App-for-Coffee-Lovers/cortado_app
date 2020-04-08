@@ -60,9 +60,11 @@ class _CoffeeRedemptionPageState extends State<CoffeeRedemptionPage> {
               Expanded(
                 flex: 4,
                 child: OnBoardingCard(
+                  fontSize: 22,
                   backgroundColor: Colors.transparent,
-                  image:
-                      Image.asset('assets/images/cup_of_joe.png', height: 250),
+                  image: Image.asset('assets/images/cup_of_joe.png',
+                      height:
+                          SizeConfig.iHeight == IphoneHeight.i667 ? 200 : 250),
                   title:
                       'Please hand your phone to the barista to confirm order.',
                 ),
@@ -82,7 +84,7 @@ class _CoffeeRedemptionPageState extends State<CoffeeRedemptionPage> {
                 ],
               ),
               Container(
-                width: 300,
+                width: SizeConfig.iWidth == IphoneWidth.i375 ? 250 : 300,
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * .24),
                 child: Column(

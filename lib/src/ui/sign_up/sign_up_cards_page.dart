@@ -23,12 +23,14 @@ class _SignUpCardsPageState extends SignUpPageState<SignUpCardsPage>
   List<Widget> _onboardingCards = <Widget>[
     OnBoardingCard(
       backgroundColor: Colors.transparent,
-      image: Image.asset('assets/images/piggy_bank.png', height: 250),
+      image: Image.asset('assets/images/piggy_bank.png',
+          height: SizeConfig.iHeight == IphoneHeight.i667 ? 200 : 250),
       title: 'Save money with every purchase.',
     ),
     OnBoardingCard(
       backgroundColor: Colors.transparent,
-      image: Image.asset('assets/images/map.png', height: 250),
+      image: Image.asset('assets/images/map.png',
+          height: SizeConfig.iHeight == IphoneHeight.i667 ? 200 : 250),
       title: """
 Discover new 
 cafés.
@@ -36,7 +38,8 @@ cafés.
     ),
     OnBoardingCard(
       backgroundColor: Colors.transparent,
-      image: Image.asset('assets/images/community.png', height: 250),
+      image: Image.asset('assets/images/community.png',
+          height: SizeConfig.iHeight == IphoneHeight.i667 ? 200 : 250),
       title: 'Support local cafés.',
     ),
   ];
@@ -67,7 +70,9 @@ cafés.
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: SizeConfig.blockSizeVertical * .2,
+                height: SizeConfig.iHeight == IphoneHeight.i667
+                    ? SizeConfig.blockSizeVertical * .12
+                    : SizeConfig.blockSizeVertical * .2,
               ),
               Expanded(
                 child: Stack(

@@ -131,7 +131,7 @@ class _PhoneInputPageState extends SignUpPageState<PhoneInputPage> {
             ),
             floatingActionButton: Container(
               color: Colors.transparent,
-              height: 125,
+              height: SizeConfig.iWidth == IphoneWidth.i375 ? 75 : 125,
               padding: EdgeInsets.only(bottom: 30),
               child: LoadingStateButton<SignUpLoadingState>(
                 bloc: signUpBloc,

@@ -47,7 +47,7 @@ class _AccountPageState extends State<AccountPage> {
                           image: AssetImage("assets/images/account.png")))),
               lower: Container(
                 color: AppColors.dark,
-                height: SizeConfig.screenHeight * .2,
+                height: SizeConfig.screenHeight * .3,
                 child: Column(
                   children: [
                     Padding(
@@ -71,61 +71,71 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ]),
           Container(
-            padding: EdgeInsets.only(top: 20),
-            child: Text(
-              "Subscription:",
-              style: TextStyles.kDefaultDarkTextStyle,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(18.0),
-            child: CortadoButton(
-              lineDist: 0,
-              text: getAccountType(),
-              textStyle: TextStyles.kAccountTitleTextStyle,
-              onTap: () {},
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
-            color: AppColors.dark,
-            height: 2.0,
-            width: SizeConfig.safeBlockHorizontal * .9,
-          ),
-          Container(
-            child: Text(
-              "Money saved:",
-              style: TextStyles.kDefaultDarkTextStyle,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(18.0),
-            child: CortadoButton(
-              lineDist: 0,
-              text: widget.user.moneySaved != null
-                  ? "\$ " + widget.user.moneySaved.toString()
-                  : "0\$",
-              textStyle: TextStyles.kAccountTitleTextStyle,
-              onTap: () {},
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
-            color: AppColors.dark,
-            height: 2.0,
-            width: SizeConfig.safeBlockHorizontal * .9,
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 25),
-            child: Text(
-              "Past redemptions:",
-              style: TextStyles.kDefaultDarkTextStyle,
-            ),
-          ),
+            height: SizeConfig.screenHeight * .5,
+            child: ListView(children: [
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(top: 20),
+                child: Text(
+                  "Subscription:",
+                  style: TextStyles.kDefaultDarkTextStyle,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(18.0),
+                child: CortadoButton(
+                  lineDist: 0,
+                  text: getAccountType(),
+                  textStyle: TextStyles.kAccountTitleTextStyle,
+                  onTap: () {},
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
+                color: AppColors.dark,
+                height: 2.0,
+                width: SizeConfig.safeBlockHorizontal * .9,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  "Money saved:",
+                  style: TextStyles.kDefaultDarkTextStyle,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(18.0),
+                child: CortadoButton(
+                  lineDist: 0,
+                  text: widget.user.moneySaved != null
+                      ? "\$ " + widget.user.moneySaved.toString()
+                      : "0\$",
+                  textStyle: TextStyles.kAccountTitleTextStyle,
+                  onTap: () {},
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
+                color: AppColors.dark,
+                height: 2.0,
+                width: SizeConfig.safeBlockHorizontal * .9,
+              ),
+              SingleChildScrollView(
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(top: 25),
+                  child: Text(
+                    "Past redemptions:",
+                    style: TextStyles.kDefaultDarkTextStyle,
+                  ),
+                ),
+              ),
+            ]),
+          )
         ],
       )),
       floatingActionButton: Container(
-          height: 125,
+          height: SizeConfig.iHeight == IphoneHeight.i667 ? 50 : 125,
           child: Column(children: <Widget>[
             Center(
               child: LoadingStateButton<AuthLoadingState>(
