@@ -26,6 +26,7 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   SortedMap<double, CoffeeShop> coffeeMap = SortedMap(Ordering.byKey());
   CoffeeShopRepository coffeeShopRepository;
   var coffeeSubject = PublishSubject<CoffeeShop>();
+  // ignore: close_sinks
   final _coffeeOutput = BehaviorSubject<SortedMap<double, CoffeeShop>>();
 
   Geolocator geolocator = Geolocator();
