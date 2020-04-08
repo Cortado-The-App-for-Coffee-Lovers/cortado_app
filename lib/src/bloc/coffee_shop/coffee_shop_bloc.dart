@@ -26,7 +26,7 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   SortedMap<double, CoffeeShop> coffeeMap = SortedMap(Ordering.byKey());
   CoffeeShopRepository coffeeShopRepository;
   var coffeeSubject = PublishSubject<CoffeeShop>();
-  final _coffeeOutput = BehaviorSubject<Map<double, CoffeeShop>>();
+  final _coffeeOutput = BehaviorSubject<SortedMap<double, CoffeeShop>>();
 
   Geolocator geolocator = Geolocator();
   User user;
@@ -34,7 +34,7 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
   @override
   CoffeeShopState get initialState => CoffeeShopInitial();
 
-  ValueStream<Map<double, CoffeeShop>> get coffeeMapStream =>
+  ValueStream<SortedMap<double, CoffeeShop>> get coffeeMapStream =>
       _coffeeOutput.stream;
 
   @override
@@ -64,14 +64,14 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
 
   _transformCoffeeShops() {
     return ScanStreamTransformer(
-        (Map<double, CoffeeShop> cache, CoffeeShop coffeeShop, index) {
+        (SortedMap<double, CoffeeShop> cache, CoffeeShop coffeeShop, index) {
       if (coffeeShop.currentDistance < 20) {
         cache[coffeeShop.currentDistance] = coffeeShop;
         coffeeMap.addAll({coffeeShop.currentDistance: coffeeShop});
       }
 
       return cache;
-    }, <double, CoffeeShop>{});
+    }, SortedMap<double, CoffeeShop>(Ordering.byKey()));
   }
 
   Future<CoffeeShop> _getUserDistance(CoffeeShop coffeeShop) async {
@@ -103,7 +103,6 @@ class CoffeeShopsBloc extends Bloc<CoffeeShopEvent, CoffeeShopState> {
     CoffeeShop updatedCoffeeShop;
     await for (CoffeeShop coffeeShop in coffeeShops) {
       updatedCoffeeShop = await _getUserDistance(coffeeShop);
-      coffeeMap.addAll({updatedCoffeeShop.currentDistance: updatedCoffeeShop});
       coffeeSubject.add(updatedCoffeeShop);
       yield updatedCoffeeShop;
     }

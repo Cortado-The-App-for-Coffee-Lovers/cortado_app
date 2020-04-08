@@ -10,6 +10,7 @@ import 'package:cortado_app/src/ui/widgets/latte_loader.dart';
 import 'package:cortado_app/src/ui/widgets/loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sortedmap/sortedmap.dart';
 import '../style.dart';
 
 class CoffeeShopsListPage extends DrawerPage {
@@ -116,7 +117,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
                 ? StreamBuilder(
                     stream: _coffeeShopsBloc.coffeeMapStream,
                     builder: (context,
-                        AsyncSnapshot<Map<double, CoffeeShop>> snapshot) {
+                        AsyncSnapshot<SortedMap<double, CoffeeShop>> snapshot) {
                       if (snapshot.hasData) {
                         List<CoffeeShop> filteredList = snapshot.data.values
                             .toList()
