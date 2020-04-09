@@ -91,7 +91,7 @@ class _CoffeeShopMapPageState extends State<CoffeeShopMapPage> {
           children: <Widget>[
             CustomScrollView(shrinkWrap: true, slivers: <Widget>[
               AppBarWithImage(
-                actions: coffeeRedemptionWidget(widget.user),
+                actions: coffeeRedemptionWidget(context, widget.user),
                 image: Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(

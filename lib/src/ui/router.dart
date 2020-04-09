@@ -25,6 +25,7 @@ const String kCoffeeShopsListRoute = '/coffee_shops';
 const String kCoffeeShopRoute = '/coffee_shops/coffee_shop_page';
 const String kCoffeeRedemptionRoute =
     '/coffee_shops/coffee_shop_page/redemption';
+const String kAccountRoute = '/account';
 
 class Router {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -58,6 +59,10 @@ class Router {
         return MaterialPageRoute(
             builder: (_) =>
                 DrawerHomePage(initialRoute: DrawerRoute.coffeeShops));
+      case kAccountRoute:
+        return MaterialPageRoute(
+            builder: (_) => DrawerHomePage(initialRoute: DrawerRoute.account));
+
       case kCoffeeRedemptionRoute:
         return MaterialPageRoute(builder: (_) {
           List args = settings.arguments;

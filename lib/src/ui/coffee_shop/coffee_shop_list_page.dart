@@ -106,7 +106,7 @@ class _CoffeeShopsListPageState extends State<CoffeeShopsListPage> {
           slivers: <Widget>[
             AppBarWithImage(
               image: _coffeeShopImage(),
-              actions: coffeeRedemptionWidget(widget.user),
+              actions: coffeeRedemptionWidget(context, widget.user),
               lower: CortadoSearchBar(
                 onChanged: _onCoffeeSearch,
               ),

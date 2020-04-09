@@ -3,6 +3,7 @@ import 'package:cortado_app/src/data/coffee_shop.dart';
 import 'package:cortado_app/src/data/user.dart';
 import 'package:cortado_app/src/ui/account/account_page.dart';
 import 'package:cortado_app/src/ui/map/coffee_map_page.dart';
+import 'package:cortado_app/src/ui/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -318,7 +319,7 @@ class CoffeeDrawerClipper extends CustomClipper<Path> {
   }
 }
 
-List<Widget> coffeeRedemptionWidget(User user) {
+List<Widget> coffeeRedemptionWidget(BuildContext context, User user) {
   return <Widget>[
     Container(
       margin: EdgeInsets.only(
@@ -327,8 +328,13 @@ List<Widget> coffeeRedemptionWidget(User user) {
       child: Row(
         children: <Widget>[
           user.redemptionsLeft != null
-              ? Text(user.redemptionsLeft.toString())
-              : Tab(icon: (Image.asset("assets/images/infinity.png"))),
+              ? GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed(kAccountRoute),
+                  child: Text(user.redemptionsLeft.toString()))
+              : GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed(kAccountRoute),
+                  child:
+                      Tab(icon: (Image.asset("assets/images/infinity.png")))),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Tab(
